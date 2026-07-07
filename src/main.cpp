@@ -8,7 +8,7 @@
 #define PANEL_RES_Y 32
 #define PANEL_CHAIN 1
 
-#define FIRMWARE_VERSION "0.5.0"
+#define FIRMWARE_VERSION "0.6.0"
 
 // WLAN Access Point
 const char *AP_SSID = "SmartFix-Matrix";
@@ -50,7 +50,8 @@ const unsigned long modeInterval = 10000;
 // -----------------------------
 // Laufschrift
 // -----------------------------
-const char *scrollText = "ELEKTRONIKSERVICE  -  REPARATUR  -  KONSOLEN  -  SMARTFIX  ";
+String scrollText = "ELEKTRONIKSERVICE  -  REPARATUR  -  KONSOLEN  -  SMARTFIX  ";
+const uint16_t MAX_SCROLL_TEXT_LEN = 160;
 int16_t scrollX = PANEL_RES_X;
 unsigned long lastScrollUpdate = 0;
 const unsigned long scrollInterval = 35;
@@ -64,8 +65,8 @@ unsigned long lastFullRedraw = 0;
 // -----------------------------
 // Helper
 // -----------------------------
-int16_t getTextPixelWidth(const char *text) {
-  return strlen(text) * 6;
+int16_t getTextPixelWidth(const String &text) {
+  return text.length() * 6;
 }
 
 const char *getModeName(DisplayMode mode) {
@@ -83,6 +84,16 @@ void loadSettings() {
 
   matrixBrightness = prefs.getUChar("bright", 70);
 
+  scrollText = prefs.getString("text", scrollText);
+
+  if (scrollText.length() == 0) {
+    scrollText = "ELEKTRONIKSERVICE  -  REPARATUR  -  KONSOLEN  -  SMARTFIX  ";
+  }
+
+  if (scrollText.length() > MAX_SCROLL_TEXT_LEN) {
+    scrollText = scrollText.substring(0, MAX_SCROLL_TEXT_LEN);
+  }
+
   int savedMode = prefs.getInt("mode", MODE_SCROLL_TEXT);
   if (savedMode < MODE_SCROLL_TEXT || savedMode > MODE_RANDOM_FX) {
     savedMode = MODE_SCROLL_TEXT;
@@ -94,6 +105,8 @@ void loadSettings() {
   Serial.println("Settings loaded:");
   Serial.print("Brightness: ");
   Serial.println(matrixBrightness);
+  Serial.print("Scroll Text: ");
+  Serial.println(scrollText);
   Serial.print("Mode: ");
   Serial.println(getModeName(currentMode));
   Serial.print("Auto Demo: ");
@@ -112,6 +125,13 @@ void saveBrightnessSetting() {
 
   Serial.print("Brightness saved: ");
   Serial.println(matrixBrightness);
+}
+
+void saveScrollTextSetting() {
+  prefs.putString("text", scrollText);
+
+  Serial.print("Scroll text saved: ");
+  Serial.println(scrollText);
 }
 
 void setMode(DisplayMode newMode, bool saveSetting = true) {
@@ -343,6 +363,16 @@ String htmlButton(const String &label, const String &url) {
   return "<a class='btn' href='" + url + "'>" + label + "</a>";
 }
 
+String htmlEscape(const String &input) {
+  String output = input;
+  output.replace("&", "&amp;");
+  output.replace("\"", "&quot;");
+  output.replace("'", "&#39;");
+  output.replace("<", "&lt;");
+  output.replace(">", "&gt;");
+  return output;
+}
+
 String htmlPage() {
   String autoStatus = autoModeDemo ? "AKTIV" : "AUS";
 
@@ -396,6 +426,17 @@ String htmlPage() {
   page += htmlButton("Pixel Art", "/mode?m=2");
   page += htmlButton("Random FX", "/mode?m=3");
   page += "</div></div>";
+
+  page += "<div class='card'>";
+  page += "<h2>Laufschrift Text</h2>";
+  page += "<form action='/set-text' method='GET'>";
+  page += "<input name='t' maxlength='160' value='";
+  page += htmlEscape(scrollText);
+  page += "' style='width:100%;box-sizing:border-box;background:#020617;color:#e5e7eb;border:1px solid #334155;border-radius:12px;padding:14px;font-size:16px;margin-bottom:12px;'>";
+  page += "<button class='btn green' type='submit' style='border:0;width:100%;cursor:pointer;'>Text speichern</button>";
+  page += "</form>";
+  page += "<div class='sub' style='margin-top:12px;'>Maximal 160 Zeichen. Umlaute testen wir sp&auml;ter mit eigener Font-Unterst&uuml;tzung.</div>";
+  page += "</div>";
 
   page += "<div class='card'>";
   page += "<h2>Auto Demo</h2>";
@@ -477,6 +518,35 @@ void handleBrightness() {
   redirectHome();
 }
 
+void handleSetText() {
+  if (server.hasArg("t")) {
+    String newText = server.arg("t");
+
+    newText.trim();
+
+    if (newText.length() == 0) {
+      newText = "SMARTFIX ELEKTRONIKSERVICE";
+    }
+
+    if (newText.length() > MAX_SCROLL_TEXT_LEN) {
+      newText = newText.substring(0, MAX_SCROLL_TEXT_LEN);
+    }
+
+    scrollText = newText + "   ";
+
+    scrollX = PANEL_RES_X;
+    saveScrollTextSetting();
+
+    autoModeDemo = false;
+    setMode(MODE_SCROLL_TEXT, true);
+
+    Serial.print("New scroll text from web: ");
+    Serial.println(scrollText);
+  }
+
+  redirectHome();
+}
+
 void handleFactoryReset() {
   prefs.clear();
 
@@ -496,6 +566,7 @@ void setupWebServer() {
   server.on("/mode", handleModeChange);
   server.on("/auto", handleAutoDemo);
   server.on("/brightness", handleBrightness);
+  server.on("/set-text", handleSetText);
   server.on("/factory-reset", handleFactoryReset);
 
   server.onNotFound([]() {
@@ -547,11 +618,11 @@ void handleSerialCommands() {
     autoModeDemo = false;
     setMode(MODE_RANDOM_FX);
   } else if (cmd == 'a' || cmd == 'A') {
-  autoModeDemo = true;
-  lastModeChange = millis();
-  saveModeSettings();
-  Serial.println("Auto mode demo enabled");
-}
+    autoModeDemo = true;
+    lastModeChange = millis();
+    saveModeSettings();
+    Serial.println("Auto mode demo enabled");
+  }
 }
 
 // -----------------------------
