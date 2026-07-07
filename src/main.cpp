@@ -5,24 +5,35 @@
 #define PANEL_RES_Y 32
 #define PANEL_CHAIN 1
 
+#define FIRMWARE_VERSION "0.2.0"
+
 MatrixPanel_I2S_DMA *display = nullptr;
 
-void setup() {
-  Serial.begin(115200);
-  delay(1500);
+// Farben
+uint16_t black;
+uint16_t white;
+uint16_t green;
+uint16_t blue;
 
-  Serial.println();
-  Serial.println("================================");
-  Serial.println("SMARTFIX MATRIX DISPLAY TEST 002");
-  Serial.println("================================");
+// Laufschrift
+const char *scrollText = "ELEKTRONIKSERVICE  -  REPARATUR  -  KONSOLEN  -  SMARTFIX  ";
+int16_t scrollX = PANEL_RES_X;
+unsigned long lastScrollUpdate = 0;
+const unsigned long scrollInterval = 35; // kleiner = schneller
 
+int16_t getTextPixelWidth(const char *text) {
+  // Standard Adafruit GFX Font: ca. 6 Pixel pro Zeichen
+  return strlen(text) * 6;
+}
+
+void initMatrix() {
   HUB75_I2S_CFG mxconfig(
     PANEL_RES_X,
     PANEL_RES_Y,
     PANEL_CHAIN
   );
 
-  // Waveshare ESP32-S3-RGB-Matrix Board Settings
+  // Waveshare ESP32-S3-RGB-Matrix Settings
   mxconfig.gpio.e = 9;
   mxconfig.clkphase = false;
   mxconfig.driver = HUB75_I2S_CFG::SHIFTREG;
@@ -31,57 +42,81 @@ void setup() {
 
   if (!display->begin()) {
     Serial.println("ERROR: display->begin() failed!");
-    return;
+    while (true) {
+      delay(1000);
+    }
   }
 
-  Serial.println("Matrix initialized OK");
-
-  display->setBrightness8(80);
+  display->setBrightness8(70);
   display->clearScreen();
 
-  Serial.println("Starting color test...");
+  black = display->color565(0, 0, 0);
+  white = display->color565(255, 255, 255);
+  green = display->color565(0, 255, 80);
+  blue  = display->color565(0, 120, 255);
 }
 
-void loop() {
-  uint16_t red   = display->color565(255, 0, 0);
-  uint16_t green = display->color565(0, 255, 0);
-  uint16_t blue  = display->color565(0, 0, 255);
-  uint16_t white = display->color565(255, 255, 255);
-  uint16_t black = display->color565(0, 0, 0);
-
-  Serial.println("RED");
-  display->fillScreen(red);
-  delay(1500);
-
-  Serial.println("GREEN");
-  display->fillScreen(green);
-  delay(1500);
-
-  Serial.println("BLUE");
-  display->fillScreen(blue);
-  delay(1500);
-
-  Serial.println("WHITE");
-  display->fillScreen(white);
-  delay(1500);
-
-  Serial.println("TEXT");
-  display->fillScreen(black);
-
+void drawHeader() {
   display->setTextWrap(false);
   display->setTextSize(1);
 
-  display->setCursor(3, 4);
+  // Smart
+  display->setCursor(2, 3);
   display->setTextColor(green);
   display->print("Smart");
 
-  display->setCursor(36, 4);
+  // Fix
+  display->setCursor(34, 3);
   display->setTextColor(blue);
   display->print("Fix");
 
-  display->setCursor(8, 18);
-  display->setTextColor(white);
-  display->print("MATRIX");
+  // kleine Trennlinie
+  display->drawLine(0, 13, 63, 13, blue);
+}
 
-  delay(3000);
+void drawScrollingText() {
+  unsigned long now = millis();
+
+  if (now - lastScrollUpdate >= scrollInterval) {
+    lastScrollUpdate = now;
+
+    display->fillScreen(black);
+
+    drawHeader();
+
+    display->setTextWrap(false);
+    display->setTextSize(1);
+    display->setTextColor(white);
+    display->setCursor(scrollX, 20);
+    display->print(scrollText);
+
+    scrollX--;
+
+    int16_t textWidth = getTextPixelWidth(scrollText);
+
+    if (scrollX < -textWidth) {
+      scrollX = PANEL_RES_X;
+    }
+  }
+}
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000);
+
+  Serial.println();
+  Serial.println("================================");
+  Serial.println("SMARTFIX MATRIX");
+  Serial.print("Firmware v");
+  Serial.println(FIRMWARE_VERSION);
+  Serial.println("Mode: Scrolling Text");
+  Serial.println("================================");
+
+  initMatrix();
+
+  Serial.println("Matrix initialized OK");
+}
+
+void loop() {
+  drawScrollingText();
 }
