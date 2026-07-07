@@ -63,6 +63,10 @@ const char *getLogoEffectName() {
     case LOGO_EFFECT_STATIC:     return "STATISCH";
     case LOGO_EFFECT_TYPEWRITER: return "BUCHSTABE";
     case LOGO_EFFECT_FADE:       return "FADE";
+    case LOGO_EFFECT_SLIDE:      return "SLIDE";
+    case LOGO_EFFECT_SHIMMER:    return "SHIMMER";
+    case LOGO_EFFECT_SPARKLE:    return "SPARKLE";
+    case LOGO_EFFECT_PULSE:      return "PULSE";
     default:                     return "STATISCH";
   }
 }

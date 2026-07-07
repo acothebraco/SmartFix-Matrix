@@ -13,7 +13,11 @@ enum DisplayMode {
 enum LogoEffectMode {
   LOGO_EFFECT_STATIC     = 0,
   LOGO_EFFECT_TYPEWRITER = 1,
-  LOGO_EFFECT_FADE       = 2
+  LOGO_EFFECT_FADE       = 2,
+  LOGO_EFFECT_SLIDE      = 3,
+  LOGO_EFFECT_SHIMMER    = 4,
+  LOGO_EFFECT_SPARKLE    = 5,
+  LOGO_EFFECT_PULSE      = 6
 };
 
 // Current app state

@@ -70,193 +70,146 @@ static bool logoIsSmartFix() {
   return logoText.equalsIgnoreCase("SmartFix");
 }
 
-static uint16_t scaleSmartColor(uint8_t brightnessScale) {
-  uint8_t g = (uint16_t)255 * brightnessScale / 255;
-  uint8_t b = (uint16_t)80 * brightnessScale / 255;
-  return makeColor(0, g, b);
+static uint8_t clampScale(uint16_t value) {
+  if (value > 255) return 255;
+  return (uint8_t)value;
 }
 
-static uint16_t scaleFixColor(uint8_t brightnessScale) {
-  uint8_t g = (uint16_t)120 * brightnessScale / 255;
-  uint8_t b = (uint16_t)255 * brightnessScale / 255;
-  return makeColor(0, g, b);
+static uint16_t scaledColor(uint8_t r, uint8_t g, uint8_t b, uint8_t scale) {
+  return makeColor((uint16_t)r * scale / 255,
+                   (uint16_t)g * scale / 255,
+                   (uint16_t)b * scale / 255);
 }
 
-static void drawPatternChar(int16_t x, int16_t y, const char *rows[], uint8_t h, uint16_t color) {
-  for (uint8_t yy = 0; yy < h; yy++) {
-    const char *row = rows[yy];
-    for (uint8_t xx = 0; row[xx] != '\0'; xx++) {
-      if (row[xx] != ' ') {
-        display->drawPixel(x + xx, y + yy, color);
-      }
+static uint16_t smartColor(uint8_t scale = 255) {
+  return scaledColor(0, 255, 80, scale);
+}
+
+static uint16_t fixColor(uint8_t scale = 255) {
+  return scaledColor(0, 120, 255, scale);
+}
+
+static uint16_t smartShadowColor(uint8_t scale = 255) {
+  return scaledColor(0, 40, 18, scale);
+}
+
+static uint16_t fixShadowColor(uint8_t scale = 255) {
+  return scaledColor(0, 22, 55, scale);
+}
+
+static uint16_t smartHighlightColor(uint8_t scale = 255) {
+  return scaledColor(120, 255, 160, scale);
+}
+
+static uint16_t fixHighlightColor(uint8_t scale = 255) {
+  return scaledColor(110, 210, 255, scale);
+}
+
+static void printText(const String &text, int16_t x, int16_t y, uint16_t color) {
+  display->setTextWrap(false);
+  display->setTextSize(1);
+  display->setTextColor(color);
+  display->setCursor(x, y);
+  display->print(text);
+}
+
+// Draw a readable wordmark with the same base font as the scrolling text,
+// but with a subtle shadow/highlight so it looks more like a logo and not like
+// plain thin text. This keeps the m readable on 64x32.
+static void drawBrandWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale, int8_t shimmerIndex = -1) {
+  const String smart = "Smart";
+  const String fix = "Fix";
+  const String full = "SmartFix";
+
+  if (revealChars > full.length()) {
+    revealChars = full.length();
+  }
+
+  uint8_t smartReveal = revealChars;
+  if (smartReveal > smart.length()) smartReveal = smart.length();
+
+  uint8_t fixReveal = 0;
+  if (revealChars > smart.length()) {
+    fixReveal = revealChars - smart.length();
+    if (fixReveal > fix.length()) fixReveal = fix.length();
+  }
+
+  String smartVisible = smart.substring(0, smartReveal);
+  String fixVisible = fix.substring(0, fixReveal);
+
+  int16_t fixX = x + 32;  // 5 chars * 6 px + small 2 px brand gap
+
+  // Soft logo-like depth. Only dim, so it does not destroy the m.
+  if (smartVisible.length() > 0) {
+    printText(smartVisible, x + 1, y + 1, smartShadowColor(brightnessScale));
+  }
+  if (fixVisible.length() > 0) {
+    printText(fixVisible, fixX + 1, y + 1, fixShadowColor(brightnessScale));
+  }
+
+  // Main colored letters, exactly the same readable font as the scrolling text.
+  if (smartVisible.length() > 0) {
+    printText(smartVisible, x, y, smartColor(brightnessScale));
+  }
+  if (fixVisible.length() > 0) {
+    printText(fixVisible, fixX, y, fixColor(brightnessScale));
+  }
+
+  // Small highlight stripe, inspired by the PNG gloss, but minimal for 64x32.
+  if (revealChars >= full.length() && brightnessScale > 90) {
+    display->drawPixel(x + 2, y, smartHighlightColor(brightnessScale));
+    display->drawPixel(x + 3, y, smartHighlightColor(brightnessScale));
+    display->drawPixel(fixX + 1, y, fixHighlightColor(brightnessScale));
+    display->drawPixel(fixX + 2, y, fixHighlightColor(brightnessScale));
+  }
+
+  // Shimmer effect: one bright moving character.
+  if (shimmerIndex >= 0 && shimmerIndex < (int)full.length() && revealChars >= full.length()) {
+    if (shimmerIndex < 5) {
+      String c = String(full[shimmerIndex]);
+      printText(c, x + shimmerIndex * 6, y, smartHighlightColor(brightnessScale));
+    } else {
+      String c = String(full[shimmerIndex]);
+      printText(c, fixX + (shimmerIndex - 5) * 6, y, fixHighlightColor(brightnessScale));
     }
   }
-}
-
-// Custom compact 64x32-friendly logo font.
-// Bigger and more readable than the default 5x7 font, but still fits 64px width.
-static uint8_t drawLogoChar(char c, int16_t posX, int16_t posY, uint16_t color) {
-  static const char *S[] = {
-    " #### ",
-    "##  ##",
-    "##    ",
-    " ###  ",
-    "  ### ",
-    "    ##",
-    "##  ##",
-    " #### ",
-    "      "
-  };
-
-  static const char *m[] = {
-    "        ",
-    "## ##   ",
-    "### ##  ",
-    "## # ## ",
-    "## # ## ",
-    "## # ## ",
-    "##   ## ",
-    "##   ## ",
-    "        "
-  };
-
-  static const char *a[] = {
-    "      ",
-    " ###  ",
-    "   ## ",
-    " #### ",
-    "## ## ",
-    "## ## ",
-    "## ## ",
-    " #### ",
-    "      "
-  };
-
-  static const char *r[] = {
-    "      ",
-    "## ## ",
-    "###   ",
-    "##    ",
-    "##    ",
-    "##    ",
-    "##    ",
-    "##    ",
-    "      "
-  };
-
-  static const char *t[] = {
-    "  ##  ",
-    " #### ",
-    "  ##  ",
-    "  ##  ",
-    "  ##  ",
-    "  ##  ",
-    "  ### ",
-    "   ## ",
-    "      "
-  };
-
-  static const char *F[] = {
-    "######",
-    "##    ",
-    "##    ",
-    "##### ",
-    "##    ",
-    "##    ",
-    "##    ",
-    "##    ",
-    "      "
-  };
-
-  static const char *i[] = {
-    "##",
-    "  ",
-    "##",
-    "##",
-    "##",
-    "##",
-    "##",
-    "##",
-    "  "
-  };
-
-  static const char *xGlyph[] = {
-    "      ",
-    "##  ##",
-    " #### ",
-    "  ##  ",
-    "  ##  ",
-    " #### ",
-    "##  ##",
-    "##  ##",
-    "      "
-  };
-
-  switch (c) {
-    case 'S': drawPatternChar(posX, posY, S, 9, color); return 6;
-    case 'm': drawPatternChar(posX, posY, m, 9, color); return 8;
-    case 'a': drawPatternChar(posX, posY, a, 9, color); return 6;
-    case 'r': drawPatternChar(posX, posY, r, 9, color); return 6;
-    case 't': drawPatternChar(posX, posY, t, 9, color); return 6;
-    case 'F': drawPatternChar(posX, posY, F, 9, color); return 6;
-    case 'i': drawPatternChar(posX, posY, i, 9, color); return 2;
-    case 'x': drawPatternChar(posX, posY, xGlyph, 9, color); return 6;
-    default:
-      display->setTextSize(1);
-      display->setTextWrap(false);
-      display->setTextColor(color);
-      display->setCursor(posX, posY + 1);
-      display->print(c);
-      return 6;
-  }
-}
-
-static uint8_t smartFixWordmarkWidth(uint8_t revealChars) {
-  String text = "SmartFix";
-  uint8_t w = 0;
-
-  for (uint8_t idx = 0; idx < text.length() && idx < revealChars; idx++) {
-    switch (text[idx]) {
-      case 'S': w += 6; break;
-      case 'm': w += 8; break;
-      case 'a': w += 6; break;
-      case 'r': w += 6; break;
-      case 't': w += 6; break;
-      case 'F': w += 6; break;
-      case 'i': w += 2; break;
-      case 'x': w += 6; break;
-      default:  w += 6; break;
-    }
-
-    // Slightly bigger gap before "Fix"
-    if (idx == 4) w += 2;
-    else w += 1;
-  }
-
-  return w;
 }
 
 void drawSmartFixWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale) {
-  String text = "SmartFix";
+  drawBrandWordmark(x, y, revealChars, brightnessScale);
+}
 
-  if (revealChars > text.length()) {
-    revealChars = text.length();
+static void drawGenericLogoText(const String &text, int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale) {
+  String visible = text;
+  if (revealChars < visible.length()) {
+    visible = visible.substring(0, revealChars);
   }
 
-  int16_t cursorX = x;
-  uint16_t smartColor = scaleSmartColor(brightnessScale);
-  uint16_t fixColor = scaleFixColor(brightnessScale);
+  uint16_t shadow = scaledColor(0, 35, 18, brightnessScale);
+  uint16_t main   = smartColor(brightnessScale);
 
-  for (uint8_t idx = 0; idx < text.length() && idx < revealChars; idx++) {
-    uint16_t color = (idx >= 5) ? fixColor : smartColor;
+  printText(visible, x + 1, y + 1, shadow);
+  printText(visible, x, y, main);
+}
 
-    uint8_t charW = drawLogoChar(text[idx], cursorX, y, color);
-    cursorX += charW;
+static void drawHeaderSparkles(int16_t x, int16_t y) {
+  // Deterministic small sparkle field around the header. No true randomness here,
+  // so the animation stays smooth without flicker chaos.
+  uint8_t frame = (millis() / 95) % 16;
 
-    if (idx == 4) {
-      cursorX += 2;
-    } else {
-      cursorX += 1;
+  const int8_t pts[][2] = {
+    {0, 0}, {8, 1}, {15, -1}, {25, 0}, {35, -1}, {46, 1}, {52, 0},
+    {4, 9}, {12, 10}, {29, 9}, {39, 10}, {48, 9}, {57, 10}
+  };
+
+  for (uint8_t i = 0; i < sizeof(pts) / sizeof(pts[0]); i++) {
+    if (((i + frame) % 5) == 0) {
+      uint16_t c = (i % 2 == 0) ? smartHighlightColor(180) : fixHighlightColor(180);
+      int16_t px = x + pts[i][0];
+      int16_t py = y + pts[i][1];
+      if (px >= 0 && px < PANEL_RES_X && py >= 0 && py < PANEL_RES_Y) {
+        display->drawPixel(px, py, c);
+      }
     }
   }
 }
@@ -265,44 +218,59 @@ void drawHeader() {
   display->setTextWrap(false);
   display->setTextSize(1);
 
-  uint8_t revealChars = logoText.length();
-  uint8_t fadeScale = 255;
-
-  if (logoEffectMode == LOGO_EFFECT_TYPEWRITER) {
-    uint8_t phase = (millis() / 230) % (logoText.length() + 7);
-    revealChars = phase;
-    if (revealChars > logoText.length()) {
-      revealChars = logoText.length();
-    }
-  } else if (logoEffectMode == LOGO_EFFECT_FADE) {
-    uint16_t phase = (millis() / 20) % 512;
-    if (phase > 255) {
-      phase = 511 - phase;
-    }
-    fadeScale = 45 + ((uint16_t)phase * 210 / 255);
+  String text = logoText;
+  text.trim();
+  if (text.length() == 0) {
+    text = "SmartFix";
   }
 
-  if (logoIsSmartFix()) {
-    uint8_t w = smartFixWordmarkWidth(revealChars);
-    int16_t x = (PANEL_RES_X - w) / 2;
-    if (x < 0) x = 0;
+  const bool isBrand = text.equalsIgnoreCase("SmartFix");
+  const uint8_t totalChars = isBrand ? 8 : text.length();
 
-    drawSmartFixWordmark(x, 2, revealChars, fadeScale);
-  } else {
-    String visible = logoText;
-    if (revealChars < visible.length()) {
-      visible = visible.substring(0, revealChars);
+  uint8_t revealChars = totalChars;
+  uint8_t fadeScale = 255;
+  int16_t baseX = isBrand ? 7 : (PANEL_RES_X - getTextPixelWidth(text)) / 2;
+  int16_t baseY = 3;
+  int8_t shimmerIndex = -1;
+
+  if (baseX < 0) baseX = 0;
+
+  if (logoEffectMode == LOGO_EFFECT_TYPEWRITER) {
+    uint8_t phase = (millis() / 220) % (totalChars + 8);
+    revealChars = phase;
+    if (revealChars > totalChars) revealChars = totalChars;
+  } else if (logoEffectMode == LOGO_EFFECT_FADE) {
+    uint16_t phase = (millis() / 18) % 512;
+    if (phase > 255) phase = 511 - phase;
+    fadeScale = clampScale(50 + ((uint16_t)phase * 205 / 255));
+  } else if (logoEffectMode == LOGO_EFFECT_SLIDE) {
+    uint16_t phase = (millis() / 22) % 170;
+    if (phase < 55) {
+      int16_t targetX = baseX;
+      baseX = PANEL_RES_X - ((PANEL_RES_X - targetX) * phase / 55);
+    } else if (phase > 125) {
+      int16_t targetX = baseX;
+      baseX = targetX - ((phase - 125) * (targetX + 56) / 45);
     }
+  } else if (logoEffectMode == LOGO_EFFECT_SHIMMER) {
+    shimmerIndex = (millis() / 115) % (totalChars + 4);
+    if (shimmerIndex >= totalChars) shimmerIndex = -1;
+  } else if (logoEffectMode == LOGO_EFFECT_SPARKLE) {
+    // Main draw stays static; sparkles are added below.
+  } else if (logoEffectMode == LOGO_EFFECT_PULSE) {
+    uint16_t phase = (millis() / 16) % 512;
+    if (phase > 255) phase = 511 - phase;
+    fadeScale = clampScale(150 + ((uint16_t)phase * 105 / 255));
+  }
 
-    int16_t logoWidth = getTextPixelWidth(visible);
-    int16_t logoX = (PANEL_RES_X - logoWidth) / 2;
-    if (logoX < 0) logoX = 0;
+  if (isBrand) {
+    drawBrandWordmark(baseX, baseY, revealChars, fadeScale, shimmerIndex);
+  } else {
+    drawGenericLogoText(text, baseX, baseY, revealChars, fadeScale);
+  }
 
-    uint16_t color = makeColor(0, (uint16_t)255 * fadeScale / 255, (uint16_t)80 * fadeScale / 255);
-
-    display->setTextColor(color);
-    display->setCursor(logoX, 3);
-    display->print(visible);
+  if (logoEffectMode == LOGO_EFFECT_SPARKLE || logoEffectMode == LOGO_EFFECT_PULSE) {
+    drawHeaderSparkles(baseX, baseY);
   }
 
   // Blue separator line intentionally removed.

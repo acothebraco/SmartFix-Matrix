@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 // SmartFix Matrix firmware
-#define FIRMWARE_VERSION "1.1.0"
+#define FIRMWARE_VERSION "1.2.0"
 
 // Current hardware: one 64x32 HUB75 panel.
 // Later:

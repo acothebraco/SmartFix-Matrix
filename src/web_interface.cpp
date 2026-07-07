@@ -140,8 +140,14 @@ static String htmlPage() {
   page += htmlButton("Statisch", "/logo-effect?e=0");
   page += htmlButton("Buchstabe f&uuml;r Buchstabe", "/logo-effect?e=1");
   page += htmlButton("Fade In / Out", "/logo-effect?e=2");
+  page += htmlButton("Slide In", "/logo-effect?e=3");
+  page += htmlButton("Shimmer", "/logo-effect?e=4");
+  page += htmlButton("Sparkle", "/logo-effect?e=5");
+  page += htmlButton("Pulse Glow", "/logo-effect?e=6");
   page += htmlButton("Refresh", "/");
-  page += "</div></div>";
+  page += "</div>";
+  page += "<div class='sub' style='margin-top:12px;'>Effekte betreffen nur den oberen Logo/Header. Farben bleiben Smart=gr&uuml;n und Fix=blau.</div>";
+  page += "</div>";
 
   page += "<div class='card'>";
   page += "<h2>Auto Demo</h2>";
@@ -293,7 +299,7 @@ static void handleLogoEffect() {
     int value = server.arg("e").toInt();
 
     if (value < LOGO_EFFECT_STATIC) value = LOGO_EFFECT_STATIC;
-    if (value > LOGO_EFFECT_FADE) value = LOGO_EFFECT_FADE;
+    if (value > LOGO_EFFECT_PULSE) value = LOGO_EFFECT_PULSE;
 
     logoEffectMode = (uint8_t)value;
     saveLogoEffectSetting();

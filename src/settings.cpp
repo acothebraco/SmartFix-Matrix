@@ -16,7 +16,7 @@ void loadSettings() {
   }
 
   logoEffectMode = prefs.getUChar("logoFx", LOGO_EFFECT_STATIC);
-  if (logoEffectMode > LOGO_EFFECT_FADE) {
+  if (logoEffectMode > LOGO_EFFECT_PULSE) {
     logoEffectMode = LOGO_EFFECT_STATIC;
   }
 
