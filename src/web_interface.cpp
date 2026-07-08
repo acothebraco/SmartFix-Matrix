@@ -142,7 +142,7 @@ static String htmlPage() {
 <style>
 :root{--bg:#050812;--panel:#0d1320;--panel2:#111827;--line:#223149;--text:#e5e7eb;--muted:#94a3b8;--green:#22c55e;--green2:#16a34a;--blue:#38bdf8;--blue2:#2563eb;--danger:#ef4444;}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 18% 0%,rgba(34,197,94,.20),transparent 34%),radial-gradient(circle at 88% 10%,rgba(56,189,248,.16),transparent 32%),linear-gradient(180deg,#050812 0%,#08111f 55%,#050812 100%);color:var(--text);min-height:100vh;}
-a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.22);border-radius:26px;background:linear-gradient(145deg,rgba(17,24,39,.93),rgba(2,6,23,.92));box-shadow:0 22px 70px rgba(0,0,0,.45);padding:22px;margin-bottom:16px}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(34,197,94,.10),transparent 40%,rgba(56,189,248,.10));pointer-events:none}.topbar{position:relative;display:flex;align-items:center;gap:15px;margin-bottom:18px;padding-right:120px}.logo-badge{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-weight:900;font-size:20px;color:white;background:linear-gradient(135deg,var(--green),var(--blue));box-shadow:0 0 32px rgba(34,197,94,.28)}.title-block h1{margin:0;font-size:31px;letter-spacing:-.8px}.title-block .sub{margin:5px 0 0;color:var(--muted)}.version-chip{margin-left:auto;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.36);color:#bbf7d0;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:bold;white-space:nowrap}.lang-switch{position:absolute;top:18px;right:18px;display:flex;gap:6px;background:rgba(2,6,23,.54);border:1px solid rgba(148,163,184,.18);border-radius:999px;padding:5px;z-index:2}.lang-btn{display:block;text-decoration:none;color:var(--muted);font-weight:900;font-size:12px;border-radius:999px;padding:7px 10px}.lang-btn.active{background:linear-gradient(135deg,var(--green2),var(--blue));color:white;box-shadow:0 0 18px rgba(56,189,248,.18)}.status{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pill{background:rgba(2,6,23,.72);border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}.pill.good{border-color:rgba(34,197,94,.32)}.pill.blue{border-color:rgba(56,189,248,.28)}.label{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}.value{font-size:16px;font-weight:bold;color:#f8fafc;margin-top:5px;word-break:break-word}.card{background:linear-gradient(145deg,rgba(17,24,39,.92),rgba(12,18,30,.92));border:1px solid rgba(148,163,184,.18);border-radius:22px;margin-bottom:12px;box-shadow:0 12px 36px rgba(0,0,0,.28)}details.card{overflow:hidden}summary{cursor:pointer;list-style:none;padding:18px 20px;display:flex;align-items:center;gap:12px;user-select:none}summary::-webkit-details-marker{display:none}.section-icon{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.25);color:#7dd3fc;font-size:18px}.summary-text{font-size:18px;font-weight:800;color:#f8fafc}.sumvalue{margin-left:auto;color:var(--muted);font-size:13px;font-weight:bold;text-align:right}.chev{margin-left:8px;color:var(--green);font-size:22px;line-height:1;transition:.18s transform}details[open] .chev{transform:rotate(45deg)}.detail-body{padding:0 20px 20px;border-top:1px solid rgba(148,163,184,.11)}h2{margin:18px 0 12px;font-size:15px;color:#7dd3fc;text-transform:uppercase;letter-spacing:.5px}.sub{color:var(--muted);font-size:14px;line-height:1.45}.hint{margin-top:12px;padding:12px;border:1px solid rgba(34,197,94,.24);background:rgba(34,197,94,.08);border-radius:14px;color:#bbf7d0}.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.btn{display:flex;align-items:center;justify-content:center;min-height:46px;text-align:center;text-decoration:none;border:1px solid rgba(148,163,184,.18);background:linear-gradient(135deg,rgba(37,99,235,.95),rgba(14,165,233,.82));color:white;padding:12px;border-radius:14px;font-weight:800;box-shadow:0 10px 22px rgba(37,99,235,.17);transition:.16s transform,.16s filter,.16s border-color}.btn:hover{filter:brightness(1.12);transform:translateY(-1px);border-color:rgba(125,211,252,.45)}.btn.green{background:linear-gradient(135deg,var(--green2),var(--green));box-shadow:0 10px 22px rgba(34,197,94,.17)}.btn.danger{background:linear-gradient(135deg,#b91c1c,var(--danger))}button.btn{border:0;width:100%;cursor:pointer;font-size:15px}input{width:100%;background:rgba(2,6,23,.78);color:var(--text);border:1px solid rgba(148,163,184,.22);border-radius:15px;padding:14px 15px;font-size:16px;margin-bottom:12px;outline:none}input[type=file]{cursor:pointer}input:focus{border-color:rgba(56,189,248,.65);box-shadow:0 0 0 3px rgba(56,189,248,.12)}.small{font-size:13px;color:var(--muted);margin:18px 0 4px;text-align:center}.row-title{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}.mini-chip{font-size:12px;color:#bbf7d0;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.25);border-radius:999px;padding:5px 9px}.preview-shell{display:flex;justify-content:center;align-items:center;background:#020617;border:1px solid rgba(56,189,248,.25);border-radius:18px;padding:14px;box-shadow:inset 0 0 28px rgba(56,189,248,.08)}#matrixPreview{width:100%;max-width:512px;height:auto;border-radius:12px;background:#000;box-shadow:0 0 28px rgba(34,197,94,.16)}#section-preview .chev{display:none}#section-preview summary{cursor:default}.preview-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px}.preview-dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 12px var(--green);margin-right:7px}@media(max-width:760px){.wrap{padding:14px}.hero{padding:18px;border-radius:22px}.topbar{align-items:flex-start;padding-top:34px;padding-right:0}.version-chip{display:none}.status{grid-template-columns:1fr 1fr}.buttons{grid-template-columns:1fr}.sumvalue{display:none}.title-block h1{font-size:27px}}@media(max-width:460px){.status{grid-template-columns:1fr}.logo-badge{width:46px;height:46px}.summary-text{font-size:16px}}
+a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.22);border-radius:26px;background:linear-gradient(145deg,rgba(17,24,39,.93),rgba(2,6,23,.92));box-shadow:0 22px 70px rgba(0,0,0,.45);padding:22px;margin-bottom:16px}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(34,197,94,.10),transparent 40%,rgba(56,189,248,.10));pointer-events:none}.topbar{position:relative;display:flex;align-items:center;gap:15px;margin-bottom:18px;padding-right:120px}.logo-badge{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-weight:900;font-size:20px;color:white;background:linear-gradient(135deg,var(--green),var(--blue));box-shadow:0 0 32px rgba(34,197,94,.28)}.title-block h1{margin:0;font-size:31px;letter-spacing:-.8px}.title-block .sub{margin:5px 0 0;color:var(--muted)}.version-chip{margin-left:auto;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.36);color:#bbf7d0;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:bold;white-space:nowrap}.lang-switch{position:absolute;top:18px;right:18px;display:flex;gap:6px;background:rgba(2,6,23,.54);border:1px solid rgba(148,163,184,.18);border-radius:999px;padding:5px;z-index:2}.lang-btn{display:block;text-decoration:none;color:var(--muted);font-weight:900;font-size:12px;border-radius:999px;padding:7px 10px}.lang-btn.active{background:linear-gradient(135deg,var(--green2),var(--blue));color:white;box-shadow:0 0 18px rgba(56,189,248,.18)}.status{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pill{background:rgba(2,6,23,.72);border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}.pill.good{border-color:rgba(34,197,94,.32)}.pill.blue{border-color:rgba(56,189,248,.28)}.label{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}.value{font-size:16px;font-weight:bold;color:#f8fafc;margin-top:5px;word-break:break-word}.card{background:linear-gradient(145deg,rgba(17,24,39,.92),rgba(12,18,30,.92));border:1px solid rgba(148,163,184,.18);border-radius:22px;margin-bottom:12px;box-shadow:0 12px 36px rgba(0,0,0,.28)}details.card{overflow:hidden}summary{cursor:pointer;list-style:none;padding:18px 20px;display:flex;align-items:center;gap:12px;user-select:none}summary::-webkit-details-marker{display:none}.section-icon{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.25);color:#7dd3fc;font-size:18px}.summary-text{font-size:18px;font-weight:800;color:#f8fafc}.sumvalue{margin-left:auto;color:var(--muted);font-size:13px;font-weight:bold;text-align:right}.chev{margin-left:8px;color:var(--green);font-size:22px;line-height:1;transition:.18s transform}details[open] .chev{transform:rotate(45deg)}.detail-body{padding:0 20px 20px;border-top:1px solid rgba(148,163,184,.11)}h2{margin:18px 0 12px;font-size:15px;color:#7dd3fc;text-transform:uppercase;letter-spacing:.5px}.sub{color:var(--muted);font-size:14px;line-height:1.45}.hint{margin-top:12px;padding:12px;border:1px solid rgba(34,197,94,.24);background:rgba(34,197,94,.08);border-radius:14px;color:#bbf7d0}.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.btn{display:flex;align-items:center;justify-content:center;min-height:46px;text-align:center;text-decoration:none;border:1px solid rgba(148,163,184,.18);background:linear-gradient(135deg,rgba(37,99,235,.95),rgba(14,165,233,.82));color:white;padding:12px;border-radius:14px;font-weight:800;box-shadow:0 10px 22px rgba(37,99,235,.17);transition:.16s transform,.16s filter,.16s border-color}.btn:hover{filter:brightness(1.12);transform:translateY(-1px);border-color:rgba(125,211,252,.45)}.btn.green{background:linear-gradient(135deg,var(--green2),var(--green));box-shadow:0 10px 22px rgba(34,197,94,.17)}.btn.danger{background:linear-gradient(135deg,#b91c1c,var(--danger))}button.btn{border:0;width:100%;cursor:pointer;font-size:15px}input{width:100%;background:rgba(2,6,23,.78);color:var(--text);border:1px solid rgba(148,163,184,.22);border-radius:15px;padding:14px 15px;font-size:16px;margin-bottom:12px;outline:none}input[type=file]{cursor:pointer}input:focus{border-color:rgba(56,189,248,.65);box-shadow:0 0 0 3px rgba(56,189,248,.12)}.small{font-size:13px;color:var(--muted);margin:18px 0 4px;text-align:center}.row-title{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}.mini-chip{font-size:12px;color:#bbf7d0;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.25);border-radius:999px;padding:5px 9px}.preview-shell{display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 50% 40%,#07111f,#020617 70%);border:1px solid rgba(56,189,248,.25);border-radius:18px;padding:14px;box-shadow:inset 0 0 34px rgba(56,189,248,.10),0 14px 34px rgba(0,0,0,.28)}#matrixPreview{width:100%;max-width:640px;height:auto;border-radius:14px;background:#000;box-shadow:0 0 28px rgba(34,197,94,.16),inset 0 0 18px rgba(255,255,255,.04)}#section-preview .chev{display:none}#section-preview summary{cursor:default}.preview-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px}.preview-dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 12px var(--green);margin-right:7px}@media(max-width:760px){.wrap{padding:14px}.hero{padding:18px;border-radius:22px}.topbar{align-items:flex-start;padding-top:34px;padding-right:0}.version-chip{display:none}.status{grid-template-columns:1fr 1fr}.buttons{grid-template-columns:1fr}.sumvalue{display:none}.title-block h1{font-size:27px}}@media(max-width:460px){.status{grid-template-columns:1fr}.logo-badge{width:46px;height:46px}.summary-text{font-size:16px}}
 </style>
 <script>
 (function(){
@@ -206,19 +206,40 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
 })();
 
 (function(){
-  var W=64,H=32,S=8;
+  var W=64,H=32,S=10;
   var colors=['#f8fafc','#22c55e','#38bdf8','#facc15','#ef4444'];
   var wordColors=['#22c55e','#38bdf8','#facc15','#ef4444','#f8fafc'];
   var off=document.createElement('canvas'); off.width=W; off.height=H;
   var oc=off.getContext('2d'); oc.imageSmoothingEnabled=false;
+
+  // 5x7 pixel font, drawn directly to the 64x32 pixel buffer.
+  // This is much closer to the ESP32/Adafruit-GFX style than browser text rendering.
+  var F={
+    ' ':[0,0,0,0,0],'!':[0,0,95,0,0],'.':[0,96,96,0,0],',':[0,80,48,0,0],':':[0,54,54,0,0],';':[0,86,54,0,0],
+    '-' :[8,8,8,8,8],'_':[64,64,64,64,64],'+':[8,8,62,8,8],'/' :[32,16,8,4,2],
+    '(':[0,28,34,65,0],')':[0,65,34,28,0],'?':[2,1,81,9,6],'&':[54,73,85,34,80],
+    '0':[62,81,73,69,62],'1':[0,66,127,64,0],'2':[66,97,81,73,70],'3':[33,65,69,75,49],'4':[24,20,18,127,16],
+    '5':[39,69,69,69,57],'6':[60,74,73,73,48],'7':[1,113,9,5,3],'8':[54,73,73,73,54],'9':[6,73,73,41,30],
+    'A':[126,17,17,17,126],'B':[127,73,73,73,54],'C':[62,65,65,65,34],'D':[127,65,65,34,28],'E':[127,73,73,73,65],
+    'F':[127,9,9,9,1],'G':[62,65,73,73,122],'H':[127,8,8,8,127],'I':[0,65,127,65,0],'J':[32,64,65,63,1],
+    'K':[127,8,20,34,65],'L':[127,64,64,64,64],'M':[127,2,12,2,127],'N':[127,4,8,16,127],'O':[62,65,65,65,62],
+    'P':[127,9,9,9,6],'Q':[62,65,81,33,94],'R':[127,9,25,41,70],'S':[70,73,73,73,49],'T':[1,1,127,1,1],
+    'U':[63,64,64,64,63],'V':[31,32,64,32,31],'W':[63,64,56,64,63],'X':[99,20,8,20,99],'Y':[7,8,112,8,7],'Z':[97,81,73,69,67],
+    'a':[32,84,84,84,120],'b':[127,72,68,68,56],'c':[56,68,68,68,32],'d':[56,68,68,72,127],'e':[56,84,84,84,24],
+    'f':[8,126,9,1,2],'g':[12,82,82,82,62],'h':[127,8,4,4,120],'i':[0,68,125,64,0],'j':[32,64,68,61,0],
+    'k':[127,16,40,68,0],'l':[0,65,127,64,0],'m':[124,4,24,4,120],'n':[124,8,4,4,120],'o':[56,68,68,68,56],
+    'p':[124,20,20,20,8],'q':[8,20,20,24,124],'r':[124,8,4,4,8],'s':[72,84,84,84,32],'t':[4,63,68,64,32],
+    'u':[60,64,64,32,124],'v':[28,32,64,32,28],'w':[60,64,48,64,60],'x':[68,40,16,40,68],'y':[12,80,80,80,60],'z':[68,100,84,76,68]
+  };
   function state(){return window.sfPreview||{};}
   function glyphs(t){return Array.from(t||'');}
   function prefix(t,n){return glyphs(t).slice(0,Math.max(0,n)).join('');}
-  function tw(t){return glyphs(t).reduce(function(w,ch){return w+(ch==='ß'?12:6);},0);}
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function hexToRgb(h){h=h.replace('#','');return {r:parseInt(h.substr(0,2),16),g:parseInt(h.substr(2,2),16),b:parseInt(h.substr(4,2),16)};}
   function rgba(hex,scale){var c=hexToRgb(hex),s=clamp(scale==null?255:scale,0,255)/255;return 'rgb('+Math.round(c.r*s)+','+Math.round(c.g*s)+','+Math.round(c.b*s)+')';}
+  function rgbObj(hex,scale){var c=hexToRgb(hex),s=clamp(scale==null?255:scale,0,255)/255;return {r:Math.round(c.r*s),g:Math.round(c.g*s),b:Math.round(c.b*s)};}
   function colorByIndex(i){return colors[i]||colors[0];}
+  function colToObj(color){if(color.charAt(0)==='#')return rgbObj(color,255);var m=color.match(/\d+/g)||[0,0,0];return {r:+m[0],g:+m[1],b:+m[2]};}
   function logoMain(part,scale){
     var p=state(), m=parseInt(p.logoColor||0);
     if(m===1)return rgba(colors[1],scale); if(m===2)return rgba(colors[2],scale); if(m===3)return rgba(colors[0],scale);
@@ -226,66 +247,42 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
     if(m===7)return rgba(wordColors[part%wordColors.length],scale);
     return rgba(part%2?colors[2]:colors[1],scale);
   }
+  function brandMain(part,scale){return rgba(part?colors[2]:colors[1],scale);}
   function logoShadow(part,scale){return part%2?rgba('#06162f',scale):rgba('#062412',scale);}
   function logoHighlight(part,scale){return part%2?rgba('#a7e8ff',scale):rgba('#bbffd0',scale);}
-  function txt(ctx,t,x,y,color){
-    if(!t)return;
-    ctx.fillStyle=color;
-    ctx.font='7px monospace';
-    ctx.textBaseline='top';
-    ctx.fillText(t,Math.round(x),Math.round(y));
+  function px(ctx,x,y,color){x=Math.round(x);y=Math.round(y);if(x<0||x>=W||y<0||y>=H)return;ctx.fillStyle=color;ctx.fillRect(x,y,1,1);}
+  function baseChar(ch){var m={'ä':'a','ö':'o','ü':'u','Ä':'A','Ö':'O','Ü':'U'};return m[ch]||ch;}
+  function drawGlyph(ctx,ch,x,y,color){
+    if(ch==='ß'){drawGlyph(ctx,'s',x,y,color);drawGlyph(ctx,'s',x+6,y,color);return 12;}
+    var uml='äöüÄÖÜ'.indexOf(ch)>=0, b=baseChar(ch), g=F[b]||F['?']||F[' '];
+    for(var cx=0;cx<5;cx++){var bits=g[cx]||0;for(var cy=0;cy<7;cy++){if(bits&(1<<cy))px(ctx,x+cx,y+cy,color);}}
+    if(uml){var dy=y-2;if(dy<0)dy=y;px(ctx,x+1,dy,color);px(ctx,x+3,dy,color);}
+    return 6;
   }
-  function px(ctx,x,y,color){
-    x=Math.round(x); y=Math.round(y);
-    if(x<0||x>=W||y<0||y>=H)return;
-    ctx.fillStyle=color; ctx.fillRect(x,y,1,1);
-  }
+  function txt(ctx,t,x,y,color){var cx=Math.round(x), chars=glyphs(t);for(var i=0;i<chars.length;i++){cx+=drawGlyph(ctx,chars[i],cx,Math.round(y),color);}}
+  function tw(t){return glyphs(t).reduce(function(w,ch){return w+(ch==='ß'?12:6);},0);}
   function lineV(ctx,x,y,h,color){for(var i=0;i<h;i++)px(ctx,x,y+i,color);}
   function brand(ctx,x,y,reveal,scale,shimmer){
-    var smart=prefix('Smart',Math.min(reveal,5));
-    var fix=prefix('Fix',Math.max(0,reveal-5));
-    var fx=x+32;
+    var smart=prefix('Smart',Math.min(reveal,5)), fix=prefix('Fix',Math.max(0,reveal-5)), fx=x+32;
     txt(ctx,smart,x+1,y+1,logoShadow(0,scale)); txt(ctx,fix,fx+1,y+1,logoShadow(1,scale));
-    txt(ctx,smart,x,y,logoMain(0,scale)); txt(ctx,fix,fx,y,logoMain(1,scale));
+    txt(ctx,smart,x,y,brandMain(0,scale)); txt(ctx,fix,fx,y,brandMain(1,scale));
     if(reveal>=8&&scale>90){px(ctx,x+2,y,logoHighlight(0,scale));px(ctx,x+3,y,logoHighlight(0,scale));px(ctx,fx+1,y,logoHighlight(1,scale));px(ctx,fx+2,y,logoHighlight(1,scale));}
-    if(shimmer>=0&&reveal>=8){
-      if(shimmer<5)txt(ctx,'Smart'[shimmer],x+shimmer*6,y,logoHighlight(0,scale));
-      else txt(ctx,'Fix'[shimmer-5],fx+(shimmer-5)*6,y,logoHighlight(1,scale));
-    }
+    if(shimmer>=0&&reveal>=8){if(shimmer<5)txt(ctx,'Smart'[shimmer],x+shimmer*6,y,logoHighlight(0,scale));else txt(ctx,'Fix'[shimmer-5],fx+(shimmer-5)*6,y,logoHighlight(1,scale));}
   }
   function genericLogo(ctx,t,x,y,reveal,scale,shimmer){
     var visible=prefix(t,reveal), chars=glyphs(visible), cx=x, word=0;
-    for(var i=0;i<chars.length;i++){
-      var ch=chars[i];
-      if(ch===' '||ch==='-'||ch==='_'){
-        txt(ctx,ch,cx,y,logoMain(word,scale)); cx+=6; if(ch!==' ')word++; continue;
-      }
-      txt(ctx,ch,cx+1,y+1,logoShadow(word,scale)); txt(ctx,ch,cx,y,logoMain(word,scale));
-      if(shimmer===i)txt(ctx,ch,cx,y,rgba(colors[0],scale));
-      cx+=(ch==='ß'?12:6);
-    }
+    for(var i=0;i<chars.length;i++){var ch=chars[i];if(ch===' '||ch==='-'||ch==='_'){txt(ctx,ch,cx,y,logoMain(word,scale));cx+=6;if(ch!==' ')word++;continue;}txt(ctx,ch,cx+1,y+1,logoShadow(word,scale));txt(ctx,ch,cx,y,logoMain(word,scale));if(shimmer===i)txt(ctx,ch,cx,y,rgba(colors[0],scale));cx+=(ch==='ß'?12:6);}
   }
   function triangle(phase,amp){phase=phase%24;if(phase>12)phase=24-phase;return Math.round((phase*amp*2/12)-amp);}
+  function logoStep(mult){var p=state(),s=parseInt(p.speed||35)*(mult||1);return clamp(s,8,240);}
   function waveLogo(ctx,t,x,y,brandMode,scale,bounce,now){
-    var chars=glyphs(t), cx=x, global=bounce?triangle(Math.floor(now/logoStep(2)),2):0;
-    for(var i=0;i<chars.length;i++){
-      var ch=chars[i], part=brandMode?(i<5?0:1):0, yy=y+global;
-      if(!bounce)yy=y+triangle(Math.floor(now/logoStep(2))+i*3,2);
-      txt(ctx,ch,cx+1,yy+1,logoShadow(part,scale)); txt(ctx,ch,cx,yy,logoMain(part,scale));
-      cx+=(ch==='ß'?12:6); if(brandMode&&i===4)cx+=2;
-    }
+    var chars=glyphs(t),cx=x,global=bounce?triangle(Math.floor(now/logoStep(2)),2):0;
+    for(var i=0;i<chars.length;i++){var ch=chars[i],part=brandMode?(i<5?0:1):0,yy=y+global;if(!bounce)yy=y+triangle(Math.floor(now/logoStep(2))+i*3,2);txt(ctx,ch,cx+1,yy+1,logoShadow(part,scale));txt(ctx,ch,cx,yy,brandMode?brandMain(part,scale):logoMain(part,scale));cx+=(ch==='ß'?12:6);if(brandMode&&i===4)cx+=2;}
   }
-  function sparkles(ctx,x,y,now){
-    var pts=[[0,0],[8,1],[15,-1],[25,0],[35,-1],[46,1],[52,0],[4,9],[12,10],[29,9],[39,10],[48,9],[57,10]];
-    var f=Math.floor(now/95)%16;
-    pts.forEach(function(pt,i){if(((i+f)%5)===0)px(ctx,x+pt[0],y+pt[1],logoHighlight(i,180));});
-  }
-  function logoStep(mult){var p=state(), s=parseInt(p.speed||35)*(mult||1);return clamp(s,8,240);}
+  function sparkles(ctx,x,y,now){var pts=[[0,0],[8,1],[15,-1],[25,0],[35,-1],[46,1],[52,0],[4,9],[12,10],[29,9],[39,10],[48,9],[57,10]],f=Math.floor(now/95)%16;pts.forEach(function(pt,i){if(((i+f)%5)===0)px(ctx,x+pt[0],y+pt[1],logoHighlight(i,180));});}
   function drawLogo(ctx,now){
-    var p=state(); var t=(p.logoText||'SmartFix').trim()||'SmartFix';
-    var brandMode=t.toLowerCase()==='smartfix'; var total=brandMode?8:glyphs(t).length;
-    var baseX=brandMode?7:Math.max(0,Math.round((64-tw(t))/2)); var baseY=3;
-    var reveal=total, scale=255, shimmer=-1, effect=parseInt(p.logoEffect||0);
+    var p=state(),t=(p.logoText||'SmartFix').trim()||'SmartFix',brandMode=t.toLowerCase()==='smartfix',total=brandMode?8:glyphs(t).length;
+    var baseX=brandMode?7:Math.max(0,Math.round((64-tw(t))/2)),baseY=3,reveal=total,scale=255,shimmer=-1,effect=parseInt(p.logoEffect||0);
     if(effect===1){var ph=Math.floor(now/logoStep(5))%(total+8);reveal=Math.min(ph,total);} 
     else if(effect===2){var ph2=Math.floor(now/logoStep())%512;if(ph2>255)ph2=511-ph2;scale=50+Math.round(ph2*205/255);} 
     else if(effect===3){var ph3=Math.floor(now/logoStep())%170,target=baseX;if(ph3<55)baseX=64-((64-target)*ph3/55);else if(ph3>125)baseX=target-((ph3-125)*(target+56)/45);} 
@@ -298,43 +295,36 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
     else genericLogo(ctx,t,baseX,baseY,reveal,scale,shimmer);
     if(effect===5||effect===6)sparkles(ctx,baseX,baseY,now);
     else if(effect===9){txt(ctx,brandMode?'SmartFix':t,baseX+((Math.floor(now/90)%3)-1),baseY,rgba(colors[4],170));txt(ctx,brandMode?'SmartFix':t,baseX-((Math.floor(now/110)%3)-1),baseY+1,rgba(colors[2],170));}
-    else if(effect===10){var w2=brandMode?50:tw(t), phs=Math.floor(now/logoStep())%(w2+18), sx=baseX-8+phs;lineV(ctx,sx,baseY-1,10,rgba(colors[0],170));lineV(ctx,sx+1,baseY-1,10,rgba(colors[0],170));}
+    else if(effect===10){var w2=brandMode?50:tw(t),phs=Math.floor(now/logoStep())%(w2+18),sx=baseX-8+phs;lineV(ctx,sx,baseY-1,10,rgba(colors[0],170));lineV(ctx,sx+1,baseY-1,10,rgba(colors[0],170));}
   }
-  function scrollX(now,w,speed,dual){
-    if(dual){var dist=64+w, pos=(now/speed)%(dist*2);return pos<dist?64-pos:-w+(pos-dist);} 
-    return 64-((now/speed)%(w+72));
-  }
+  function scrollX(now,w,speed,dual){if(dual){var dist=64+w,pos=(now/speed)%(dist*2);return pos<dist?64-pos:-w+(pos-dist);}return 64-((now/speed)%(w+72));}
   function drawScroll(ctx,now){
-    var p=state(), t=p.scrollText||'SmartFix Matrix', effect=parseInt(p.scrollEffect||0), speed=Math.max(8,parseInt(p.speed||35)), x=scrollX(now,tw(t),speed,effect===6), y=20, color=colorByIndex(parseInt(p.scrollColor||0));
-    if(effect===1){var chars=glyphs(t), cx=x;for(var i=0;i<chars.length;i++){txt(ctx,chars[i],cx,y,wordColors[(i+Math.floor(now/180))%wordColors.length]);cx+=(chars[i]==='ß'?12:6);}return;}
-    if(effect===2){var cs=glyphs(t), cx2=x;for(var j=0;j<cs.length;j++){txt(ctx,cs[j],cx2,y+triangle(Math.floor(now/70)+j*3,2),color);cx2+=(cs[j]==='ß'?12:6);}return;}
+    var p=state(),t=p.scrollText||'SmartFix Matrix',effect=parseInt(p.scrollEffect||0),speed=Math.max(8,parseInt(p.speed||35)),x=scrollX(now,tw(t),speed,effect===6),y=20,color=colorByIndex(parseInt(p.scrollColor||0));
+    if(effect===1){var chars=glyphs(t),cx=x;for(var i=0;i<chars.length;i++){txt(ctx,chars[i],cx,y,wordColors[(i+Math.floor(now/180))%wordColors.length]);cx+=(chars[i]==='ß'?12:6);}return;}
+    if(effect===2){var cs=glyphs(t),cx2=x;for(var j=0;j<cs.length;j++){txt(ctx,cs[j],cx2,y+triangle(Math.floor(now/70)+j*3,2),color);cx2+=(cs[j]==='ß'?12:6);}return;}
     if(effect===3){txt(ctx,t,x,y,color);sparkles(ctx,0,15,now);return;}
     if(effect===4){txt(ctx,t,x+3,y,rgba(color,45));txt(ctx,t,x+2,y,rgba(color,75));txt(ctx,t,x+1,y,rgba(color,110));txt(ctx,t,x,y,color);return;}
     if(effect===5){txt(ctx,t,x,y,((Math.floor(now/350)%2)===0)?colors[0]:color);return;}
     txt(ctx,t,x,y,color);
   }
   function renderDots(cv){
-    var ctx=cv.getContext('2d'); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height); ctx.fillStyle='#030712'; ctx.fillRect(0,0,cv.width,cv.height);
+    var ctx=cv.getContext('2d');ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,cv.width,cv.height);
+    var bg=ctx.createLinearGradient(0,0,0,cv.height);bg.addColorStop(0,'#020617');bg.addColorStop(.48,'#050916');bg.addColorStop(1,'#000205');ctx.fillStyle=bg;ctx.fillRect(0,0,cv.width,cv.height);
     var img=oc.getImageData(0,0,W,H).data;
-    for(var y=0;y<H;y++){
-      for(var x=0;x<W;x++){
-        var i=(y*W+x)*4, r=img[i], g=img[i+1], b=img[i+2], a=img[i+3];
-        var on=a>15&&(r+g+b)>20, cx=x*S+S/2, cy=y*S+S/2;
-        ctx.beginPath(); ctx.arc(cx,cy,on?2.75:1.8,0,Math.PI*2);
-        ctx.fillStyle=on?'rgb('+r+','+g+','+b+')':'#0b1220'; ctx.fill();
-        if(on){ctx.globalAlpha=.32;ctx.beginPath();ctx.arc(cx,cy,4.1,0,Math.PI*2);ctx.fillStyle='rgb('+r+','+g+','+b+')';ctx.fill();ctx.globalAlpha=1;}
-      }
+    for(var y=0;y<H;y++)for(var x=0;x<W;x++){
+      var i=(y*W+x)*4,r=img[i],g=img[i+1],b=img[i+2],a=img[i+3],on=a>15&&(r+g+b)>20,cx=x*S+S/2,cy=y*S+S/2;
+      var cup=ctx.createRadialGradient(cx-1.6,cy-1.8,.4,cx,cy,S*.47);cup.addColorStop(0,'#1b2838');cup.addColorStop(.45,'#0b1220');cup.addColorStop(1,'#01040a');
+      ctx.beginPath();ctx.arc(cx,cy,S*.43,0,Math.PI*2);ctx.fillStyle=cup;ctx.fill();ctx.strokeStyle='rgba(51,65,85,.30)';ctx.lineWidth=.55;ctx.stroke();
+      if(on){var c={r:r,g:g,b:b};var led=ctx.createRadialGradient(cx-1.3,cy-1.4,.35,cx,cy,S*.36);led.addColorStop(0,'rgba(255,255,255,.98)');led.addColorStop(.24,'rgb('+c.r+','+c.g+','+c.b+')');led.addColorStop(1,'rgba('+c.r+','+c.g+','+c.b+',.62)');ctx.beginPath();ctx.arc(cx,cy,S*.30,0,Math.PI*2);ctx.fillStyle=led;ctx.fill();ctx.globalAlpha=.22;ctx.beginPath();ctx.arc(cx,cy,S*.54,0,Math.PI*2);ctx.fillStyle='rgb('+c.r+','+c.g+','+c.b+')';ctx.fill();ctx.globalAlpha=1;}else{ctx.beginPath();ctx.arc(cx,cy,S*.13,0,Math.PI*2);ctx.fillStyle='#0f172a';ctx.fill();}
     }
+    ctx.globalAlpha=.08;ctx.strokeStyle='#334155';ctx.lineWidth=1;for(var gx=0;gx<=W;gx+=8){ctx.beginPath();ctx.moveTo(gx*S+.5,0);ctx.lineTo(gx*S+.5,H*S);ctx.stroke();}for(var gy=0;gy<=H;gy+=8){ctx.beginPath();ctx.moveTo(0,gy*S+.5);ctx.lineTo(W*S,gy*S+.5);ctx.stroke();}ctx.globalAlpha=1;
+    var glass=ctx.createLinearGradient(0,0,cv.width,cv.height);glass.addColorStop(0,'rgba(255,255,255,.07)');glass.addColorStop(.38,'rgba(255,255,255,.012)');glass.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=glass;ctx.fillRect(0,0,cv.width,cv.height);
   }
-  var last=0;
   function frame(ts){
-    var cv=document.getElementById('matrixPreview'); if(!cv){requestAnimationFrame(frame);return;}
-    if(ts-last<33){requestAnimationFrame(frame);return;} last=ts;
-    var p=state(), si=document.getElementById('scrollTextInput'), li=document.getElementById('logoTextInput');
-    if(si)p.scrollText=si.value; if(li)p.logoText=li.value;
-    oc.setTransform(1,0,0,1,0,0); oc.clearRect(0,0,W,H); oc.fillStyle='#000'; oc.fillRect(0,0,W,H);
-    drawLogo(oc,ts); drawScroll(oc,ts); renderDots(cv);
-    requestAnimationFrame(frame);
+    var cv=document.getElementById('matrixPreview');if(!cv){requestAnimationFrame(frame);return;}
+    var p=state(),si=document.getElementById('scrollTextInput'),li=document.getElementById('logoTextInput');if(si)p.scrollText=si.value;if(li)p.logoText=li.value;
+    oc.setTransform(1,0,0,1,0,0);oc.clearRect(0,0,W,H);oc.fillStyle='#000';oc.fillRect(0,0,W,H);
+    drawLogo(oc,ts);drawScroll(oc,ts);renderDots(cv);requestAnimationFrame(frame);
   }
   window.addEventListener('load',function(){requestAnimationFrame(frame);});
 })();
@@ -381,7 +371,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
 
   page += "<details class='card config-section' id='section-preview' open>";
   page += "<summary><span class='section-icon'>&#128161;</span><span class='summary-text'>" + L("LED Matrix Vorschau", "LED matrix preview") + "</span><span class='sumvalue'>64x32</span><span class='chev'>+</span></summary><div class='detail-body'>";
-  page += "<div class='preview-shell'><canvas id='matrixPreview' width='512' height='256'></canvas></div>";
+  page += "<div class='preview-shell'><canvas id='matrixPreview' width='640' height='320'></canvas></div>";
   page += "<div class='preview-row'><div class='sub'><span class='preview-dot'></span>" + L("Animierte Vorschau mit realistischen LED-Punkten. Logo-Text und Lauftext werden live mit den aktuellen Effekten simuliert.", "Animated preview with realistic LED dots. Logo text and scrolling text are simulated live with the current effects.") + "</div></div>";
   page += "</div></details>";
 
@@ -493,14 +483,18 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += "<summary><span class='section-icon'>&#9889;</span><span class='summary-text'>" + L("Firmware Update", "Firmware update") + "</span><span class='sumvalue'>" + htmlEscape(lastOtaStatus) + "</span><span class='chev'>+</span></summary><div class='detail-body'>";
   page += "<div class='hint'>" + L("Der GitHub Update-Check läuft automatisch, sobald Home WiFi verbunden ist. Die OTA URL wird fest aus dem Projekt verwendet und muss nicht konfiguriert werden.", "The GitHub update check runs automatically when Home WiFi is connected. The OTA URL is fixed by the project and does not need user configuration.") + "</div>";
   page += "<div class='sub' style='margin-top:12px;'>" + L("Letzter Check", "Last check") + ": " + htmlEscape(lastUpdateCheckText) + "<br>" + L("Neueste Version", "Latest version") + ": " + htmlEscape(latestFirmwareVersion) + "</div>";
+  page += "<h2>" + L("GitHub OTA Update", "GitHub OTA update") + "</h2>";
+  page += "<div class='buttons'>";
+  page += htmlButton(L("GitHub Update jetzt installieren", "Install GitHub update now"), "/ota-github-start");
+  page += htmlButton("Refresh", "/");
+  page += "</div>";
+  page += "<div class='hint'>" + L("Der Button prüft GitHub und flasht nur dann automatisch, wenn eine neuere SmartFix-Matrix-ota.bin verfügbar ist.", "The button checks GitHub and flashes automatically only when a newer SmartFix-Matrix-ota.bin is available.") + "</div>";
   page += "<h2>" + L("OTA BIN manuell flashen", "Flash OTA BIN manually") + "</h2>";
   page += "<form method='POST' action='/ota-upload' enctype='multipart/form-data'>";
   page += "<input type='file' name='firmware' accept='.bin' required>";
   page += "<button class='btn green' type='submit'>" + L("OTA BIN hochladen und flashen", "Upload and flash OTA BIN") + "</button></form>";
   page += "<div class='hint'>" + L("Wichtig: Hier nur die SmartFix-Matrix-ota.bin verwenden, nicht die USB-Full-BIN.", "Important: use only SmartFix-Matrix-ota.bin here, not the USB full BIN.") + "</div>";
-  page += "<div class='buttons' style='margin-top:10px;'>";
-  page += htmlButton("Refresh", "/");
-  page += "</div><div class='hint'>" + L("Status", "Status") + ": " + htmlEscape(lastOtaStatus) + "</div></div></details>";
+  page += "<div class='hint'>" + L("Status", "Status") + ": " + htmlEscape(lastOtaStatus) + "</div></div></details>";
 
   page += "<details class='card config-section' id='section-system'>";
   page += "<summary><span class='section-icon'>&#128295;</span><span class='summary-text'>" + L("System", "System") + "</span><span class='sumvalue'>Reset</span><span class='chev'>+</span></summary><div class='detail-body'>";
@@ -829,6 +823,57 @@ static void handleWifiForget() {
   ESP.restart();
 }
 
+static void handleGithubOtaStart() {
+  if (WiFi.status() != WL_CONNECTED) {
+    lastOtaStatus = "GitHub OTA Fehler: Home WiFi ist nicht verbunden.";
+    server.send(200, "text/html",
+                "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
+                "<h1>SmartFix Matrix OTA</h1>"
+                "<p>Home WiFi ist nicht verbunden.</p>"
+                "<p><a style='color:#38bdf8' href='/#section-ota'>Zurück</a></p>"
+                "</body></html>");
+    return;
+  }
+
+  checkFirmwareUpdateFromGitHub(true);
+
+  if (!firmwareUpdateAvailable) {
+    lastOtaStatus = "Kein neueres GitHub Update gefunden.";
+    server.send(200, "text/html",
+                "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
+                "<h1>SmartFix Matrix OTA</h1>"
+                "<p>Kein neueres GitHub Update gefunden.</p>"
+                "<p><a style='color:#38bdf8' href='/#section-ota'>Zurück</a></p>"
+                "</body></html>");
+    return;
+  }
+
+  if (latestFirmwareUrl.length() == 0) {
+    lastOtaStatus = "GitHub OTA Fehler: SmartFix-Matrix-ota.bin nicht gefunden.";
+    server.send(500, "text/html",
+                "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
+                "<h1>SmartFix Matrix OTA</h1>"
+                "<p>SmartFix-Matrix-ota.bin wurde im GitHub Release nicht gefunden.</p>"
+                "<p><a style='color:#38bdf8' href='/#section-ota'>Zurück</a></p>"
+                "</body></html>");
+    return;
+  }
+
+  otaUrl = latestFirmwareUrl;
+  saveOtaSettings();
+  lastOtaStatus = "GitHub OTA gestartet: " + latestFirmwareVersion;
+
+  server.send(200, "text/html",
+              "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
+              "<h1>SmartFix Matrix OTA</h1>"
+              "<p>GitHub OTA Update startet jetzt.</p>"
+              "<p>Bitte Stromversorgung nicht trennen.</p>"
+              "</body></html>");
+
+  delay(750);
+  startOtaUpdateFromSavedUrl();
+}
+
 static void handleOtaUploadFinished() {
   if (Update.hasError()) {
     lastOtaStatus = "Manuelles OTA fehlgeschlagen.";
@@ -914,6 +959,7 @@ void setupWebServer() {
   server.on("/wifi-scan", HTTP_GET, handleWifiScan);
   server.on("/wifi-save", HTTP_POST, handleWifiSave);
   server.on("/wifi-forget", HTTP_GET, handleWifiForget);
+  server.on("/ota-github-start", HTTP_GET, handleGithubOtaStart);
   server.on("/ota-upload", HTTP_POST, handleOtaUploadFinished, handleOtaFileUpload);
   server.on("/factory-reset", HTTP_GET, handleFactoryReset);
 
