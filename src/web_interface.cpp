@@ -280,6 +280,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   function state(){return window.sfPreview||{};}
   function glyphs(t){return Array.from(t||'');}
   function prefix(t,n){return glyphs(t).slice(0,Math.max(0,n)).join('');}
+  function isSmartFixBrand(t){return String(t||'').toLowerCase().replace(/[\s\-_]/g,'')==='smartfix';}
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function hexToRgb(h){h=h.replace('#','');return {r:parseInt(h.substr(0,2),16),g:parseInt(h.substr(2,2),16),b:parseInt(h.substr(4,2),16)};}
   function rgba(hex,scale){var c=hexToRgb(hex),s=clamp(scale==null?255:scale,0,255)/255;return 'rgb('+Math.round(c.r*s)+','+Math.round(c.g*s)+','+Math.round(c.b*s)+')';}
@@ -293,7 +294,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
     if(m===7)return rgba(wordColors[part%wordColors.length],scale);
     return rgba(part%2?colors[2]:colors[1],scale);
   }
-  function brandMain(part,scale){return rgba(part?colors[2]:colors[1],scale);}
+  function brandMain(part,scale){return logoMain(part,scale);}
   function logoShadow(part,scale){return part%2?rgba('#06162f',scale):rgba('#062412',scale);}
   function logoHighlight(part,scale){return part%2?rgba('#a7e8ff',scale):rgba('#bbffd0',scale);}
   function px(ctx,x,y,color){x=Math.round(x);y=Math.round(y);if(x<0||x>=W||y<0||y>=H)return;ctx.fillStyle=color;ctx.fillRect(x,y,1,1);}
@@ -327,7 +328,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   }
   function sparkles(ctx,x,y,now){var pts=[[0,0],[8,1],[15,-1],[25,0],[35,-1],[46,1],[52,0],[4,9],[12,10],[29,9],[39,10],[48,9],[57,10]],f=Math.floor(now/95)%16;pts.forEach(function(pt,i){if(((i+f)%5)===0)px(ctx,x+pt[0],y+pt[1],logoHighlight(i,180));});}
   function drawLogo(ctx,now){
-    var p=state(),t=(p.logoText||'SmartFix').trim()||'SmartFix',brandMode=t.toLowerCase()==='smartfix',total=brandMode?8:glyphs(t).length;
+    var p=state(),t=(p.logoText||'SmartFix').trim()||'SmartFix',brandMode=isSmartFixBrand(t),total=brandMode?8:glyphs(t).length;
     var baseX=brandMode?7:Math.max(0,Math.round((64-tw(t))/2)),baseY=3,reveal=total,scale=255,shimmer=-1,effect=parseInt(p.logoEffect||0);
     if(effect===1){var ph=Math.floor(now/logoStep(5))%(total+8);reveal=Math.min(ph,total);} 
     else if(effect===2){var ph2=Math.floor(now/logoStep())%512;if(ph2>255)ph2=511-ph2;scale=50+Math.round(ph2*205/255);} 
@@ -444,7 +445,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += "<details class='card config-section' id='section-preview' open>";
   page += "<summary><span class='section-icon'>&#128161;</span><span class='summary-text'>" + L("LED Matrix Vorschau", "LED matrix preview") + "</span><span class='sumvalue'>64x32</span><span class='chev'>+</span></summary><div class='detail-body'>";
   page += "<div class='preview-shell'><canvas id='matrixPreview' width='640' height='320'></canvas></div>";
-  page += "<div class='preview-row'><div class='sub'><span class='preview-dot'></span>" + L("Animierte Vorschau mit realistischen LED-Punkten. Logo-Text und Lauftext werden live mit den aktuellen Effekten simuliert.", "Animated preview with realistic LED dots. Logo text and scrolling text are simulated live with the current effects.") + "</div></div>";
+  page += "<div class='preview-row'><div class='sub'><span class='preview-dot'></span>" + L("Animierte Vorschau mit realistischen LED-Punkten. Logo-Text, Farben und Lauftext werden live mit den aktuellen Effekten simuliert.", "Animated preview with realistic LED dots. Logo text, colors and scrolling text are simulated live with the current effects.") + "</div></div>";
   page += "</div></details>";
 
   page += "<details class='card config-section' id='section-mode'>";
