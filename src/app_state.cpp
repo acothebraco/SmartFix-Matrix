@@ -16,6 +16,7 @@ uint8_t matrixBrightness = DEFAULT_BRIGHTNESS;
 uint16_t scrollInterval = DEFAULT_SCROLL_INTERVAL;
 uint8_t scrollTextColorMode = 0; // 0=White, 1=Green, 2=Blue, 3=Yellow, 4=Red
 uint8_t logoEffectMode = LOGO_EFFECT_STATIC;
+uint8_t logoColorMode = LOGO_COLOR_BRAND;
 
 bool homeWifiEnabled = false;
 String homeWifiSsid = "";
@@ -55,6 +56,20 @@ const char *getScrollTextColorName() {
     case 3: return "GELB";
     case 4: return "ROT";
     default: return "WEISS";
+  }
+}
+
+const char *getLogoColorName() {
+  switch (logoColorMode) {
+    case LOGO_COLOR_BRAND:     return "AUTO/BRAND";
+    case LOGO_COLOR_GREEN:     return "GRUEN";
+    case LOGO_COLOR_BLUE:      return "BLAU";
+    case LOGO_COLOR_WHITE:     return "WEISS";
+    case LOGO_COLOR_YELLOW:    return "GELB";
+    case LOGO_COLOR_RED:       return "ROT";
+    case LOGO_COLOR_TWO_WORDS: return "2-FARBIG";
+    case LOGO_COLOR_RAINBOW:   return "MEHRFARBIG";
+    default:                   return "AUTO/BRAND";
   }
 }
 

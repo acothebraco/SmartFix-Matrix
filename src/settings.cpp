@@ -20,6 +20,11 @@ void loadSettings() {
     logoEffectMode = LOGO_EFFECT_STATIC;
   }
 
+  logoColorMode = prefs.getUChar("logoColor", LOGO_COLOR_BRAND);
+  if (logoColorMode > LOGO_COLOR_RAINBOW) {
+    logoColorMode = LOGO_COLOR_BRAND;
+  }
+
   scrollInterval = prefs.getUShort("speed", DEFAULT_SCROLL_INTERVAL);
   if (scrollInterval < 5 || scrollInterval > 200) {
     scrollInterval = DEFAULT_SCROLL_INTERVAL;
@@ -66,6 +71,8 @@ void loadSettings() {
   Serial.println(getScrollTextColorName());
   Serial.print("Logo Effect: ");
   Serial.println(getLogoEffectName());
+  Serial.print("Logo Color: ");
+  Serial.println(getLogoColorName());
   Serial.print("Scroll Speed: ");
   Serial.print(scrollInterval);
   Serial.println(" ms");
@@ -110,6 +117,12 @@ void saveLogoEffectSetting() {
   prefs.putUChar("logoFx", logoEffectMode);
   Serial.print("Logo effect saved: ");
   Serial.println(getLogoEffectName());
+}
+
+void saveLogoColorSetting() {
+  prefs.putUChar("logoColor", logoColorMode);
+  Serial.print("Logo color saved: ");
+  Serial.println(getLogoColorName());
 }
 
 void saveScrollTextSetting() {

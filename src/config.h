@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 // SmartFix Matrix firmware
-#define FIRMWARE_VERSION "1.2.0"
+#define FIRMWARE_VERSION "1.2.2"
 
 // Current hardware: one 64x32 HUB75 panel.
 // Later:
@@ -17,6 +17,9 @@
 // Waveshare ESP32-S3-RGB-Matrix AP
 static const char AP_SSID[] = "SmartFix-Matrix";
 static const char AP_PASSWORD[] = "smartfix123";
+
+// mDNS name when connected to home WiFi: http://smartfixmatrix.local/
+static const char MDNS_HOSTNAME[] = "smartfixmatrix";
 
 // Preferences namespace
 static const char PREF_NAMESPACE[] = "smartfix";

@@ -20,6 +20,17 @@ enum LogoEffectMode {
   LOGO_EFFECT_PULSE      = 6
 };
 
+enum LogoColorMode {
+  LOGO_COLOR_BRAND      = 0,  // Smart=green, Fix=blue. Generic text alternates words green/blue.
+  LOGO_COLOR_GREEN      = 1,
+  LOGO_COLOR_BLUE       = 2,
+  LOGO_COLOR_WHITE      = 3,
+  LOGO_COLOR_YELLOW     = 4,
+  LOGO_COLOR_RED        = 5,
+  LOGO_COLOR_TWO_WORDS  = 6,  // word 1 green, word 2 blue, repeat
+  LOGO_COLOR_RAINBOW    = 7   // green/blue/yellow/red/white by word
+};
+
 // Current app state
 extern DisplayMode currentMode;
 extern bool autoModeDemo;
@@ -35,6 +46,7 @@ extern uint8_t matrixBrightness;
 extern uint16_t scrollInterval;
 extern uint8_t scrollTextColorMode;
 extern uint8_t logoEffectMode;
+extern uint8_t logoColorMode;
 
 // Home WiFi / OTA
 extern bool homeWifiEnabled;
@@ -47,6 +59,7 @@ const char *getModeName(DisplayMode mode);
 const char *getSpeedName();
 const char *getScrollTextColorName();
 const char *getLogoEffectName();
+const char *getLogoColorName();
 int16_t getTextPixelWidth(const String &text);
 
 void setMode(DisplayMode newMode, bool saveSetting = true);

@@ -7,4 +7,6 @@ void setupWiFi();
 void handleWiFiReconnect();
 String getWiFiStatusText();
 String getStaIpText();
+String getMdnsAddressText();
+bool isMdnsStarted();
 void disconnectHomeWiFi();

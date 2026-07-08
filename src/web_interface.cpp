@@ -21,6 +21,47 @@ static String htmlEscape(const String &input) {
   return output;
 }
 
+static String urlEncode(const String &input) {
+  const char *hex = "0123456789ABCDEF";
+  String output;
+
+  for (size_t i = 0; i < input.length(); i++) {
+    uint8_t c = (uint8_t)input[i];
+
+    if ((c >= 'a' && c <= 'z') ||
+        (c >= 'A' && c <= 'Z') ||
+        (c >= '0' && c <= '9') ||
+        c == '-' || c == '_' || c == '.' || c == '~') {
+      output += (char)c;
+    } else {
+      output += '%';
+      output += hex[(c >> 4) & 0x0F];
+      output += hex[c & 0x0F];
+    }
+  }
+
+  return output;
+}
+
+static String getWifiSecurityName(wifi_auth_mode_t type) {
+  switch (type) {
+    case WIFI_AUTH_OPEN: return "Offen";
+    case WIFI_AUTH_WEP: return "WEP";
+    case WIFI_AUTH_WPA_PSK: return "WPA";
+    case WIFI_AUTH_WPA2_PSK: return "WPA2";
+    case WIFI_AUTH_WPA_WPA2_PSK: return "WPA/WPA2";
+    case WIFI_AUTH_WPA2_ENTERPRISE: return "WPA2 Enterprise";
+    default: return "Gesch&uuml;tzt";
+  }
+}
+
+static String getWifiSignalName(int32_t rssi) {
+  if (rssi >= -55) return "Sehr gut";
+  if (rssi >= -67) return "Gut";
+  if (rssi >= -75) return "OK";
+  return "Schwach";
+}
+
 static String htmlButton(const String &label, const String &url) {
   return "<a class='btn' href='" + url + "'>" + label + "</a>";
 }
@@ -32,6 +73,14 @@ static void redirectHome() {
 
 static String htmlPage() {
   String autoStatus = autoModeDemo ? "AKTIV" : "AUS";
+  String wifiSsidValue = homeWifiSsid;
+  bool wifiSsidFromScan = false;
+
+  if (server.hasArg("ssid")) {
+    wifiSsidValue = server.arg("ssid");
+    wifiSsidValue.trim();
+    wifiSsidFromScan = wifiSsidValue.length() > 0;
+  }
 
   String page;
   page += "<!DOCTYPE html><html lang='de'><head>";
@@ -105,6 +154,14 @@ static String htmlPage() {
   page += htmlEscape(getStaIpText());
   page += "</div></div>";
 
+  page += "<div class='pill'><div class='label'>mDNS Adresse</div><div class='value'>";
+  page += htmlEscape(getMdnsAddressText());
+  page += "</div></div>";
+
+  page += "<div class='pill'><div class='label'>Logo Farbe</div><div class='value'>";
+  page += getLogoColorName();
+  page += "</div></div>";
+
   page += "</div></div>";
 
   page += "<div class='card'>";
@@ -131,7 +188,7 @@ static String htmlPage() {
   page += "<input name='t' maxlength='32' value='" + htmlEscape(logoText) + "'>";
   page += "<button class='btn green' type='submit'>Logo Text speichern</button>";
   page += "</form>";
-  page += "<div class='sub' style='margin-top:12px;'>Bei SmartFix wird eine eigene lesbare Pixel-Font mit gr&uuml;n/blauem Branding verwendet.</div>";
+  page += "<div class='sub' style='margin-top:12px;'>Der Logo-Text kann jetzt einfarbig, zweifarbig oder wortweise mehrfarbig dargestellt werden.</div>";
   page += "</div>";
 
   page += "<div class='card'>";
@@ -146,7 +203,22 @@ static String htmlPage() {
   page += htmlButton("Pulse Glow", "/logo-effect?e=6");
   page += htmlButton("Refresh", "/");
   page += "</div>";
-  page += "<div class='sub' style='margin-top:12px;'>Effekte betreffen nur den oberen Logo/Header. Farben bleiben Smart=gr&uuml;n und Fix=blau.</div>";
+  page += "<div class='sub' style='margin-top:12px;'>Effekte betreffen nur den oberen Logo/Header.</div>";
+  page += "</div>";
+
+  page += "<div class='card'>";
+  page += "<h2>Logo Farbe</h2>";
+  page += "<div class='buttons'>";
+  page += htmlButton("Auto / Brand", "/logo-color?c=0");
+  page += htmlButton("Gruen", "/logo-color?c=1");
+  page += htmlButton("Blau", "/logo-color?c=2");
+  page += htmlButton("Weiss", "/logo-color?c=3");
+  page += htmlButton("Gelb", "/logo-color?c=4");
+  page += htmlButton("Rot", "/logo-color?c=5");
+  page += htmlButton("2-farbig nach Wort", "/logo-color?c=6");
+  page += htmlButton("Mehrfarbig nach Wort", "/logo-color?c=7");
+  page += "</div>";
+  page += "<div class='sub' style='margin-top:12px;'>Bei mehreren W&ouml;rtern wird jedes Wort einzeln gef&auml;rbt. Beispiel: SmartFix Reparatur Service.</div>";
   page += "</div>";
 
   page += "<div class='card'>";
@@ -189,18 +261,22 @@ static String htmlPage() {
   page += htmlButton("100%", "/brightness?v=200");
   page += "</div></div>";
 
-  page += "<div class='card'>";
+  page += "<div class='card' id='wifi'>";
   page += "<h2>Heim WLAN</h2>";
   page += "<form action='/wifi-save' method='POST'>";
-  page += "<input name='ssid' maxlength='64' placeholder='SSID' value='" + htmlEscape(homeWifiSsid) + "'>";
+  page += "<input name='ssid' maxlength='64' placeholder='SSID' value='" + htmlEscape(wifiSsidValue) + "'>";
   page += "<input name='pass' maxlength='64' placeholder='WLAN Passwort' type='password' value='" + htmlEscape(homeWifiPassword) + "'>";
   page += "<button class='btn green' type='submit'>Mit Heim WLAN verbinden</button>";
   page += "</form>";
   page += "<div class='buttons' style='margin-top:10px;'>";
+  page += htmlButton("WLAN scannen", "/wifi-scan");
   page += htmlButton("Heim WLAN l&ouml;schen", "/wifi-forget");
   page += htmlButton("Refresh", "/");
   page += "</div>";
-  page += "<div class='sub' style='margin-top:12px;'>Der SmartFix-Matrix Access Point bleibt zus&auml;tzlich aktiv.</div>";
+  if (wifiSsidFromScan) {
+    page += "<div class='sub' style='margin-top:12px;color:#22c55e;'>SSID aus Scan &uuml;bernommen. Bitte WLAN Passwort eingeben und speichern.</div>";
+  }
+  page += "<div class='sub' style='margin-top:12px;'>Der SmartFix-Matrix Access Point bleibt zus&auml;tzlich aktiv. Beim Scan kann die Verbindung kurz langsam reagieren.</div>";
   page += "</div>";
 
   page += "<div class='card'>";
@@ -313,6 +389,25 @@ static void handleLogoEffect() {
   redirectHome();
 }
 
+static void handleLogoColor() {
+  if (server.hasArg("c")) {
+    int value = server.arg("c").toInt();
+
+    if (value < LOGO_COLOR_BRAND) value = LOGO_COLOR_BRAND;
+    if (value > LOGO_COLOR_RAINBOW) value = LOGO_COLOR_RAINBOW;
+
+    logoColorMode = (uint8_t)value;
+    saveLogoColorSetting();
+
+    clearDisplay();
+
+    Serial.print("Logo color changed to: ");
+    Serial.println(getLogoColorName());
+  }
+
+  redirectHome();
+}
+
 static void handleSpeed() {
   if (server.hasArg("v")) {
     int value = server.arg("v").toInt();
@@ -386,6 +481,84 @@ static void handleSetLogoText() {
   }
 
   redirectHome();
+}
+
+static String wifiScanPage() {
+  String page;
+  page += "<!DOCTYPE html><html lang='de'><head>";
+  page += "<meta charset='UTF-8'>";
+  page += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
+  page += "<title>SmartFix Matrix WLAN Scan</title>";
+  page += "<style>";
+  page += "body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#0b0f14;color:#e5e7eb;}";
+  page += ".wrap{max-width:780px;margin:0 auto;padding:22px;}";
+  page += ".card{background:#111827;border:1px solid #1f2937;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 10px 30px rgba(0,0,0,.35);}";
+  page += "h1{margin:0 0 6px;font-size:28px;color:#22c55e;}";
+  page += "h2{margin:0 0 14px;font-size:18px;color:#60a5fa;}";
+  page += ".sub{color:#9ca3af;margin-bottom:18px;}";
+  page += ".net{display:grid;grid-template-columns:1.4fr .7fr .8fr .8fr;gap:8px;align-items:center;background:#020617;border:1px solid #334155;border-radius:12px;padding:10px;margin-bottom:10px;}";
+  page += ".ssid{font-weight:bold;color:#f8fafc;word-break:break-word;}";
+  page += ".meta{font-size:13px;color:#94a3b8;}";
+  page += ".btn{display:block;text-align:center;text-decoration:none;background:#2563eb;color:white;padding:10px;border-radius:10px;font-weight:bold;}";
+  page += ".btn:hover{background:#1d4ed8;}";
+  page += ".btn.green{background:#16a34a;}";
+  page += ".btn.green:hover{background:#15803d;}";
+  page += "@media(max-width:650px){.net{grid-template-columns:1fr}.btn{text-align:center;}}";
+  page += "</style>";
+  page += "</head><body><div class='wrap'>";
+  page += "<div class='card'>";
+  page += "<h1>SmartFix Matrix</h1>";
+  page += "<h2>WLAN Scan</h2>";
+  page += "<div class='sub'>Gefundene WLAN-Netzwerke. W&auml;hle eine SSID aus, gib danach das Passwort ein und speichere die Verbindung.</div>";
+
+  WiFi.scanDelete();
+  int networkCount = WiFi.scanNetworks(false, true);
+
+  if (networkCount <= 0) {
+    page += "<div class='sub'>Keine WLAN-Netzwerke gefunden. Bitte pr&uuml;fe die Antenne/Position und scanne erneut.</div>";
+  } else {
+    for (int i = 0; i < networkCount; i++) {
+      String ssid = WiFi.SSID(i);
+      int32_t rssi = WiFi.RSSI(i);
+      wifi_auth_mode_t security = WiFi.encryptionType(i);
+
+      String ssidLabel = ssid.length() > 0 ? htmlEscape(ssid) : String("<i>Verstecktes Netzwerk</i>");
+      String selectUrl = "/?ssid=" + urlEncode(ssid) + "#wifi";
+
+      page += "<div class='net'>";
+      page += "<div><div class='ssid'>" + ssidLabel + "</div><div class='meta'>Kanal ";
+      page += String(WiFi.channel(i));
+      page += "</div></div>";
+      page += "<div class='meta'>";
+      page += String(rssi);
+      page += " dBm<br>";
+      page += getWifiSignalName(rssi);
+      page += "</div>";
+      page += "<div class='meta'>";
+      page += getWifiSecurityName(security);
+      page += "</div>";
+      if (ssid.length() > 0) {
+        page += "<a class='btn green' href='" + selectUrl + "'>SSID &uuml;bernehmen</a>";
+      } else {
+        page += "<span class='meta'>Manuell eingeben</span>";
+      }
+      page += "</div>";
+    }
+  }
+
+  WiFi.scanDelete();
+
+  page += "<div style='display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;'>";
+  page += "<a class='btn green' href='/wifi-scan'>Erneut scannen</a>";
+  page += "<a class='btn' href='/#wifi'>Zur&uuml;ck</a>";
+  page += "</div>";
+  page += "</div></div></body></html>";
+
+  return page;
+}
+
+static void handleWifiScan() {
+  server.send(200, "text/html", wifiScanPage());
 }
 
 static void handleWifiSave() {
@@ -478,8 +651,10 @@ void setupWebServer() {
   server.on("/speed", HTTP_GET, handleSpeed);
   server.on("/text-color", HTTP_GET, handleTextColor);
   server.on("/logo-effect", HTTP_GET, handleLogoEffect);
+  server.on("/logo-color", HTTP_GET, handleLogoColor);
   server.on("/set-text", HTTP_GET, handleSetText);
   server.on("/set-logo-text", HTTP_GET, handleSetLogoText);
+  server.on("/wifi-scan", HTTP_GET, handleWifiScan);
   server.on("/wifi-save", HTTP_POST, handleWifiSave);
   server.on("/wifi-forget", HTTP_GET, handleWifiForget);
   server.on("/ota-save", HTTP_POST, handleOtaSave);

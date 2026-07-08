@@ -105,6 +105,69 @@ static uint16_t fixHighlightColor(uint8_t scale = 255) {
   return scaledColor(110, 210, 255, scale);
 }
 
+static uint16_t singleLogoColor(uint8_t colorIndex, uint8_t scale) {
+  switch (colorIndex) {
+    case 0: return smartColor(scale);
+    case 1: return fixColor(scale);
+    case 2: return scaledColor(255, 220, 0, scale);
+    case 3: return scaledColor(255, 40, 35, scale);
+    case 4: return scaledColor(255, 255, 255, scale);
+    default: return smartColor(scale);
+  }
+}
+
+static uint16_t singleLogoShadowColor(uint8_t colorIndex, uint8_t scale) {
+  switch (colorIndex) {
+    case 0: return scaledColor(0, 40, 18, scale);
+    case 1: return scaledColor(0, 22, 55, scale);
+    case 2: return scaledColor(55, 38, 0, scale);
+    case 3: return scaledColor(55, 0, 0, scale);
+    case 4: return scaledColor(35, 35, 35, scale);
+    default: return scaledColor(0, 40, 18, scale);
+  }
+}
+
+static uint16_t singleLogoHighlightColor(uint8_t colorIndex, uint8_t scale) {
+  switch (colorIndex) {
+    case 0: return smartHighlightColor(scale);
+    case 1: return fixHighlightColor(scale);
+    case 2: return scaledColor(255, 245, 140, scale);
+    case 3: return scaledColor(255, 110, 110, scale);
+    case 4: return scaledColor(255, 255, 255, scale);
+    default: return smartHighlightColor(scale);
+  }
+}
+
+static uint8_t colorIndexForLogoPart(uint8_t partIndex) {
+  switch (logoColorMode) {
+    case LOGO_COLOR_GREEN:  return 0;
+    case LOGO_COLOR_BLUE:   return 1;
+    case LOGO_COLOR_YELLOW: return 2;
+    case LOGO_COLOR_RED:    return 3;
+    case LOGO_COLOR_WHITE:  return 4;
+
+    case LOGO_COLOR_RAINBOW:
+      return partIndex % 5;
+
+    case LOGO_COLOR_TWO_WORDS:
+    case LOGO_COLOR_BRAND:
+    default:
+      return partIndex % 2;
+  }
+}
+
+static uint16_t logoMainColor(uint8_t partIndex, uint8_t scale = 255) {
+  return singleLogoColor(colorIndexForLogoPart(partIndex), scale);
+}
+
+static uint16_t logoShadowColor(uint8_t partIndex, uint8_t scale = 255) {
+  return singleLogoShadowColor(colorIndexForLogoPart(partIndex), scale);
+}
+
+static uint16_t logoHighlightColor(uint8_t partIndex, uint8_t scale = 255) {
+  return singleLogoHighlightColor(colorIndexForLogoPart(partIndex), scale);
+}
+
 static void printText(const String &text, int16_t x, int16_t y, uint16_t color) {
   display->setTextWrap(false);
   display->setTextSize(1);
@@ -141,36 +204,36 @@ static void drawBrandWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t
 
   // Soft logo-like depth. Only dim, so it does not destroy the m.
   if (smartVisible.length() > 0) {
-    printText(smartVisible, x + 1, y + 1, smartShadowColor(brightnessScale));
+    printText(smartVisible, x + 1, y + 1, logoShadowColor(0, brightnessScale));
   }
   if (fixVisible.length() > 0) {
-    printText(fixVisible, fixX + 1, y + 1, fixShadowColor(brightnessScale));
+    printText(fixVisible, fixX + 1, y + 1, logoShadowColor(1, brightnessScale));
   }
 
   // Main colored letters, exactly the same readable font as the scrolling text.
   if (smartVisible.length() > 0) {
-    printText(smartVisible, x, y, smartColor(brightnessScale));
+    printText(smartVisible, x, y, logoMainColor(0, brightnessScale));
   }
   if (fixVisible.length() > 0) {
-    printText(fixVisible, fixX, y, fixColor(brightnessScale));
+    printText(fixVisible, fixX, y, logoMainColor(1, brightnessScale));
   }
 
   // Small highlight stripe, inspired by the PNG gloss, but minimal for 64x32.
   if (revealChars >= full.length() && brightnessScale > 90) {
-    display->drawPixel(x + 2, y, smartHighlightColor(brightnessScale));
-    display->drawPixel(x + 3, y, smartHighlightColor(brightnessScale));
-    display->drawPixel(fixX + 1, y, fixHighlightColor(brightnessScale));
-    display->drawPixel(fixX + 2, y, fixHighlightColor(brightnessScale));
+    display->drawPixel(x + 2, y, logoHighlightColor(0, brightnessScale));
+    display->drawPixel(x + 3, y, logoHighlightColor(0, brightnessScale));
+    display->drawPixel(fixX + 1, y, logoHighlightColor(1, brightnessScale));
+    display->drawPixel(fixX + 2, y, logoHighlightColor(1, brightnessScale));
   }
 
   // Shimmer effect: one bright moving character.
   if (shimmerIndex >= 0 && shimmerIndex < (int)full.length() && revealChars >= full.length()) {
     if (shimmerIndex < 5) {
       String c = String(full[shimmerIndex]);
-      printText(c, x + shimmerIndex * 6, y, smartHighlightColor(brightnessScale));
+      printText(c, x + shimmerIndex * 6, y, logoHighlightColor(0, brightnessScale));
     } else {
       String c = String(full[shimmerIndex]);
-      printText(c, fixX + (shimmerIndex - 5) * 6, y, fixHighlightColor(brightnessScale));
+      printText(c, fixX + (shimmerIndex - 5) * 6, y, logoHighlightColor(1, brightnessScale));
     }
   }
 }
@@ -179,17 +242,46 @@ void drawSmartFixWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t bri
   drawBrandWordmark(x, y, revealChars, brightnessScale);
 }
 
-static void drawGenericLogoText(const String &text, int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale) {
+static void drawGenericLogoText(const String &text, int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale, int8_t shimmerIndex = -1) {
   String visible = text;
   if (revealChars < visible.length()) {
     visible = visible.substring(0, revealChars);
   }
 
-  uint16_t shadow = scaledColor(0, 35, 18, brightnessScale);
-  uint16_t main   = smartColor(brightnessScale);
+  int16_t cursorX = x;
+  uint8_t wordIndex = 0;
+  String word = "";
 
-  printText(visible, x + 1, y + 1, shadow);
-  printText(visible, x, y, main);
+  for (uint16_t i = 0; i <= visible.length(); i++) {
+    char c = (i < visible.length()) ? visible[i] : ' ';
+    bool separator = (c == ' ' || c == '-' || c == '_' || i == visible.length());
+
+    if (!separator) {
+      word += c;
+      continue;
+    }
+
+    if (word.length() > 0) {
+      printText(word, cursorX + 1, y + 1, logoShadowColor(wordIndex, brightnessScale));
+      printText(word, cursorX, y, logoMainColor(wordIndex, brightnessScale));
+      cursorX += word.length() * 6;
+      wordIndex++;
+      word = "";
+    }
+
+    if (i < visible.length()) {
+      String sep = String(c);
+      printText(sep, cursorX, y, logoMainColor(wordIndex, brightnessScale));
+      cursorX += 6;
+    }
+  }
+
+  if (shimmerIndex >= 0 && shimmerIndex < (int)visible.length()) {
+    char c = visible[shimmerIndex];
+    if (c != ' ') {
+      printText(String(c), x + shimmerIndex * 6, y, scaledColor(255, 255, 255, brightnessScale));
+    }
+  }
 }
 
 static void drawHeaderSparkles(int16_t x, int16_t y) {
@@ -204,7 +296,7 @@ static void drawHeaderSparkles(int16_t x, int16_t y) {
 
   for (uint8_t i = 0; i < sizeof(pts) / sizeof(pts[0]); i++) {
     if (((i + frame) % 5) == 0) {
-      uint16_t c = (i % 2 == 0) ? smartHighlightColor(180) : fixHighlightColor(180);
+      uint16_t c = logoHighlightColor(i, 180);
       int16_t px = x + pts[i][0];
       int16_t py = y + pts[i][1];
       if (px >= 0 && px < PANEL_RES_X && py >= 0 && py < PANEL_RES_Y) {
@@ -266,7 +358,7 @@ void drawHeader() {
   if (isBrand) {
     drawBrandWordmark(baseX, baseY, revealChars, fadeScale, shimmerIndex);
   } else {
-    drawGenericLogoText(text, baseX, baseY, revealChars, fadeScale);
+    drawGenericLogoText(text, baseX, baseY, revealChars, fadeScale, shimmerIndex);
   }
 
   if (logoEffectMode == LOGO_EFFECT_SPARKLE || logoEffectMode == LOGO_EFFECT_PULSE) {

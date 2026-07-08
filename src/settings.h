@@ -9,6 +9,7 @@ void saveBrightnessSetting();
 void saveSpeedSetting();
 void saveTextColorSetting();
 void saveLogoEffectSetting();
+void saveLogoColorSetting();
 void saveScrollTextSetting();
 void saveLogoTextSetting();
 void saveWiFiSettings();

@@ -2,8 +2,32 @@
 #include "config.h"
 #include "app_state.h"
 
+#include <ESPmDNS.h>
+
 static unsigned long lastReconnectAttempt = 0;
 static const unsigned long reconnectInterval = 30000;
+static bool mdnsStarted = false;
+
+static void startMdnsIfConnected() {
+  if (mdnsStarted) {
+    return;
+  }
+
+  if (WiFi.status() != WL_CONNECTED) {
+    return;
+  }
+
+  if (MDNS.begin(MDNS_HOSTNAME)) {
+    mdnsStarted = true;
+    MDNS.addService("http", "tcp", 80);
+
+    Serial.print("mDNS started: http://");
+    Serial.print(MDNS_HOSTNAME);
+    Serial.println(".local/");
+  } else {
+    Serial.println("ERROR: mDNS start failed");
+  }
+}
 
 void setupWiFi() {
   WiFi.mode(WIFI_AP_STA);
@@ -36,7 +60,14 @@ void handleWiFiReconnect() {
   }
 
   if (WiFi.status() == WL_CONNECTED) {
+    startMdnsIfConnected();
     return;
+  }
+
+  if (mdnsStarted) {
+    MDNS.end();
+    mdnsStarted = false;
+    Serial.println("mDNS stopped because Home WiFi disconnected");
   }
 
   unsigned long now = millis();
@@ -68,6 +99,23 @@ String getStaIpText() {
   return "-";
 }
 
+bool isMdnsStarted() {
+  return mdnsStarted;
+}
+
+String getMdnsAddressText() {
+  if (WiFi.status() == WL_CONNECTED && mdnsStarted) {
+    return String("http://") + MDNS_HOSTNAME + ".local/";
+  }
+
+  return "-";
+}
+
 void disconnectHomeWiFi() {
+  if (mdnsStarted) {
+    MDNS.end();
+    mdnsStarted = false;
+  }
+
   WiFi.disconnect(false, true);
 }
