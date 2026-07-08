@@ -7,6 +7,7 @@
 #include "wifi_manager.h"
 #include "web_interface.h"
 #include "animations.h"
+#include "ota_update.h"
 
 void setup() {
   Serial.begin(115200);
@@ -37,5 +38,6 @@ void setup() {
 void loop() {
   handleWebServer();
   handleWiFiReconnect();
+  handleOtaAutoCheck();
   handleCurrentAnimation();
 }

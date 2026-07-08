@@ -22,12 +22,12 @@ void loadSettings() {
   }
 
   scrollTextEffectMode = prefs.getUChar("scrollFx", SCROLL_EFFECT_NORMAL);
-  if (scrollTextEffectMode > SCROLL_EFFECT_FLASH) {
+  if (scrollTextEffectMode > SCROLL_EFFECT_DUAL_SLIDE) {
     scrollTextEffectMode = SCROLL_EFFECT_NORMAL;
   }
 
   logoEffectMode = prefs.getUChar("logoFx", LOGO_EFFECT_STATIC);
-  if (logoEffectMode > LOGO_EFFECT_SCANLINE) {
+  if (logoEffectMode > LOGO_EFFECT_DUAL_SLIDE) {
     logoEffectMode = LOGO_EFFECT_STATIC;
   }
 

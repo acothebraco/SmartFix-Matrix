@@ -8,12 +8,14 @@ static int16_t scrollX = PANEL_RES_X;
 static unsigned long lastScrollUpdate = 0;
 static unsigned long lastFxUpdate = 0;
 static unsigned long lastFullRedraw = 0;
+static bool scrollDualReturn = false;
 
 void resetAnimationState() {
   scrollX = PANEL_RES_X;
   lastScrollUpdate = 0;
   lastFxUpdate = 0;
   lastFullRedraw = 0;
+  scrollDualReturn = false;
 }
 
 static uint16_t scaledMatrixColor(uint8_t r, uint8_t g, uint8_t b, uint8_t scale) {
@@ -76,7 +78,7 @@ static void drawScrollingText() {
     display->setTextWrap(false);
     display->setTextSize(1);
 
-    if (scrollTextEffectMode == SCROLL_EFFECT_NORMAL) {
+    if (scrollTextEffectMode == SCROLL_EFFECT_NORMAL || scrollTextEffectMode == SCROLL_EFFECT_DUAL_SLIDE) {
       drawMatrixText(scrollText, scrollX, 20, getScrollTextColor());
     } else {
       int16_t cursorX = scrollX;
@@ -118,12 +120,27 @@ static void drawScrollingText() {
       }
     }
 
-    scrollX--;
-
     int16_t textWidth = getTextPixelWidth(scrollText);
 
-    if (scrollX < -textWidth) {
-      scrollX = PANEL_RES_X;
+    if (scrollTextEffectMode == SCROLL_EFFECT_DUAL_SLIDE) {
+      if (scrollDualReturn) {
+        scrollX++;
+        if (scrollX > PANEL_RES_X) {
+          scrollX = PANEL_RES_X;
+          scrollDualReturn = false;
+        }
+      } else {
+        scrollX--;
+        if (scrollX < -textWidth) {
+          scrollX = -textWidth;
+          scrollDualReturn = true;
+        }
+      }
+    } else {
+      scrollX--;
+      if (scrollX < -textWidth) {
+        scrollX = PANEL_RES_X;
+      }
     }
   }
 }

@@ -25,6 +25,10 @@ String homeWifiPassword = "";
 String otaUrl = DEFAULT_OTA_URL;
 String uiLanguage = "de";
 String lastOtaStatus = "Noch kein OTA Update gestartet.";
+String latestFirmwareVersion = "-";
+String latestFirmwareUrl = "";
+String lastUpdateCheckText = "Noch nie";
+bool firmwareUpdateAvailable = false;
 
 int16_t getTextPixelWidth(const String &text) {
   return getMatrixTextPixelWidth(text);
@@ -57,12 +61,12 @@ const char *getSpeedName() {
 
 const char *getScrollTextColorName() {
   switch (scrollTextColorMode) {
-    case 0: return "WEISS";
-    case 1: return "GRUEN";
+    case 0: return "WEIß";
+    case 1: return "GRÜN";
     case 2: return "BLAU";
     case 3: return "GELB";
     case 4: return "ROT";
-    default: return "WEISS";
+    default: return "WEIß";
   }
 }
 
@@ -73,17 +77,18 @@ const char *getScrollTextEffectName() {
     case SCROLL_EFFECT_WAVE:    return "WAVE";
     case SCROLL_EFFECT_SPARKLE: return "SPARKLE";
     case SCROLL_EFFECT_COMET:   return "COMET";
-    case SCROLL_EFFECT_FLASH:   return "FLASH";
-    default:                    return "NORMAL";
+    case SCROLL_EFFECT_FLASH:      return "FLASH";
+    case SCROLL_EFFECT_DUAL_SLIDE: return "2-WAY SLIDE";
+    default:                       return "NORMAL";
   }
 }
 
 const char *getLogoColorName() {
   switch (logoColorMode) {
     case LOGO_COLOR_BRAND:     return "AUTO/BRAND";
-    case LOGO_COLOR_GREEN:     return "GRUEN";
+    case LOGO_COLOR_GREEN:     return "GRÜN";
     case LOGO_COLOR_BLUE:      return "BLAU";
-    case LOGO_COLOR_WHITE:     return "WEISS";
+    case LOGO_COLOR_WHITE:     return "WEIß";
     case LOGO_COLOR_YELLOW:    return "GELB";
     case LOGO_COLOR_RED:       return "ROT";
     case LOGO_COLOR_TWO_WORDS: return "2-FARBIG";
@@ -105,6 +110,7 @@ const char *getLogoEffectName() {
     case LOGO_EFFECT_BOUNCE:     return "BOUNCE";
     case LOGO_EFFECT_GLITCH:     return "GLITCH";
     case LOGO_EFFECT_SCANLINE:   return "SCANLINE";
+    case LOGO_EFFECT_DUAL_SLIDE: return "2-WAY SLIDE";
     default:                     return "STATISCH";
   }
 }

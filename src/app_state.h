@@ -21,7 +21,8 @@ enum LogoEffectMode {
   LOGO_EFFECT_WAVE       = 7,
   LOGO_EFFECT_BOUNCE     = 8,
   LOGO_EFFECT_GLITCH     = 9,
-  LOGO_EFFECT_SCANLINE   = 10
+  LOGO_EFFECT_SCANLINE   = 10,
+  LOGO_EFFECT_DUAL_SLIDE = 11
 };
 
 enum LogoColorMode {
@@ -41,7 +42,8 @@ enum ScrollTextEffectMode {
   SCROLL_EFFECT_WAVE    = 2,
   SCROLL_EFFECT_SPARKLE = 3,
   SCROLL_EFFECT_COMET   = 4,
-  SCROLL_EFFECT_FLASH   = 5
+  SCROLL_EFFECT_FLASH      = 5,
+  SCROLL_EFFECT_DUAL_SLIDE = 6
 };
 
 // Current app state
@@ -72,6 +74,10 @@ extern String homeWifiSsid;
 extern String homeWifiPassword;
 extern String otaUrl;
 extern String lastOtaStatus;
+extern String latestFirmwareVersion;
+extern String latestFirmwareUrl;
+extern String lastUpdateCheckText;
+extern bool firmwareUpdateAvailable;
 
 const char *getModeName(DisplayMode mode);
 const char *getSpeedName();

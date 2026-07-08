@@ -215,6 +215,13 @@ static uint8_t clampScale(uint16_t value) {
   return (uint8_t)value;
 }
 
+static uint16_t logoSpeedStep(uint16_t multiplier = 1) {
+  uint16_t step = scrollInterval * multiplier;
+  if (step < 8) step = 8;
+  if (step > 240) step = 240;
+  return step;
+}
+
 static uint16_t scaledColor(uint8_t r, uint8_t g, uint8_t b, uint8_t scale) {
   return makeColor((uint16_t)r * scale / 255,
                    (uint16_t)g * scale / 255,
@@ -453,10 +460,10 @@ static int8_t triangleWaveOffset(uint16_t phase, int8_t amplitude) {
 static void drawLogoWaveText(const String &text, int16_t x, int16_t y, bool isBrand, uint8_t brightnessScale, bool bounceOnly) {
   int16_t cursorX = x;
   uint8_t wordIndex = 0;
-  uint16_t t = millis() / 70;
+  uint16_t t = millis() / logoSpeedStep(2);
   uint16_t byteIndex = 0;
   uint8_t glyphIndex = 0;
-  int8_t globalBounce = bounceOnly ? triangleWaveOffset(millis() / 85, 2) : 0;
+  int8_t globalBounce = bounceOnly ? triangleWaveOffset(millis() / logoSpeedStep(2), 2) : 0;
 
   while (byteIndex < text.length()) {
     uint16_t cp = nextUtf8Codepoint(text, byteIndex);
@@ -493,7 +500,7 @@ static void drawLogoWaveText(const String &text, int16_t x, int16_t y, bool isBr
 }
 
 static void drawLogoGlitchOverlay(const String &text, int16_t x, int16_t y, bool isBrand) {
-  uint8_t phase = (millis() / 70) % 24;
+  uint8_t phase = (millis() / logoSpeedStep(2)) % 24;
 
   if (phase > 5) {
     return;
@@ -516,7 +523,7 @@ static void drawLogoGlitchOverlay(const String &text, int16_t x, int16_t y, bool
 }
 
 static void drawLogoScanline(int16_t x, int16_t y, int16_t textWidth) {
-  uint16_t phase = (millis() / 35) % (textWidth + 18);
+  uint16_t phase = (millis() / logoSpeedStep()) % (textWidth + 18);
   int16_t scanX = x - 8 + phase;
 
   for (int8_t dx = 0; dx < 2; dx++) {
@@ -549,15 +556,15 @@ void drawHeader() {
   if (baseX < 0) baseX = 0;
 
   if (logoEffectMode == LOGO_EFFECT_TYPEWRITER) {
-    uint8_t phase = (millis() / 220) % (totalChars + 8);
+    uint8_t phase = (millis() / logoSpeedStep(5)) % (totalChars + 8);
     revealChars = phase;
     if (revealChars > totalChars) revealChars = totalChars;
   } else if (logoEffectMode == LOGO_EFFECT_FADE) {
-    uint16_t phase = (millis() / 18) % 512;
+    uint16_t phase = (millis() / logoSpeedStep()) % 512;
     if (phase > 255) phase = 511 - phase;
     fadeScale = clampScale(50 + ((uint16_t)phase * 205 / 255));
   } else if (logoEffectMode == LOGO_EFFECT_SLIDE) {
-    uint16_t phase = (millis() / 22) % 170;
+    uint16_t phase = (millis() / logoSpeedStep()) % 170;
     if (phase < 55) {
       int16_t targetX = baseX;
       baseX = PANEL_RES_X - ((PANEL_RES_X - targetX) * phase / 55);
@@ -565,13 +572,30 @@ void drawHeader() {
       int16_t targetX = baseX;
       baseX = targetX - ((phase - 125) * (targetX + 56) / 45);
     }
+  } else if (logoEffectMode == LOGO_EFFECT_DUAL_SLIDE) {
+    uint16_t phase = (millis() / logoSpeedStep()) % 220;
+    int16_t targetX = baseX;
+    int16_t textWidth = isBrand ? 50 : getMatrixTextPixelWidth(text);
+
+    if (phase < 55) {
+      // Slide in from the right.
+      baseX = PANEL_RES_X - ((PANEL_RES_X - targetX) * phase / 55);
+    } else if (phase < 110) {
+      baseX = targetX;
+    } else if (phase < 165) {
+      // Slide out to the right.
+      baseX = targetX + ((phase - 110) * (PANEL_RES_X - targetX + 2) / 55);
+    } else {
+      // Slide in from the left.
+      baseX = -textWidth + (((int32_t)(targetX + textWidth) * (phase - 165)) / 55);
+    }
   } else if (logoEffectMode == LOGO_EFFECT_SHIMMER) {
-    shimmerIndex = (millis() / 115) % (totalChars + 4);
+    shimmerIndex = (millis() / logoSpeedStep(3)) % (totalChars + 4);
     if (shimmerIndex >= totalChars) shimmerIndex = -1;
   } else if (logoEffectMode == LOGO_EFFECT_SPARKLE) {
     // Main draw stays static; sparkles are added below.
   } else if (logoEffectMode == LOGO_EFFECT_PULSE) {
-    uint16_t phase = (millis() / 16) % 512;
+    uint16_t phase = (millis() / logoSpeedStep()) % 512;
     if (phase > 255) phase = 511 - phase;
     fadeScale = clampScale(150 + ((uint16_t)phase * 105 / 255));
   }
