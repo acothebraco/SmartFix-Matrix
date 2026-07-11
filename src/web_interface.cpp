@@ -152,7 +152,7 @@ static String htmlPage() {
 <style>
 :root{--bg:#050812;--panel:#0d1320;--panel2:#111827;--line:#223149;--text:#e5e7eb;--muted:#94a3b8;--green:#22c55e;--green2:#16a34a;--blue:#38bdf8;--blue2:#2563eb;--danger:#ef4444;}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 18% 0%,rgba(34,197,94,.20),transparent 34%),radial-gradient(circle at 88% 10%,rgba(56,189,248,.16),transparent 32%),linear-gradient(180deg,#050812 0%,#08111f 55%,#050812 100%);color:var(--text);min-height:100vh;}
-a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.22);border-radius:26px;background:linear-gradient(145deg,rgba(17,24,39,.93),rgba(2,6,23,.92));box-shadow:0 22px 70px rgba(0,0,0,.45);padding:22px;margin-bottom:16px}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(34,197,94,.10),transparent 40%,rgba(56,189,248,.10));pointer-events:none}.topbar{position:relative;display:flex;align-items:center;gap:15px;margin-bottom:18px;padding-right:120px}.logo-badge{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-weight:900;font-size:20px;color:white;background:linear-gradient(135deg,var(--green),var(--blue));box-shadow:0 0 32px rgba(34,197,94,.28)}.title-block h1{margin:0;font-size:31px;letter-spacing:-.8px}.title-block .sub{margin:5px 0 0;color:var(--muted)}.version-chip{margin-left:auto;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.36);color:#bbf7d0;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:bold;white-space:nowrap}.lang-switch{position:absolute;top:18px;right:18px;display:flex;gap:6px;background:rgba(2,6,23,.54);border:1px solid rgba(148,163,184,.18);border-radius:999px;padding:5px;z-index:2}.lang-btn{display:block;text-decoration:none;color:var(--muted);font-weight:900;font-size:12px;border-radius:999px;padding:7px 10px}.lang-btn.active{background:linear-gradient(135deg,var(--green2),var(--blue));color:white;box-shadow:0 0 18px rgba(56,189,248,.18)}.status{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pill{background:rgba(2,6,23,.72);border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}.pill.good{border-color:rgba(34,197,94,.32)}.pill.blue{border-color:rgba(56,189,248,.28)}.label{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}.value{font-size:16px;font-weight:bold;color:#f8fafc;margin-top:5px;word-break:break-word}.card{background:linear-gradient(145deg,rgba(17,24,39,.92),rgba(12,18,30,.92));border:1px solid rgba(148,163,184,.18);border-radius:22px;margin-bottom:12px;box-shadow:0 12px 36px rgba(0,0,0,.28)}details.card{overflow:hidden}summary{cursor:pointer;list-style:none;padding:18px 20px;display:flex;align-items:center;gap:12px;user-select:none}summary::-webkit-details-marker{display:none}.section-icon{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.25);color:#7dd3fc;font-size:18px}.summary-text{font-size:18px;font-weight:800;color:#f8fafc}.sumvalue{margin-left:auto;color:var(--muted);font-size:13px;font-weight:bold;text-align:right}.chev{margin-left:8px;color:var(--green);font-size:22px;line-height:1;transition:.18s transform}details[open] .chev{transform:rotate(45deg)}.detail-body{padding:0 20px 20px;border-top:1px solid rgba(148,163,184,.11)}h2{margin:18px 0 12px;font-size:15px;color:#7dd3fc;text-transform:uppercase;letter-spacing:.5px}.sub{color:var(--muted);font-size:14px;line-height:1.45}.hint{margin-top:12px;padding:12px;border:1px solid rgba(34,197,94,.24);background:rgba(34,197,94,.08);border-radius:14px;color:#bbf7d0}.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.btn{display:flex;align-items:center;justify-content:center;min-height:46px;text-align:center;text-decoration:none;border:1px solid rgba(148,163,184,.18);background:linear-gradient(135deg,rgba(37,99,235,.95),rgba(14,165,233,.82));color:white;padding:12px;border-radius:14px;font-weight:800;box-shadow:0 10px 22px rgba(37,99,235,.17);transition:.16s transform,.16s filter,.16s border-color}.btn:hover{filter:brightness(1.12);transform:translateY(-1px);border-color:rgba(125,211,252,.45)}.btn.green{background:linear-gradient(135deg,var(--green2),var(--green));box-shadow:0 10px 22px rgba(34,197,94,.17)}.btn.danger{background:linear-gradient(135deg,#b91c1c,var(--danger))}button.btn{border:0;width:100%;cursor:pointer;font-size:15px}input{width:100%;background:rgba(2,6,23,.78);color:var(--text);border:1px solid rgba(148,163,184,.22);border-radius:15px;padding:14px 15px;font-size:16px;margin-bottom:12px;outline:none}input[type=file]{cursor:pointer}input:focus{border-color:rgba(56,189,248,.65);box-shadow:0 0 0 3px rgba(56,189,248,.12)}.small{font-size:13px;color:var(--muted);margin:18px 0 4px;text-align:center}.row-title{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}.mini-chip{font-size:12px;color:#bbf7d0;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.25);border-radius:999px;padding:5px 9px}.preview-shell{display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 50% 40%,#07111f,#020617 70%);border:1px solid rgba(56,189,248,.25);border-radius:18px;padding:14px;box-shadow:inset 0 0 34px rgba(56,189,248,.10),0 14px 34px rgba(0,0,0,.28)}#matrixPreview{width:100%;max-width:640px;height:auto;border-radius:14px;background:#000;box-shadow:0 0 28px rgba(34,197,94,.16),inset 0 0 18px rgba(255,255,255,.04)}#section-preview .chev{display:none}#section-preview summary{cursor:default}.preview-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px}.preview-dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 12px var(--green);margin-right:7px}.sf-toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(18px);opacity:0;z-index:99;background:rgba(2,6,23,.94);border:1px solid rgba(56,189,248,.34);box-shadow:0 18px 48px rgba(0,0,0,.45);color:#e5e7eb;border-radius:999px;padding:11px 16px;font-size:13px;font-weight:800;pointer-events:none;transition:.18s opacity,.18s transform}.sf-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@media(max-width:760px){.wrap{padding:14px}.hero{padding:18px;border-radius:22px}.topbar{align-items:flex-start;padding-top:34px;padding-right:0}.version-chip{display:none}.status{grid-template-columns:1fr 1fr}.buttons{grid-template-columns:1fr}.sumvalue{display:none}.title-block h1{font-size:27px}}@media(max-width:460px){.status{grid-template-columns:1fr}.logo-badge{width:46px;height:46px}.summary-text{font-size:16px}}
+a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:relative;overflow:hidden;border:1px solid rgba(148,163,184,.22);border-radius:26px;background:linear-gradient(145deg,rgba(17,24,39,.93),rgba(2,6,23,.92));box-shadow:0 22px 70px rgba(0,0,0,.45);padding:22px;margin-bottom:16px}.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(34,197,94,.10),transparent 40%,rgba(56,189,248,.10));pointer-events:none}.topbar{position:relative;display:flex;align-items:center;gap:15px;margin-bottom:18px;padding-right:120px}.logo-badge{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-weight:900;font-size:20px;color:white;background:linear-gradient(135deg,var(--green),var(--blue));box-shadow:0 0 32px rgba(34,197,94,.28)}.title-block h1{margin:0;font-size:31px;letter-spacing:-.8px}.title-block .sub{margin:5px 0 0;color:var(--muted)}.version-chip{margin-left:auto;background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.36);color:#bbf7d0;padding:8px 12px;border-radius:999px;font-size:13px;font-weight:bold;white-space:nowrap}.lang-switch{position:absolute;top:18px;right:18px;display:flex;gap:6px;background:rgba(2,6,23,.54);border:1px solid rgba(148,163,184,.18);border-radius:999px;padding:5px;z-index:2}.lang-btn{display:block;text-decoration:none;color:var(--muted);font-weight:900;font-size:12px;border-radius:999px;padding:7px 10px}.lang-btn.active{background:linear-gradient(135deg,var(--green2),var(--blue));color:white;box-shadow:0 0 18px rgba(56,189,248,.18)}.status{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.pill{background:rgba(2,6,23,.72);border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}.pill.good{border-color:rgba(34,197,94,.32)}.pill.blue{border-color:rgba(56,189,248,.28)}.label{font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}.value{font-size:16px;font-weight:bold;color:#f8fafc;margin-top:5px;word-break:break-word}.card{background:linear-gradient(145deg,rgba(17,24,39,.92),rgba(12,18,30,.92));border:1px solid rgba(148,163,184,.18);border-radius:22px;margin-bottom:12px;box-shadow:0 12px 36px rgba(0,0,0,.28)}details.card{overflow:hidden}summary{cursor:pointer;list-style:none;padding:18px 20px;display:flex;align-items:center;gap:12px;user-select:none}summary::-webkit-details-marker{display:none}.section-icon{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.25);color:#7dd3fc;font-size:18px}.summary-text{font-size:18px;font-weight:800;color:#f8fafc}.sumvalue{margin-left:auto;color:var(--muted);font-size:13px;font-weight:bold;text-align:right}.chev{margin-left:8px;color:var(--green);font-size:22px;line-height:1;transition:.18s transform}details[open] .chev{transform:rotate(45deg)}.detail-body{padding:0 20px 20px;border-top:1px solid rgba(148,163,184,.11)}h2{margin:18px 0 12px;font-size:15px;color:#7dd3fc;text-transform:uppercase;letter-spacing:.5px}.sub{color:var(--muted);font-size:14px;line-height:1.45}.hint{margin-top:12px;padding:12px;border:1px solid rgba(34,197,94,.24);background:rgba(34,197,94,.08);border-radius:14px;color:#bbf7d0}.buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.btn{display:flex;align-items:center;justify-content:center;min-height:46px;text-align:center;text-decoration:none;border:1px solid rgba(148,163,184,.18);background:linear-gradient(135deg,rgba(37,99,235,.95),rgba(14,165,233,.82));color:white;padding:12px;border-radius:14px;font-weight:800;box-shadow:0 10px 22px rgba(37,99,235,.17);transition:.16s transform,.16s filter,.16s border-color}.btn:hover{filter:brightness(1.12);transform:translateY(-1px);border-color:rgba(125,211,252,.45)}.btn.green{background:linear-gradient(135deg,var(--green2),var(--green));box-shadow:0 10px 22px rgba(34,197,94,.17)}.btn.danger{background:linear-gradient(135deg,#b91c1c,var(--danger))}button.btn{border:0;width:100%;cursor:pointer;font-size:15px}input{width:100%;background:rgba(2,6,23,.78);color:var(--text);border:1px solid rgba(148,163,184,.22);border-radius:15px;padding:14px 15px;font-size:16px;margin-bottom:12px;outline:none}input[type=file]{cursor:pointer}input:focus{border-color:rgba(56,189,248,.65);box-shadow:0 0 0 3px rgba(56,189,248,.12)}.small{font-size:13px;color:var(--muted);margin:18px 0 4px;text-align:center}.row-title{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}.mini-chip{font-size:12px;color:#bbf7d0;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.25);border-radius:999px;padding:5px 9px}.slider-card{background:rgba(2,6,23,.46);border:1px solid rgba(148,163,184,.16);border-radius:18px;padding:15px;margin-top:6px}.slider-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.slider-head span{font-size:14px;color:var(--muted);font-weight:800}.slider-head strong{font-size:18px;color:#f8fafc}.range-slider{width:100%;appearance:none;-webkit-appearance:none;height:12px;border-radius:999px;padding:0;margin:4px 0 10px;background:linear-gradient(90deg,var(--green2),var(--blue));border:1px solid rgba(148,163,184,.24);outline:none}.range-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;border-radius:50%;background:#f8fafc;border:3px solid var(--blue);box-shadow:0 0 22px rgba(56,189,248,.55);cursor:pointer}.range-slider::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:#f8fafc;border:3px solid var(--blue);box-shadow:0 0 22px rgba(56,189,248,.55);cursor:pointer}.slider-scale{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;font-weight:800;margin-top:2px}.preview-shell{display:flex;justify-content:center;align-items:center;background:radial-gradient(circle at 50% 40%,#07111f,#020617 70%);border:1px solid rgba(56,189,248,.25);border-radius:18px;padding:14px;box-shadow:inset 0 0 34px rgba(56,189,248,.10),0 14px 34px rgba(0,0,0,.28)}#matrixPreview{width:100%;max-width:640px;height:auto;border-radius:14px;background:#000;box-shadow:0 0 28px rgba(34,197,94,.16),inset 0 0 18px rgba(255,255,255,.04)}#section-preview .chev{display:none}#section-preview summary{cursor:default}.preview-row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px}.preview-dot{width:10px;height:10px;border-radius:50%;display:inline-block;background:var(--green);box-shadow:0 0 12px var(--green);margin-right:7px}.sf-toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(18px);opacity:0;z-index:99;background:rgba(2,6,23,.94);border:1px solid rgba(56,189,248,.34);box-shadow:0 18px 48px rgba(0,0,0,.45);color:#e5e7eb;border-radius:999px;padding:11px 16px;font-size:13px;font-weight:800;pointer-events:none;transition:.18s opacity,.18s transform}.sf-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}@media(max-width:760px){.wrap{padding:14px}.hero{padding:18px;border-radius:22px}.topbar{align-items:flex-start;padding-top:34px;padding-right:0}.version-chip{display:none}.status{grid-template-columns:1fr 1fr}.buttons{grid-template-columns:1fr}.sumvalue{display:none}.title-block h1{font-size:27px}}@media(max-width:460px){.status{grid-template-columns:1fr}.logo-badge{width:46px;height:46px}.summary-text{font-size:16px}}
 </style>
 <script>
 (function(){
@@ -216,17 +216,18 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
 })();
 
 (function(){
-  function fastAction(href){return /^(\/mode|\/brightness|\/speed|\/logo-speed|\/scroll-font-size|\/logo-font-size|\/scroll-font-style|\/logo-font-style|\/text-color|\/scroll-effect|\/logo-effect|\/logo-color|\/panels|\/auto)(\?|$)/.test(href||'');}
+  function fastAction(href){return /^(\/mode|\/brightness|\/speed|\/logo-speed|\/text-color|\/scroll-effect|\/logo-effect|\/logo-color|\/panels|\/auto)(\?|$)/.test(href||'');}
   function withAjax(href){return href+(href.indexOf('?')>=0?'&':'?')+'_ajax=1&_t='+(Date.now());}
   function toast(msg){var t=document.getElementById('sfToast');if(!t){return;}t.textContent=msg;t.classList.add('show');clearTimeout(t._timer);t._timer=setTimeout(function(){t.classList.remove('show');},1250);}
   function updatePreviewFromUrl(href){
     try{var u=new URL(href,location.origin),p=window.sfPreview||{};
-      if(u.pathname==='/speed')p.speed=u.searchParams.get('v')||p.speed;
+      if(u.pathname==='/brightness'){
+        p.brightness=u.searchParams.get('v')||p.brightness;
+        var bv=document.getElementById('brightnessStatusValue');
+        if(bv){var v=parseInt(p.brightness,10)||0;bv.textContent=v+' / 255';}
+      }
+      else if(u.pathname==='/speed')p.speed=u.searchParams.get('v')||p.speed;
       else if(u.pathname==='/logo-speed')p.logoSpeed=u.searchParams.get('v')||p.logoSpeed;
-      else if(u.pathname==='/scroll-font-size')p.scrollFontSize=u.searchParams.get('s')||p.scrollFontSize;
-      else if(u.pathname==='/logo-font-size')p.logoFontSize=u.searchParams.get('s')||p.logoFontSize;
-      else if(u.pathname==='/scroll-font-style')p.scrollFontStyle=u.searchParams.get('f')||p.scrollFontStyle;
-      else if(u.pathname==='/logo-font-style')p.logoFontStyle=u.searchParams.get('f')||p.logoFontStyle;
       else if(u.pathname==='/text-color')p.scrollColor=u.searchParams.get('c')||p.scrollColor;
       else if(u.pathname==='/scroll-effect')p.scrollEffect=u.searchParams.get('e')||p.scrollEffect;
       else if(u.pathname==='/logo-effect')p.logoEffect=u.searchParams.get('e')||p.logoEffect;
@@ -239,8 +240,31 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
     window.sfPreviewPaused=true;toast('Speichere...');
     fetch(withAjax(href),{cache:'no-store'}).then(function(){updatePreviewFromUrl(href);toast('Gespeichert');}).catch(function(){toast('Fehler beim Speichern');}).finally(function(){setTimeout(function(){window.sfPreviewPaused=false;},80);});
   }
+  function setBrightnessUi(value){
+    var v=Math.max(5,Math.min(255,parseInt(value,10)||70));
+    var label=document.getElementById('brightnessValue');
+    var status=document.getElementById('brightnessStatusValue');
+    if(label){label.textContent=v+' / 255 ('+Math.round(v*100/255)+'%)';}
+    if(status){status.textContent=v+' / 255';}
+    var p=window.sfPreview||{};p.brightness=v;window.sfPreview=p;
+  }
+  function setupBrightnessSlider(){
+    var slider=document.getElementById('brightnessSlider');
+    if(!slider)return;
+    var timer=null,lastSaved=String(slider.value||'');
+    setBrightnessUi(slider.value);
+    function saveNow(){
+      var v=String(slider.value||'70');
+      if(v===lastSaved)return;
+      lastSaved=v;
+      ajaxGet('/brightness?v='+encodeURIComponent(v));
+    }
+    slider.addEventListener('input',function(){setBrightnessUi(slider.value);clearTimeout(timer);timer=setTimeout(saveNow,220);});
+    slider.addEventListener('change',function(){setBrightnessUi(slider.value);clearTimeout(timer);saveNow();});
+  }
   window.addEventListener('load',function(){
     document.body.insertAdjacentHTML('beforeend','<div id="sfToast" class="sf-toast"></div>');
+    setupBrightnessSlider();
     document.addEventListener('click',function(e){
       var a=e.target.closest&&e.target.closest('a.btn');if(!a)return;var href=a.getAttribute('href')||'';
       if(!fastAction(href))return;
@@ -316,56 +340,41 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   function logoHighlight(part,scale){return part%2?rgba('#a7e8ff',scale):rgba('#bbffd0',scale);}
   function px(ctx,x,y,color){x=Math.round(x);y=Math.round(y);if(x<0||x>=W||y<0||y>=H)return;ctx.fillStyle=color;ctx.fillRect(x,y,1,1);}
   function baseChar(ch){var m={'ä':'a','ö':'o','ü':'u','Ä':'A','Ö':'O','Ü':'U'};return m[ch]||ch;}
-  function safeFontSize(size){size=parseInt(size||1);return clamp(size,1,2);}
-  function safeFontStyle(style){style=parseInt(style||0);return clamp(style,0,3);}
-  function fontExtra(size,style){style=safeFontStyle(style);size=safeFontSize(size);if(style===1)return 1;if(style===2)return size;if(style===3)return 1;return 0;}
-  function glyphWidth(ch,size,style){return (ch==='ß'?12:6)*safeFontSize(size)+fontExtra(size,style);}
-  function drawGlyphBase(ctx,ch,x,y,color,size){
-    size=safeFontSize(size);
-    if(ch==='ß'){drawGlyphBase(ctx,'s',x,y,color,size);drawGlyphBase(ctx,'s',x+6*size,y,color,size);return;}
+  function drawGlyph(ctx,ch,x,y,color){
+    if(ch==='ß'){drawGlyph(ctx,'s',x,y,color);drawGlyph(ctx,'s',x+6,y,color);return 12;}
     var uml='äöüÄÖÜ'.indexOf(ch)>=0, b=baseChar(ch), g=F[b]||F['?']||F[' '];
-    for(var cx=0;cx<5;cx++){var bits=g[cx]||0;for(var cy=0;cy<7;cy++){if(bits&(1<<cy)){for(var sx=0;sx<size;sx++)for(var sy=0;sy<size;sy++)px(ctx,x+cx*size+sx,y+cy*size+sy,color);}}}
-    if(uml){var dy=y-2*size;if(dy<0)dy=y;for(var dx=0;dx<size;dx++){px(ctx,x+1*size+dx,dy,color);px(ctx,x+3*size+dx,dy,color);}}
+    for(var cx=0;cx<5;cx++){var bits=g[cx]||0;for(var cy=0;cy<7;cy++){if(bits&(1<<cy))px(ctx,x+cx,y+cy,color);}}
+    if(uml){var dy=y-2;if(dy<0)dy=y;px(ctx,x+1,dy,color);px(ctx,x+3,dy,color);}
+    return 6;
   }
-  function drawGlyph(ctx,ch,x,y,color,size,style){
-    size=safeFontSize(size);style=safeFontStyle(style);x=Math.round(x);y=Math.round(y);
-    if(style===1){drawGlyphBase(ctx,ch,x,y,color,size);drawGlyphBase(ctx,ch,x+1,y,color,size);return glyphWidth(ch,size,style);}
-    if(style===2){drawGlyphBase(ctx,ch,x,y,color,size);drawGlyphBase(ctx,ch,x+size,y,color,size);return glyphWidth(ch,size,style);}
-    if(style===3){drawGlyphBase(ctx,ch,x,y,color,size);drawGlyphBase(ctx,ch,x+1,y,color,size);drawGlyphBase(ctx,ch,x,y+1,color,size);return glyphWidth(ch,size,style);}
-    drawGlyphBase(ctx,ch,x,y,color,size);return glyphWidth(ch,size,style);
-  }
-  function txt(ctx,t,x,y,color,size,style){var cx=Math.round(x), chars=glyphs(t);for(var i=0;i<chars.length;i++){cx+=drawGlyph(ctx,chars[i],cx,Math.round(y),color,size,style);}}
-  function tw(t,size,style){return glyphs(t).reduce(function(w,ch){return w+glyphWidth(ch,size,style);},0);}
+  function txt(ctx,t,x,y,color){var cx=Math.round(x), chars=glyphs(t);for(var i=0;i<chars.length;i++){cx+=drawGlyph(ctx,chars[i],cx,Math.round(y),color);}}
+  function tw(t){return glyphs(t).reduce(function(w,ch){return w+(ch==='ß'?12:6);},0);}
   function lineV(ctx,x,y,h,color){for(var i=0;i<h;i++)px(ctx,x,y+i,color);}
-  function logoFont(){var p=state();return {size:safeFontSize(p.logoFontSize||1),style:safeFontStyle(p.logoFontStyle||0)};}
-  function scrollFont(){var p=state();return {size:safeFontSize(p.scrollFontSize||1),style:safeFontStyle(p.scrollFontStyle||0)};}
-  function brandWidth(size,style){return tw('Smart',size,style)+(size>=2?3:2)+tw('Fix',size,style);}
   function brand(ctx,x,y,reveal,scale,shimmer){
-    var f=logoFont(),smart=prefix('Smart',Math.min(reveal,5)), fix=prefix('Fix',Math.max(0,reveal-5)), fx=x+tw('Smart',f.size,f.style)+(f.size>=2?3:2);
-    txt(ctx,smart,x+1,y+1,logoShadow(0,scale),f.size,f.style); txt(ctx,fix,fx+1,y+1,logoShadow(1,scale),f.size,f.style);
-    txt(ctx,smart,x,y,brandMain(0,scale),f.size,f.style); txt(ctx,fix,fx,y,brandMain(1,scale),f.size,f.style);
-    if(reveal>=8&&scale>90){px(ctx,x+f.size+1,y,logoHighlight(0,scale));px(ctx,x+f.size+2,y,logoHighlight(0,scale));px(ctx,fx+f.size,y,logoHighlight(1,scale));px(ctx,fx+f.size+1,y,logoHighlight(1,scale));}
-    if(shimmer>=0&&reveal>=8){if(shimmer<5)txt(ctx,'Smart'[shimmer],x+tw('Smart'.substring(0,shimmer),f.size,f.style),y,logoHighlight(0,scale),f.size,f.style);else txt(ctx,'Fix'[shimmer-5],fx+tw('Fix'.substring(0,shimmer-5),f.size,f.style),y,logoHighlight(1,scale),f.size,f.style);}
+    var smart=prefix('Smart',Math.min(reveal,5)), fix=prefix('Fix',Math.max(0,reveal-5)), fx=x+32;
+    txt(ctx,smart,x+1,y+1,logoShadow(0,scale)); txt(ctx,fix,fx+1,y+1,logoShadow(1,scale));
+    txt(ctx,smart,x,y,brandMain(0,scale)); txt(ctx,fix,fx,y,brandMain(1,scale));
+    if(reveal>=8&&scale>90){px(ctx,x+2,y,logoHighlight(0,scale));px(ctx,x+3,y,logoHighlight(0,scale));px(ctx,fx+1,y,logoHighlight(1,scale));px(ctx,fx+2,y,logoHighlight(1,scale));}
+    if(shimmer>=0&&reveal>=8){if(shimmer<5)txt(ctx,'Smart'[shimmer],x+shimmer*6,y,logoHighlight(0,scale));else txt(ctx,'Fix'[shimmer-5],fx+(shimmer-5)*6,y,logoHighlight(1,scale));}
   }
   function genericLogo(ctx,t,x,y,reveal,scale,shimmer){
-    var f=logoFont(),visible=prefix(t,reveal), chars=glyphs(visible), cx=x, word=0;
-    for(var i=0;i<chars.length;i++){var ch=chars[i];if(ch===' '||ch==='-'||ch==='_'){txt(ctx,ch,cx,y,logoMain(word,scale),f.size,f.style);cx+=tw(ch,f.size,f.style);if(ch!==' ')word++;continue;}txt(ctx,ch,cx+1,y+1,logoShadow(word,scale),f.size,f.style);txt(ctx,ch,cx,y,logoMain(word,scale),f.size,f.style);if(shimmer===i)txt(ctx,ch,cx,y,rgba(colors[0],scale),f.size,f.style);cx+=glyphWidth(ch,f.size,f.style);}
+    var visible=prefix(t,reveal), chars=glyphs(visible), cx=x, word=0;
+    for(var i=0;i<chars.length;i++){var ch=chars[i];if(ch===' '||ch==='-'||ch==='_'){txt(ctx,ch,cx,y,logoMain(word,scale));cx+=6;if(ch!==' ')word++;continue;}txt(ctx,ch,cx+1,y+1,logoShadow(word,scale));txt(ctx,ch,cx,y,logoMain(word,scale));if(shimmer===i)txt(ctx,ch,cx,y,rgba(colors[0],scale));cx+=(ch==='ß'?12:6);}
   }
   function triangle(phase,amp){phase=phase%24;if(phase>12)phase=24-phase;return Math.round((phase*amp*2/12)-amp);}
   function logoStep(mult){var p=state(),s=parseInt(p.logoSpeed||35)*(mult||1);return clamp(s,8,240);}
   function waveLogo(ctx,t,x,y,brandMode,scale,bounce,now){
-    var f=logoFont(),chars=glyphs(t),cx=x,global=bounce?triangle(Math.floor(now/logoStep(2)),f.size>=2?1:2):0;
-    for(var i=0;i<chars.length;i++){var ch=chars[i],part=brandMode?(i<5?0:1):0,yy=y+global;if(!bounce)yy=y+triangle(Math.floor(now/logoStep(2))+i*3,f.size>=2?1:2);txt(ctx,ch,cx+1,yy+1,logoShadow(part,scale),f.size,f.style);txt(ctx,ch,cx,yy,brandMode?brandMain(part,scale):logoMain(part,scale),f.size,f.style);cx+=glyphWidth(ch,f.size,f.style);if(brandMode&&i===4)cx+=(f.size>=2?3:2);}
+    var chars=glyphs(t),cx=x,global=bounce?triangle(Math.floor(now/logoStep(2)),2):0;
+    for(var i=0;i<chars.length;i++){var ch=chars[i],part=brandMode?(i<5?0:1):0,yy=y+global;if(!bounce)yy=y+triangle(Math.floor(now/logoStep(2))+i*3,2);txt(ctx,ch,cx+1,yy+1,logoShadow(part,scale));txt(ctx,ch,cx,yy,brandMode?brandMain(part,scale):logoMain(part,scale));cx+=(ch==='ß'?12:6);if(brandMode&&i===4)cx+=2;}
   }
   function sparkles(ctx,x,y,now){var pts=[[0,0],[8,1],[15,-1],[25,0],[35,-1],[46,1],[52,0],[4,9],[12,10],[29,9],[39,10],[48,9],[57,10]],f=Math.floor(now/95)%16;pts.forEach(function(pt,i){if(((i+f)%5)===0)px(ctx,x+pt[0],y+pt[1],logoHighlight(i,180));});}
   function drawLogo(ctx,now){
-    var p=state(),f=logoFont(),t=(p.logoText||'SmartFix').trim()||'SmartFix',brandMode=isSmartFixBrand(t),total=brandMode?8:glyphs(t).length;
-    var lw=brandMode?brandWidth(f.size,f.style):tw(t,f.size,f.style);
-    var baseX=Math.max(0,Math.round((W-lw)/2)),baseY=f.size>=2?1:3,reveal=total,scale=255,shimmer=-1,effect=parseInt(p.logoEffect||0);
+    var p=state(),t=(p.logoText||'SmartFix').trim()||'SmartFix',brandMode=isSmartFixBrand(t),total=brandMode?8:glyphs(t).length;
+    var baseX=brandMode?Math.max(0,Math.round((W-50)/2)):Math.max(0,Math.round((W-tw(t))/2)),baseY=3,reveal=total,scale=255,shimmer=-1,effect=parseInt(p.logoEffect||0);
     if(effect===1){var ph=Math.floor(now/logoStep(5))%(total+8);reveal=Math.min(ph,total);} 
     else if(effect===2){var ph2=Math.floor(now/logoStep())%512;if(ph2>255)ph2=511-ph2;scale=50+Math.round(ph2*205/255);} 
-    else if(effect===3){var ph3=Math.floor(now/logoStep())%170,target=baseX;if(ph3<55)baseX=W-((W-target)*ph3/55);else if(ph3>125)baseX=target-((ph3-125)*(target+lw+6)/45);} 
-    else if(effect===11){var ph11=Math.floor(now/logoStep())%220,target11=baseX,w=lw;if(ph11<55)baseX=W-((W-target11)*ph11/55);else if(ph11<110)baseX=target11;else if(ph11<165)baseX=target11+((ph11-110)*(W-target11+2)/55);else baseX=-w+(((target11+w)*(ph11-165))/55);} 
+    else if(effect===3){var ph3=Math.floor(now/logoStep())%170,target=baseX;if(ph3<55)baseX=W-((W-target)*ph3/55);else if(ph3>125)baseX=target-((ph3-125)*(target+56)/45);} 
+    else if(effect===11){var ph11=Math.floor(now/logoStep())%220,target11=baseX,w=brandMode?50:tw(t);if(ph11<55)baseX=W-((W-target11)*ph11/55);else if(ph11<110)baseX=target11;else if(ph11<165)baseX=target11+((ph11-110)*(W-target11+2)/55);else baseX=-w+(((target11+w)*(ph11-165))/55);} 
     else if(effect===4){var sh=Math.floor(now/logoStep(3))%(total+4);if(sh<total)shimmer=sh;} 
     else if(effect===6){var ph6=Math.floor(now/logoStep())%512;if(ph6>255)ph6=511-ph6;scale=150+Math.round(ph6*105/255);} 
     if(effect===7)waveLogo(ctx,brandMode?'SmartFix':t,baseX,baseY,brandMode,scale,false,now);
@@ -373,20 +382,19 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
     else if(brandMode)brand(ctx,baseX,baseY,reveal,scale,shimmer);
     else genericLogo(ctx,t,baseX,baseY,reveal,scale,shimmer);
     if(effect===5||effect===6)sparkles(ctx,baseX,baseY,now);
-    else if(effect===9){txt(ctx,brandMode?'SmartFix':t,baseX+((Math.floor(now/90)%3)-1),baseY,rgba(colors[4],170),f.size,f.style);txt(ctx,brandMode?'SmartFix':t,baseX-((Math.floor(now/110)%3)-1),baseY+1,rgba(colors[2],170),f.size,f.style);}
-    else if(effect===10){var w2=lw,phs=Math.floor(now/logoStep())%(w2+18),sx=baseX-8+phs;lineV(ctx,sx,baseY-1,7*f.size+3,rgba(colors[0],170));lineV(ctx,sx+1,baseY-1,7*f.size+3,rgba(colors[0],170));}
+    else if(effect===9){txt(ctx,brandMode?'SmartFix':t,baseX+((Math.floor(now/90)%3)-1),baseY,rgba(colors[4],170));txt(ctx,brandMode?'SmartFix':t,baseX-((Math.floor(now/110)%3)-1),baseY+1,rgba(colors[2],170));}
+    else if(effect===10){var w2=brandMode?50:tw(t),phs=Math.floor(now/logoStep())%(w2+18),sx=baseX-8+phs;lineV(ctx,sx,baseY-1,10,rgba(colors[0],170));lineV(ctx,sx+1,baseY-1,10,rgba(colors[0],170));}
   }
   function scrollX(now,w,speed,dual){if(dual){var dist=W+w,pos=(now/speed)%(dist*2);return pos<dist?W-pos:-w+(pos-dist);}return W-((now/speed)%(w+W+8));}
   function drawScroll(ctx,now){
-    var p=state(),f=scrollFont(),t=p.scrollText||'SmartFix Matrix',effect=parseInt(p.scrollEffect||0),speed=Math.max(8,parseInt(p.speed||35)),w=tw(t,f.size,f.style),x=scrollX(now,w,speed,effect===6),y=f.size>=2?17:20,color=colorByIndex(parseInt(p.scrollColor||0));
-    if(effect===1){var chars=glyphs(t),cx=x;for(var i=0;i<chars.length;i++){txt(ctx,chars[i],cx,y,wordColors[(i+Math.floor(now/180))%wordColors.length],f.size,f.style);cx+=glyphWidth(chars[i],f.size,f.style);}return;}
-    if(effect===2){var cs=glyphs(t),cx2=x,amp=f.size>=2?1:2;for(var j=0;j<cs.length;j++){txt(ctx,cs[j],cx2,y+triangle(Math.floor(now/70)+j*3,amp),color,f.size,f.style);cx2+=glyphWidth(cs[j],f.size,f.style);}return;}
-    if(effect===3){txt(ctx,t,x,y,color,f.size,f.style);sparkles(ctx,0,15,now);return;}
-    if(effect===4){txt(ctx,t,x+3,y,rgba(color,45),f.size,f.style);txt(ctx,t,x+2,y,rgba(color,75),f.size,f.style);txt(ctx,t,x+1,y,rgba(color,110),f.size,f.style);txt(ctx,t,x,y,color,f.size,f.style);return;}
-    if(effect===5){txt(ctx,t,x,y,((Math.floor(now/350)%2)===0)?colors[0]:color,f.size,f.style);return;}
-    txt(ctx,t,x,y,color,f.size,f.style);
+    var p=state(),t=p.scrollText||'SmartFix Matrix',effect=parseInt(p.scrollEffect||0),speed=Math.max(8,parseInt(p.speed||35)),x=scrollX(now,tw(t),speed,effect===6),y=20,color=colorByIndex(parseInt(p.scrollColor||0));
+    if(effect===1){var chars=glyphs(t),cx=x;for(var i=0;i<chars.length;i++){txt(ctx,chars[i],cx,y,wordColors[(i+Math.floor(now/180))%wordColors.length]);cx+=(chars[i]==='ß'?12:6);}return;}
+    if(effect===2){var cs=glyphs(t),cx2=x;for(var j=0;j<cs.length;j++){txt(ctx,cs[j],cx2,y+triangle(Math.floor(now/70)+j*3,2),color);cx2+=(cs[j]==='ß'?12:6);}return;}
+    if(effect===3){txt(ctx,t,x,y,color);sparkles(ctx,0,15,now);return;}
+    if(effect===4){txt(ctx,t,x+3,y,rgba(color,45));txt(ctx,t,x+2,y,rgba(color,75));txt(ctx,t,x+1,y,rgba(color,110));txt(ctx,t,x,y,color);return;}
+    if(effect===5){txt(ctx,t,x,y,((Math.floor(now/350)%2)===0)?colors[0]:color);return;}
+    txt(ctx,t,x,y,color);
   }
-
   function makeBase(){
     if(baseReady)return;
     baseCanvas=document.createElement('canvas');baseCanvas.width=W*S;baseCanvas.height=H*S;
@@ -446,10 +454,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += "logoColor:" + String(logoColorMode) + ",";
   page += "speed:" + String(scrollInterval) + ",";
   page += "logoSpeed:" + String(logoInterval) + ",";
-  page += "scrollFontSize:" + String(scrollFontSize) + ",";
-  page += "logoFontSize:" + String(logoFontSize) + ",";
-  page += "scrollFontStyle:" + String(scrollFontStyle) + ",";
-  page += "logoFontStyle:" + String(logoFontStyle) + ",";
+  page += "brightness:" + String(matrixBrightness) + ",";
   page += "panelCount:" + String(panelCount);
   page += "};</script>";
   page += "</head><body><div class='wrap'>";
@@ -468,9 +473,9 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += "<div class='pill blue'><div class='label'>" + L("Display", "Display") + "</div><div class='value'>" + String(getPanelLayoutName()) + "</div></div>";
   page += "<div class='pill blue'><div class='label'>" + L("Modus", "Mode") + "</div><div class='value'>" + String(getModeName(currentMode)) + "</div></div>";
   page += "<div class='pill'><div class='label'>" + L("Auto Demo", "Auto demo") + "</div><div class='value'>" + autoStatus + "</div></div>";
-  page += "<div class='pill'><div class='label'>" + L("Helligkeit", "Brightness") + "</div><div class='value'>" + String(matrixBrightness) + " / 255</div></div>";
-  page += "<div class='pill'><div class='label'>" + L("Laufschrift", "Scroll") + "</div><div class='value'>" + String(getSpeedName()) + " / " + String(getScrollTextEffectName()) + "<br>" + String(getScrollFontSizeName()) + " / " + String(getScrollFontStyleName()) + "</div></div>";
-  page += "<div class='pill'><div class='label'>Logo</div><div class='value'>" + String(getLogoSpeedName()) + " / " + String(getLogoEffectName()) + "<br>" + String(getLogoFontSizeName()) + " / " + String(getLogoFontStyleName()) + "</div></div>";
+  page += "<div class='pill'><div class='label'>" + L("Helligkeit", "Brightness") + "</div><div class='value' id='brightnessStatusValue'>" + String(matrixBrightness) + " / 255</div></div>";
+  page += "<div class='pill'><div class='label'>" + L("Laufschrift", "Scroll") + "</div><div class='value'>" + String(getSpeedName()) + " / " + String(getScrollTextEffectName()) + "</div></div>";
+  page += "<div class='pill'><div class='label'>Logo</div><div class='value'>" + String(getLogoSpeedName()) + " / " + String(getLogoEffectName()) + "</div></div>";
   page += "<div class='pill'><div class='label'>" + L("Textfarbe", "Text color") + "</div><div class='value'>" + String(getScrollTextColorName()) + "</div></div>";
   page += "<div class='pill'><div class='label'>" + L("Heim WLAN", "Home WiFi") + "</div><div class='value'>" + getWiFiStatusText() + "<br>" + htmlEscape(getStaIpText()) + "</div></div>";
   page += "<div class='pill'><div class='label'>" + L("mDNS Adresse", "mDNS address") + "</div><div class='value'>" + htmlEscape(getMdnsAddressText()) + "</div></div>";
@@ -511,17 +516,6 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += htmlButton(L("Schnell", "Fast"), "/speed?v=18");
   page += htmlButton("Turbo", "/speed?v=8");
   page += "</div>";
-  page += "<h2>" + L("Schriftgröße", "Font size") + "</h2><div class='buttons'>";
-  page += htmlButton(L("Klein", "Small"), "/scroll-font-size?s=1");
-  page += htmlButton(L("Groß", "Large"), "/scroll-font-size?s=2");
-  page += "</div>";
-  page += "<h2>" + L("Schriftart", "Font style") + "</h2><div class='buttons'>";
-  page += htmlButton(L("Klassisch", "Classic"), "/scroll-font-style?f=0");
-  page += htmlButton(L("Fett", "Bold"), "/scroll-font-style?f=1");
-  page += htmlButton(L("Breit", "Wide"), "/scroll-font-style?f=2");
-  page += htmlButton("Block", "/scroll-font-style?f=3");
-  page += "</div>";
-  page += "<div class='hint'>" + L("Große Schrift braucht auf 32 Pixel Höhe mehr Platz. Die Vorschau zeigt sofort, ob es gut lesbar bleibt.", "Large font needs more room on 32 pixels height. The preview immediately shows readability.") + "</div>";
   page += "<h2>" + L("Farbe", "Color") + "</h2><div class='buttons'>";
   page += htmlButton(L("Weiß", "White"), "/text-color?c=0");
   page += htmlButton(L("Grün", "Green"), "/text-color?c=1");
@@ -568,16 +562,6 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += htmlButton(L("Schnell", "Fast"), "/logo-speed?v=18");
   page += htmlButton("Turbo", "/logo-speed?v=8");
   page += "</div><div class='hint'>" + L("Logo Geschwindigkeit und Laufschrift Geschwindigkeit sind jetzt getrennt gespeichert.", "Logo speed and scrolling text speed are now saved separately.") + "</div>";
-  page += "<h2>" + L("Logo Schriftgröße", "Logo font size") + "</h2><div class='buttons'>";
-  page += htmlButton(L("Klein", "Small"), "/logo-font-size?s=1");
-  page += htmlButton(L("Groß", "Large"), "/logo-font-size?s=2");
-  page += "</div>";
-  page += "<h2>" + L("Logo Schriftart", "Logo font style") + "</h2><div class='buttons'>";
-  page += htmlButton(L("Klassisch", "Classic"), "/logo-font-style?f=0");
-  page += htmlButton(L("Fett", "Bold"), "/logo-font-style?f=1");
-  page += htmlButton(L("Breit", "Wide"), "/logo-font-style?f=2");
-  page += htmlButton("Block", "/logo-font-style?f=3");
-  page += "</div><div class='hint'>" + L("Schriftgröße und Schriftart sind für Logo und Laufschrift getrennt einstellbar.", "Font size and font style are separately adjustable for logo and scrolling text.") + "</div>";
   page += "<h2>" + L("Logo Farbe", "Logo color") + "</h2><div class='buttons'>";
   page += htmlButton("Auto / Brand", "/logo-color?c=0");
   page += htmlButton(L("Grün", "Green"), "/logo-color?c=1");
@@ -593,11 +577,12 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += "<summary><span class='section-icon'>&#9728;</span><span class='summary-text'>" + L("Auto Demo &amp; Helligkeit", "Auto demo &amp; brightness") + "</span><span class='sumvalue'>" + autoStatus + "</span><span class='chev'>+</span></summary><div class='detail-body'>";
   page += "<h2>Auto Demo</h2><div class='buttons'><a class='btn green' href='/auto'>" + L("Auto Demo starten", "Start auto demo") + "</a>";
   page += htmlButton("Refresh", "/");
-  page += "</div><h2>" + L("Helligkeit", "Brightness") + "</h2><div class='buttons'>";
-  page += htmlButton("25%", "/brightness?v=40");
-  page += htmlButton("50%", "/brightness?v=80");
-  page += htmlButton("75%", "/brightness?v=130");
-  page += htmlButton("100%", "/brightness?v=200");
+  page += "</div><h2>" + L("Helligkeit", "Brightness") + "</h2>";
+  page += "<div class='slider-card'>";
+  page += "<div class='slider-head'><span>" + L("Display Helligkeit", "Display brightness") + "</span><strong id='brightnessValue'>" + String(matrixBrightness) + " / 255</strong></div>";
+  page += "<input id='brightnessSlider' class='range-slider' type='range' min='5' max='255' step='1' value='" + String(matrixBrightness) + "'>";
+  page += "<div class='slider-scale'><span>5</span><span>70</span><span>130</span><span>200</span><span>255</span></div>";
+  page += "<div class='hint'>" + L("Der Wert wird beim Schieben automatisch gespeichert.", "The value is saved automatically while sliding.") + "</div>";
   page += "</div></div></details>";
 
   page += "<details class='card config-section' id='section-display'>";
@@ -840,82 +825,6 @@ static void handleLogoSpeed() {
     Serial.print("Logo speed changed to: ");
     Serial.print(logoInterval);
     Serial.println(" ms");
-  }
-
-  redirectHome();
-}
-
-static void handleScrollFontSize() {
-  if (server.hasArg("s")) {
-    int value = server.arg("s").toInt();
-    if (value < 1) value = 1;
-    if (value > 2) value = 2;
-
-    scrollFontSize = (uint8_t)value;
-    saveScrollFontSetting();
-
-    autoModeDemo = false;
-    setMode(MODE_SCROLL_TEXT, true);
-
-    Serial.print("Scroll font size changed to: ");
-    Serial.println(getScrollFontSizeName());
-  }
-
-  redirectHome();
-}
-
-static void handleLogoFontSize() {
-  if (server.hasArg("s")) {
-    int value = server.arg("s").toInt();
-    if (value < 1) value = 1;
-    if (value > 2) value = 2;
-
-    logoFontSize = (uint8_t)value;
-    saveLogoFontSetting();
-
-    autoModeDemo = false;
-    clearDisplay();
-
-    Serial.print("Logo font size changed to: ");
-    Serial.println(getLogoFontSizeName());
-  }
-
-  redirectHome();
-}
-
-static void handleScrollFontStyle() {
-  if (server.hasArg("f")) {
-    int value = server.arg("f").toInt();
-    if (value < FONT_STYLE_CLASSIC) value = FONT_STYLE_CLASSIC;
-    if (value > FONT_STYLE_BLOCK) value = FONT_STYLE_BLOCK;
-
-    scrollFontStyle = (uint8_t)value;
-    saveScrollFontSetting();
-
-    autoModeDemo = false;
-    setMode(MODE_SCROLL_TEXT, true);
-
-    Serial.print("Scroll font style changed to: ");
-    Serial.println(getScrollFontStyleName());
-  }
-
-  redirectHome();
-}
-
-static void handleLogoFontStyle() {
-  if (server.hasArg("f")) {
-    int value = server.arg("f").toInt();
-    if (value < FONT_STYLE_CLASSIC) value = FONT_STYLE_CLASSIC;
-    if (value > FONT_STYLE_BLOCK) value = FONT_STYLE_BLOCK;
-
-    logoFontStyle = (uint8_t)value;
-    saveLogoFontSetting();
-
-    autoModeDemo = false;
-    clearDisplay();
-
-    Serial.print("Logo font style changed to: ");
-    Serial.println(getLogoFontStyleName());
   }
 
   redirectHome();
@@ -1204,10 +1113,6 @@ void setupWebServer() {
   server.on("/brightness", HTTP_GET, handleBrightness);
   server.on("/speed", HTTP_GET, handleSpeed);
   server.on("/logo-speed", HTTP_GET, handleLogoSpeed);
-  server.on("/scroll-font-size", HTTP_GET, handleScrollFontSize);
-  server.on("/logo-font-size", HTTP_GET, handleLogoFontSize);
-  server.on("/scroll-font-style", HTTP_GET, handleScrollFontStyle);
-  server.on("/logo-font-style", HTTP_GET, handleLogoFontStyle);
   server.on("/text-color", HTTP_GET, handleTextColor);
   server.on("/scroll-effect", HTTP_GET, handleScrollEffect);
   server.on("/logo-effect", HTTP_GET, handleLogoEffect);

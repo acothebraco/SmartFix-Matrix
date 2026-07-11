@@ -3,7 +3,7 @@
 #include <Arduino.h>
 
 // SmartFix Matrix firmware
-#define FIRMWARE_VERSION "1.4.10"
+#define FIRMWARE_VERSION "1.4.11"
 
 // Physical HUB75 panel setup.
 // PANEL_CHAIN is the maximum number of 64x32 panels connected side-by-side.
