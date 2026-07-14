@@ -26,7 +26,7 @@ enum LogoEffectMode {
 };
 
 enum LogoColorMode {
-  LOGO_COLOR_BRAND      = 0,  // Smart=green, Fix=blue. Generic text alternates words green/blue.
+  LOGO_COLOR_BRAND      = 0,  // Brand/generic text alternates words green/blue.
   LOGO_COLOR_GREEN      = 1,
   LOGO_COLOR_BLUE       = 2,
   LOGO_COLOR_WHITE      = 3,

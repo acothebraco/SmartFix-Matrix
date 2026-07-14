@@ -38,7 +38,7 @@ static String extractOtaAssetUrl(const String &json) {
     int nextNamePos = json.indexOf("\"name\"", namePos + 6);
     String block = json.substring(namePos, nextNamePos > 0 ? nextNamePos : json.length());
 
-    if (block.indexOf("SmartFix-Matrix-ota.bin") >= 0) {
+    if (block.indexOf("DIY-LED-Matrix-ota.bin") >= 0) {
       return extractJsonString(block, "browser_download_url");
     }
 
@@ -100,7 +100,7 @@ void checkFirmwareUpdateFromGitHub(bool manualCheck) {
   HTTPClient http;
   http.setFollowRedirects(HTTPC_STRICT_FOLLOW_REDIRECTS);
   http.begin(client, GITHUB_RELEASE_API_URL);
-  http.addHeader("User-Agent", "SmartFix-Matrix");
+  http.addHeader("User-Agent", "DIY-LED-Matrix");
 
   int httpCode = http.GET();
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SmartFix Matrix — Web Flasher</title>
-  <meta name="description" content="Flash SmartFix Matrix firmware directly from Chrome or Edge using ESP Web Tools." />
+  <title>DIY LED Matrix — Web Flasher</title>
+  <meta name="description" content="Flash DIY LED Matrix firmware directly from Chrome or Edge using ESP Web Tools." />
   <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
   <style>
     :root {
@@ -113,15 +113,15 @@
   <main class="wrap">
     <section class="hero">
       <div class="brand">
-        <div class="logo">SF</div>
+        <div class="logo">DIY</div>
         <div>
-          <strong>SmartFix Elektronikservice</strong>
+          <strong>DIY LED Matrix</strong>
           <small>ESP32-S3 HUB75 Matrix Sign</small>
         </div>
       </div>
 
-      <h1><span class="smart">Smart</span><span class="fix">Fix</span> Matrix</h1>
-      <p class="sub">Flash the SmartFix Matrix firmware directly from your browser — no PlatformIO, no local toolchain.</p>
+      <h1><span class="smart">DIY</span> <span class="fix">LED</span> Matrix</h1>
+      <p class="sub">Flash the DIY LED Matrix firmware directly from your browser — no PlatformIO, no local toolchain.</p>
 
       <div class="firmware-banner" aria-label="Firmware version">
         <span>Current firmware</span>
@@ -132,7 +132,7 @@
       <div class="install-card">
         <div class="install-head">
           <esp-web-install-button manifest="manifest.json">
-            <button slot="activate">⚡ Install SmartFix Matrix</button>
+            <button slot="activate">⚡ Install DIY LED Matrix</button>
             <span slot="unsupported">Use Chrome or Edge on desktop. Web Serial is required.</span>
             <span slot="not-allowed">This page must be opened via HTTPS or localhost.</span>
           </esp-web-install-button>
@@ -141,9 +141,9 @@
 
         <ol>
           <li>Plug the Waveshare ESP32-S3 RGB Matrix board into your computer with a USB-C data cable.</li>
-          <li>Click <strong>Install SmartFix Matrix</strong> and select the <code>USB JTAG/serial</code> or <code>USB Serial</code> port.</li>
+          <li>Click <strong>Install DIY LED Matrix</strong> and select the <code>USB JTAG/serial</code> or <code>USB Serial</code> port.</li>
           <li>For the first flash, choose <strong>Erase device + Install</strong>.</li>
-          <li>After reboot, connect to the <code>SmartFix-Matrix</code> WiFi access point.</li>
+          <li>After reboot, connect to the <code>DIY-LED-Matrix</code> WiFi access point.</li>
           <li>Open <code>http://192.168.4.1/</code> to configure text, colors, effects, home WiFi and OTA.</li>
         </ol>
 
@@ -152,7 +152,7 @@
     </section>
 
     <div class="footer">
-      Source & build instructions: <a href="https://github.com/acothebraco/SmartFix-Matrix">GitHub repository</a>
+      Source & build instructions: <a href="https://github.com/acothebraco/DIY-LED-Matrix">GitHub repository</a>
     </div>
   </main>
 </body>

@@ -1,4 +1,4 @@
-name: SmartFix Matrix Firmware Release
+name: DIY LED Matrix Firmware Release
 
 on:
   push:
@@ -33,8 +33,8 @@ jobs:
       - name: Prepare release files
         run: |
           mkdir -p dist
-          cp .pio/build/esp32-s3-rgb-matrix/SmartFix-Matrix-ota.bin dist/SmartFix-Matrix-ota.bin
-          cp .pio/build/esp32-s3-rgb-matrix/SmartFix-Matrix-usb.bin dist/SmartFix-Matrix-usb.bin
+          cp .pio/build/esp32-s3-rgb-matrix/DIY-LED-Matrix-ota.bin dist/DIY-LED-Matrix-ota.bin
+          cp .pio/build/esp32-s3-rgb-matrix/DIY-LED-Matrix-usb.bin dist/DIY-LED-Matrix-usb.bin
 
       - name: Create GitHub Release
         env:
@@ -46,14 +46,14 @@ jobs:
           if [ -f "$NOTES_FILE" ]; then
             echo "Using release notes: $NOTES_FILE"
             gh release create "$TAG" dist/* \
-              --title "SmartFix Matrix $TAG" \
+              --title "DIY LED Matrix $TAG" \
               --notes-file "$NOTES_FILE" \
               --latest \
               --verify-tag
           else
             echo "No release notes file found for $TAG. Falling back to generated notes."
             gh release create "$TAG" dist/* \
-              --title "SmartFix Matrix $TAG" \
+              --title "DIY LED Matrix $TAG" \
               --generate-notes \
               --latest \
               --verify-tag

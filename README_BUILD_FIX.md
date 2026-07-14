@@ -1,4 +1,4 @@
-# SmartFix Matrix v1.3.1 Build Fix
+# DIY LED Matrix v1.3.1 Build Fix
 
 This package fixes GitHub Actions build errors caused by `web_interface.cpp` referencing the new text/logo effect declarations while the matching state/settings/display files were not committed.
 

@@ -1,4 +1,4 @@
-# SmartFix Matrix v1.4.12 Update
+# DIY LED Matrix v1.4.12 Update
 
 This update restores the font controls from the recovered project ZIP and keeps the v1.4.11 brightness slider.
 

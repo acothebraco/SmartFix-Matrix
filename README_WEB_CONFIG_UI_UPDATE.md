@@ -1,6 +1,6 @@
-# SmartFix Matrix Web Config UI Update
+# DIY LED Matrix Web Config UI Update
 
-This update fixes the dropdown behavior on the web configuration page and gives the page a new SmartFix web flasher inspired design.
+This update fixes the dropdown behavior on the web configuration page and gives the page a new DIY LED Matrix web flasher inspired design.
 
 ## Changed files
 
@@ -15,7 +15,7 @@ release-notes/v1.3.1.md
 - Open dropdown sections stay open after pressing buttons.
 - Scroll position is restored after saving/changing settings.
 - Returning from WiFi scan opens the Home WiFi section automatically.
-- The web config page now uses a modern dark gradient design with SmartFix SF badge.
+- The web config page now uses a modern dark gradient design with DIY LED Matrix DIY badge.
 
 ## Build
 

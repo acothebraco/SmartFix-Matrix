@@ -1,11 +1,11 @@
-# SmartFix Matrix Modular Firmware
+# DIY LED Matrix Modular Firmware
 
 Diese Version ersetzt die große `src/main.cpp` durch mehrere Dateien.
 
 ## Enthaltene Funktionen
 
 - HUB75 Matrix auf Waveshare ESP32-S3-RGB-Matrix
-- AP `SmartFix-Matrix`
+- AP `DIY-LED-Matrix`
 - optionales Heim-WLAN
 - Webinterface
 - Laufschrift Text, Geschwindigkeit, Farbe
@@ -14,7 +14,7 @@ Diese Version ersetzt die große `src/main.cpp` durch mehrere Dateien.
 - gespeicherte Einstellungen per Preferences/NVS
 - GitHub OTA URL + OTA Start
 - 3D Logo Modus entfernt
-- Custom SmartFix Pixel-Font für bessere Lesbarkeit
+- Custom DIY LED Matrix Pixel-Font für bessere Lesbarkeit
 
 ## Import
 

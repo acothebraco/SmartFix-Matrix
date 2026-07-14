@@ -63,12 +63,12 @@ jobs:
 
           sed -i -E "s/__FWVER__/${FWVER:-dev}/g; s/__BUILDDATE__/${BUILDDATE:-unknown}/g" site/index.html site/manifest.json
 
-          if [ -f "$B/SmartFix-Matrix-usb.bin" ]; then
-            cp "$B/SmartFix-Matrix-usb.bin" site/SmartFix-Matrix-usb.bin
+          if [ -f "$B/DIY-LED-Matrix-usb.bin" ]; then
+            cp "$B/DIY-LED-Matrix-usb.bin" site/DIY-LED-Matrix-usb.bin
           else
             BOOT_APP0="$(find "$HOME/.platformio/packages" -name boot_app0.bin -path '*framework-arduinoespressif32*' | head -1)"
             python -m esptool --chip esp32s3 merge_bin \
-              -o site/SmartFix-Matrix-usb.bin \
+              -o site/DIY-LED-Matrix-usb.bin \
               --flash_mode dio \
               --flash_freq 80m \
               --flash_size 32MB \

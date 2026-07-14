@@ -147,7 +147,7 @@ static String htmlPage() {
   page += "<meta charset='UTF-8'>";
   page += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
   page += "<meta name='theme-color' content='#050812'>";
-  page += "<title>SmartFix Matrix</title>";
+  page += "<title>DIY LED Matrix</title>";
   page += R"rawliteral(
 <style>
 :root{--bg:#050812;--panel:#0d1320;--panel2:#111827;--line:#223149;--text:#e5e7eb;--muted:#94a3b8;--green:#22c55e;--green2:#16a34a;--blue:#38bdf8;--blue2:#2563eb;--danger:#ef4444;}
@@ -325,7 +325,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   }
   function glyphs(t){return Array.from(t||'');}
   function prefix(t,n){return glyphs(t).slice(0,Math.max(0,n)).join('');}
-  function isSmartFixBrand(t){return String(t||'').toLowerCase().replace(/[\s\-_]/g,'')==='smartfix';}
+  function isDiyLedMatrixBrand(t){return String(t||'').toLowerCase().replace(/[\s\-_]/g,'')==='diyledmatrix';}
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function hexToRgb(h){h=h.replace('#','');return {r:parseInt(h.substr(0,2),16),g:parseInt(h.substr(2,2),16),b:parseInt(h.substr(4,2),16)};}
   function rgba(hex,scale){var c=hexToRgb(hex),s=clamp(scale==null?255:scale,0,255)/255;return 'rgb('+Math.round(c.r*s)+','+Math.round(c.g*s)+','+Math.round(c.b*s)+')';}
@@ -367,13 +367,9 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   function lineV(ctx,x,y,h,color){for(var i=0;i<h;i++)px(ctx,x,y+i,color);}
   function logoFont(){var p=state();return {size:safeFontSize(p.logoFontSize||1),style:safeFontStyle(p.logoFontStyle||0)};}
   function scrollFont(){var p=state();return {size:safeFontSize(p.scrollFontSize||1),style:safeFontStyle(p.scrollFontStyle||0)};}
-  function brandWidth(size,style){return tw('Smart',size,style)+(size>=2?3:2)+tw('Fix',size,style);}
+  function brandWidth(size,style){return tw('DIY LED Matrix',size,style);}
   function brand(ctx,x,y,reveal,scale,shimmer){
-    var f=logoFont(),smart=prefix('Smart',Math.min(reveal,5)), fix=prefix('Fix',Math.max(0,reveal-5)), fx=x+tw('Smart',f.size,f.style)+(f.size>=2?3:2);
-    txt(ctx,smart,x+1,y+1,logoShadow(0,scale),f.size,f.style); txt(ctx,fix,fx+1,y+1,logoShadow(1,scale),f.size,f.style);
-    txt(ctx,smart,x,y,brandMain(0,scale),f.size,f.style); txt(ctx,fix,fx,y,brandMain(1,scale),f.size,f.style);
-    if(reveal>=8&&scale>90){px(ctx,x+f.size+1,y,logoHighlight(0,scale));px(ctx,x+f.size+2,y,logoHighlight(0,scale));px(ctx,fx+f.size,y,logoHighlight(1,scale));px(ctx,fx+f.size+1,y,logoHighlight(1,scale));}
-    if(shimmer>=0&&reveal>=8){if(shimmer<5)txt(ctx,'Smart'[shimmer],x+tw('Smart'.substring(0,shimmer),f.size,f.style),y,logoHighlight(0,scale),f.size,f.style);else txt(ctx,'Fix'[shimmer-5],fx+tw('Fix'.substring(0,shimmer-5),f.size,f.style),y,logoHighlight(1,scale),f.size,f.style);}
+    genericLogo(ctx,'DIY LED Matrix',x,y,reveal,scale,shimmer);
   }
   function genericLogo(ctx,t,x,y,reveal,scale,shimmer){
     var f=logoFont(),visible=prefix(t,reveal), chars=glyphs(visible), cx=x, word=0;
@@ -382,13 +378,20 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   function triangle(phase,amp){phase=phase%24;if(phase>12)phase=24-phase;return Math.round((phase*amp*2/12)-amp);}
   function logoStep(mult){var p=state(),s=parseInt(p.logoSpeed||35)*(mult||1);return clamp(s,8,240);}
   function waveLogo(ctx,t,x,y,brandMode,scale,bounce,now){
-    var f=logoFont(),chars=glyphs(t),cx=x,global=bounce?triangle(Math.floor(now/logoStep(2)),f.size>=2?1:2):0;
-    for(var i=0;i<chars.length;i++){var ch=chars[i],part=brandMode?(i<5?0:1):0,yy=y+global;if(!bounce)yy=y+triangle(Math.floor(now/logoStep(2))+i*3,f.size>=2?1:2);txt(ctx,ch,cx+1,yy+1,logoShadow(part,scale),f.size,f.style);txt(ctx,ch,cx,yy,brandMode?brandMain(part,scale):logoMain(part,scale),f.size,f.style);cx+=glyphWidth(ch,f.size,f.style);if(brandMode&&i===4)cx+=(f.size>=2?3:2);}
+    var f=logoFont(),chars=glyphs(t),cx=x,global=bounce?triangle(Math.floor(now/logoStep(2)),f.size>=2?1:2):0,word=0;
+    for(var i=0;i<chars.length;i++){
+      var ch=chars[i],part=word,yy=y+global;
+      if(!bounce)yy=y+triangle(Math.floor(now/logoStep(2))+i*3,f.size>=2?1:2);
+      txt(ctx,ch,cx+1,yy+1,logoShadow(part,scale),f.size,f.style);
+      txt(ctx,ch,cx,yy,logoMain(part,scale),f.size,f.style);
+      cx+=glyphWidth(ch,f.size,f.style);
+      if(ch===' '||ch==='-'||ch==='_')word++;
+    }
   }
   function sparkles(ctx,x,y,now){var pts=[[0,0],[8,1],[15,-1],[25,0],[35,-1],[46,1],[52,0],[4,9],[12,10],[29,9],[39,10],[48,9],[57,10]],f=Math.floor(now/95)%16;pts.forEach(function(pt,i){if(((i+f)%5)===0)px(ctx,x+pt[0],y+pt[1],logoHighlight(i,180));});}
   function drawLogo(ctx,now){
-    var p=state(),f=logoFont(),t=(p.logoText||'SmartFix').trim()||'SmartFix',brandMode=isSmartFixBrand(t),total=brandMode?8:glyphs(t).length;
-    var lw=brandMode?brandWidth(f.size,f.style):tw(t,f.size,f.style);
+    var p=state(),f=logoFont(),brandText='DIY LED Matrix',t=(p.logoText||brandText).trim()||brandText,brandMode=isDiyLedMatrixBrand(t),renderText=brandMode?brandText:t,total=glyphs(renderText).length;
+    var lw=tw(renderText,f.size,f.style);
     var baseX=Math.max(0,Math.round((W-lw)/2)),baseY=f.size>=2?1:3,reveal=total,scale=255,shimmer=-1,effect=parseInt(p.logoEffect||0);
     if(effect===1){var ph=Math.floor(now/logoStep(5))%(total+8);reveal=Math.min(ph,total);} 
     else if(effect===2){var ph2=Math.floor(now/logoStep())%512;if(ph2>255)ph2=511-ph2;scale=50+Math.round(ph2*205/255);} 
@@ -396,17 +399,17 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
     else if(effect===11){var ph11=Math.floor(now/logoStep())%220,target11=baseX,w=lw;if(ph11<55)baseX=W-((W-target11)*ph11/55);else if(ph11<110)baseX=target11;else if(ph11<165)baseX=target11+((ph11-110)*(W-target11+2)/55);else baseX=-w+(((target11+w)*(ph11-165))/55);} 
     else if(effect===4){var sh=Math.floor(now/logoStep(3))%(total+4);if(sh<total)shimmer=sh;} 
     else if(effect===6){var ph6=Math.floor(now/logoStep())%512;if(ph6>255)ph6=511-ph6;scale=150+Math.round(ph6*105/255);} 
-    if(effect===7)waveLogo(ctx,brandMode?'SmartFix':t,baseX,baseY,brandMode,scale,false,now);
-    else if(effect===8)waveLogo(ctx,brandMode?'SmartFix':t,baseX,baseY,brandMode,scale,true,now);
+    if(effect===7)waveLogo(ctx,renderText,baseX,baseY,brandMode,scale,false,now);
+    else if(effect===8)waveLogo(ctx,renderText,baseX,baseY,brandMode,scale,true,now);
     else if(brandMode)brand(ctx,baseX,baseY,reveal,scale,shimmer);
-    else genericLogo(ctx,t,baseX,baseY,reveal,scale,shimmer);
+    else genericLogo(ctx,renderText,baseX,baseY,reveal,scale,shimmer);
     if(effect===5||effect===6)sparkles(ctx,baseX,baseY,now);
-    else if(effect===9){txt(ctx,brandMode?'SmartFix':t,baseX+((Math.floor(now/90)%3)-1),baseY,rgba(colors[4],170),f.size,f.style);txt(ctx,brandMode?'SmartFix':t,baseX-((Math.floor(now/110)%3)-1),baseY+1,rgba(colors[2],170),f.size,f.style);}
+    else if(effect===9){txt(ctx,renderText,baseX+((Math.floor(now/90)%3)-1),baseY,rgba(colors[4],170),f.size,f.style);txt(ctx,renderText,baseX-((Math.floor(now/110)%3)-1),baseY+1,rgba(colors[2],170),f.size,f.style);}
     else if(effect===10){var w2=lw,phs=Math.floor(now/logoStep())%(w2+18),sx=baseX-8+phs;lineV(ctx,sx,baseY-1,7*f.size+3,rgba(colors[0],170));lineV(ctx,sx+1,baseY-1,7*f.size+3,rgba(colors[0],170));}
   }
   function scrollX(now,w,speed,dual){if(dual){var dist=W+w,pos=(now/speed)%(dist*2);return pos<dist?W-pos:-w+(pos-dist);}return W-((now/speed)%(w+W+8));}
   function drawScroll(ctx,now){
-    var p=state(),f=scrollFont(),t=p.scrollText||'SmartFix Matrix',effect=parseInt(p.scrollEffect||0),speed=Math.max(8,parseInt(p.speed||35)),w=tw(t,f.size,f.style),x=scrollX(now,w,speed,effect===6),y=f.size>=2?17:20,color=colorByIndex(parseInt(p.scrollColor||0));
+    var p=state(),f=scrollFont(),t=p.scrollText||'DIY LED Matrix',effect=parseInt(p.scrollEffect||0),speed=Math.max(8,parseInt(p.speed||35)),w=tw(t,f.size,f.style),x=scrollX(now,w,speed,effect===6),y=f.size>=2?17:20,color=colorByIndex(parseInt(p.scrollColor||0));
     if(effect===1){var chars=glyphs(t),cx=x;for(var i=0;i<chars.length;i++){txt(ctx,chars[i],cx,y,wordColors[(i+Math.floor(now/180))%wordColors.length],f.size,f.style);cx+=glyphWidth(chars[i],f.size,f.style);}return;}
     if(effect===2){var cs=glyphs(t),cx2=x,amp=f.size>=2?1:2;for(var j=0;j<cs.length;j++){txt(ctx,cs[j],cx2,y+triangle(Math.floor(now/70)+j*3,amp),color,f.size,f.style);cx2+=glyphWidth(cs[j],f.size,f.style);}return;}
     if(effect===3){txt(ctx,t,x,y,color,f.size,f.style);sparkles(ctx,0,15,now);return;}
@@ -485,9 +488,9 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
 
   page += "<div class='hero'>";
   page += "<div class='lang-switch'><a class='lang-btn" + activeLangClass("de") + "' href='/lang?l=de'>DE</a><a class='lang-btn" + activeLangClass("en") + "' href='/lang?l=en'>EN</a></div>";
-  page += "<div class='topbar'><div class='logo-badge'>SF</div><div class='title-block'>";
-  page += "<h1>SmartFix Matrix</h1>";
-  page += "<div class='sub'>" + L("SmartFix Elektronikservice &bull; ESP32-S3 HUB75 Matrix", "SmartFix electronics service &bull; ESP32-S3 HUB75 Matrix") + "</div>";
+  page += "<div class='topbar'><div class='logo-badge'>DIY</div><div class='title-block'>";
+  page += "<h1>DIY LED Matrix</h1>";
+  page += "<div class='sub'>" + L("DIY LED Matrix &bull; ESP32-S3 HUB75 Matrix", "DIY LED Matrix &bull; ESP32-S3 HUB75 Matrix") + "</div>";
   page += "</div><div class='version-chip'>Firmware v";
   page += FIRMWARE_VERSION;
   page += "</div></div>";
@@ -570,7 +573,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += "</div><div class='hint'>" + L("Effekte betreffen nur die laufende Textzeile unten.", "Effects apply only to the lower scrolling text line.") + "</div></div></details>";
 
   page += "<details class='card config-section' id='section-logo'>";
-  page += "<summary><span class='section-icon'>SF</span><span class='summary-text'>Logo / Header</span><span class='sumvalue'>" + String(getLogoEffectName()) + "</span><span class='chev'>+</span></summary><div class='detail-body'>";
+  page += "<summary><span class='section-icon'>DIY</span><span class='summary-text'>Logo / Header</span><span class='sumvalue'>" + String(getLogoEffectName()) + "</span><span class='chev'>+</span></summary><div class='detail-body'>";
   page += "<div class='row-title'><h2>" + L("Logo Text", "Logo text") + "</h2><span class='mini-chip'>" + L("max. 160 Zeichen", "max. 160 characters") + "</span></div>";
   page += "<form action='/set-logo-text' method='GET'>";
   page += "<input id='logoTextInput' name='t' maxlength='160' value='" + htmlEscape(logoText) + "'>";
@@ -652,7 +655,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += htmlButton("Refresh", "/");
   page += "</div>";
   if (wifiSsidFromScan) page += "<div class='hint'>" + L("SSID aus Scan &uuml;bernommen. Bitte WLAN Passwort eingeben und speichern.", "SSID copied from scan. Enter the WiFi password and save.") + "</div>";
-  page += "<div class='sub' style='margin-top:12px;'>" + L("Der SmartFix-Matrix Access Point bleibt zus&auml;tzlich aktiv.", "The SmartFix-Matrix access point remains active.") + "</div></div></details>";
+  page += "<div class='sub' style='margin-top:12px;'>" + L("Der DIY-LED-Matrix Access Point bleibt zus&auml;tzlich aktiv.", "The DIY-LED-Matrix access point remains active.") + "</div></div></details>";
 
   page += "<details class='card config-section' id='section-ota'>";
   page += "<summary><span class='section-icon'>&#9889;</span><span class='summary-text'>" + L("Firmware Update", "Firmware update") + "</span><span class='sumvalue'>" + htmlEscape(lastOtaStatus) + "</span><span class='chev'>+</span></summary><div class='detail-body'>";
@@ -663,12 +666,12 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += htmlButton(L("GitHub Update jetzt installieren", "Install GitHub update now"), "/ota-github-start");
   page += htmlButton("Refresh", "/");
   page += "</div>";
-  page += "<div class='hint'>" + L("Der Button prüft GitHub und flasht nur dann automatisch, wenn eine neuere SmartFix-Matrix-ota.bin verfügbar ist.", "The button checks GitHub and flashes automatically only when a newer SmartFix-Matrix-ota.bin is available.") + "</div>";
+  page += "<div class='hint'>" + L("Der Button prüft GitHub und flasht nur dann automatisch, wenn eine neuere DIY-LED-Matrix-ota.bin verfügbar ist.", "The button checks GitHub and flashes automatically only when a newer DIY-LED-Matrix-ota.bin is available.") + "</div>";
   page += "<h2>" + L("OTA BIN manuell flashen", "Flash OTA BIN manually") + "</h2>";
   page += "<form method='POST' action='/ota-upload' enctype='multipart/form-data'>";
   page += "<input type='file' name='firmware' accept='.bin' required>";
   page += "<button class='btn green' type='submit'>" + L("OTA BIN hochladen und flashen", "Upload and flash OTA BIN") + "</button></form>";
-  page += "<div class='hint'>" + L("Wichtig: Hier nur die SmartFix-Matrix-ota.bin verwenden, nicht die USB-Full-BIN.", "Important: use only SmartFix-Matrix-ota.bin here, not the USB full BIN.") + "</div>";
+  page += "<div class='hint'>" + L("Wichtig: Hier nur die DIY-LED-Matrix-ota.bin verwenden, nicht die USB-Full-BIN.", "Important: use only DIY-LED-Matrix-ota.bin here, not the USB full BIN.") + "</div>";
   page += "<div class='hint'>" + L("Status", "Status") + ": " + htmlEscape(lastOtaStatus) + "</div></div></details>";
 
   page += "<details class='card config-section' id='section-system'>";
@@ -677,7 +680,7 @@ a{color:inherit}.wrap{max-width:940px;margin:0 auto;padding:22px}.hero{position:
   page += htmlButton("Refresh", "/");
   page += "</div></div></details>";
 
-  page += "<div class='small'>" + L("SmartFix Elektronikservice &bull; Entwickelt f&uuml;r ", "SmartFix electronics service &bull; Designed for ") + String(getPanelLayoutName()) + " HUB75 RGB Matrix</div>";
+  page += "<div class='small'>" + L("DIY LED Matrix &bull; Entwickelt f&uuml;r ", "DIY LED Matrix &bull; Designed for ") + String(getPanelLayoutName()) + " HUB75 RGB Matrix</div>";
   page += "</div></body></html>";
   return page;
 }
@@ -958,7 +961,7 @@ static void handleSetText() {
     newText.trim();
 
     if (newText.length() == 0) {
-      newText = "SMARTFIX ELEKTRONIKSERVICE";
+      newText = "DIY LED MATRIX ELEKTRONIKSERVICE";
     }
 
     if (newText.length() > MAX_SCROLL_TEXT_LEN) {
@@ -986,7 +989,7 @@ static void handleSetLogoText() {
     newLogoText.trim();
 
     if (newLogoText.length() == 0) {
-      newLogoText = "SmartFix";
+      newLogoText = "DIY LED Matrix";
     }
 
     if (newLogoText.length() > MAX_LOGO_TEXT_LEN) {
@@ -1011,14 +1014,14 @@ static String wifiScanPage() {
   page += "<meta charset='UTF-8'>";
   page += "<meta name='viewport' content='width=device-width, initial-scale=1.0'>";
   page += "<meta name='theme-color' content='#050812'>";
-  page += "<title>SmartFix Matrix WiFi Scan</title>";
+  page += "<title>DIY LED Matrix WiFi Scan</title>";
   page += R"rawliteral(
 <style>
 :root{--bg:#050812;--panel:#0d1320;--line:#223149;--text:#e5e7eb;--muted:#94a3b8;--green:#22c55e;--blue:#38bdf8}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 18% 0%,rgba(34,197,94,.20),transparent 34%),radial-gradient(circle at 88% 10%,rgba(56,189,248,.16),transparent 32%),linear-gradient(180deg,#050812 0%,#08111f 55%,#050812 100%);color:var(--text);min-height:100vh}.wrap{max-width:940px;margin:0 auto;padding:22px}.card{background:linear-gradient(145deg,rgba(17,24,39,.93),rgba(2,6,23,.92));border:1px solid rgba(148,163,184,.22);border-radius:26px;padding:22px;margin-bottom:16px;box-shadow:0 22px 70px rgba(0,0,0,.45)}.topbar{display:flex;align-items:center;gap:15px;margin-bottom:18px}.logo-badge{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-weight:900;font-size:20px;color:white;background:linear-gradient(135deg,var(--green),var(--blue));box-shadow:0 0 32px rgba(34,197,94,.28)}h1{margin:0;font-size:31px;letter-spacing:-.8px}h2{margin:0 0 14px;font-size:18px;color:#7dd3fc}.sub{color:var(--muted);line-height:1.45;margin-bottom:18px}.net{display:grid;grid-template-columns:1.4fr .7fr .8fr .8fr;gap:10px;align-items:center;background:rgba(2,6,23,.72);border:1px solid rgba(148,163,184,.18);border-radius:16px;padding:12px;margin-bottom:10px}.ssid{font-weight:bold;color:#f8fafc;word-break:break-word}.meta{font-size:13px;color:var(--muted)}.btn{display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;min-height:42px;background:linear-gradient(135deg,#2563eb,#0ea5e9);color:white;padding:10px 12px;border-radius:13px;font-weight:800}.btn.green{background:linear-gradient(135deg,#16a34a,#22c55e)}.btn:hover{filter:brightness(1.12)}.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}@media(max-width:650px){.net{grid-template-columns:1fr}.actions{grid-template-columns:1fr}.wrap{padding:14px}}
 </style>
 )rawliteral";
   page += "</head><body><div class='wrap'><div class='card'>";
-  page += "<div class='topbar'><div class='logo-badge'>SF</div><div><h1>SmartFix Matrix</h1><div class='sub' style='margin:5px 0 0;'>" + L("WLAN Scan", "WiFi scan") + "</div></div></div>";
+  page += "<div class='topbar'><div class='logo-badge'>DIY</div><div><h1>DIY LED Matrix</h1><div class='sub' style='margin:5px 0 0;'>" + L("WLAN Scan", "WiFi scan") + "</div></div></div>";
   page += "<h2>" + L("Gefundene WLAN-Netzwerke", "Found WiFi networks") + "</h2>";
   page += "<div class='sub'>" + L("W&auml;hle eine SSID aus, gib danach das Passwort ein und speichere die Verbindung.", "Select an SSID, then enter the password and save the connection.") + "</div>";
 
@@ -1077,7 +1080,7 @@ static void handleWifiSave() {
 
     server.send(200, "text/html",
                 "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-                "<h1>SmartFix Matrix</h1>"
+                "<h1>DIY LED Matrix</h1>"
                 "<p>WLAN gespeichert. Neustart...</p>"
                 "</body></html>");
 
@@ -1098,7 +1101,7 @@ static void handleWifiForget() {
 
   server.send(200, "text/html",
               "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-              "<h1>SmartFix Matrix</h1>"
+              "<h1>DIY LED Matrix</h1>"
               "<p>Heim WLAN gel&ouml;scht. Neustart...</p>"
               "</body></html>");
 
@@ -1111,7 +1114,7 @@ static void handleGithubOtaStart() {
     lastOtaStatus = "GitHub OTA Fehler: Home WiFi ist nicht verbunden.";
     server.send(200, "text/html",
                 "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-                "<h1>SmartFix Matrix OTA</h1>"
+                "<h1>DIY LED Matrix OTA</h1>"
                 "<p>Home WiFi ist nicht verbunden.</p>"
                 "<p><a style='color:#38bdf8' href='/#section-ota'>Zurück</a></p>"
                 "</body></html>");
@@ -1124,7 +1127,7 @@ static void handleGithubOtaStart() {
     lastOtaStatus = "Kein neueres GitHub Update gefunden.";
     server.send(200, "text/html",
                 "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-                "<h1>SmartFix Matrix OTA</h1>"
+                "<h1>DIY LED Matrix OTA</h1>"
                 "<p>Kein neueres GitHub Update gefunden.</p>"
                 "<p><a style='color:#38bdf8' href='/#section-ota'>Zurück</a></p>"
                 "</body></html>");
@@ -1132,11 +1135,11 @@ static void handleGithubOtaStart() {
   }
 
   if (latestFirmwareUrl.length() == 0) {
-    lastOtaStatus = "GitHub OTA Fehler: SmartFix-Matrix-ota.bin nicht gefunden.";
+    lastOtaStatus = "GitHub OTA Fehler: DIY-LED-Matrix-ota.bin nicht gefunden.";
     server.send(500, "text/html",
                 "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-                "<h1>SmartFix Matrix OTA</h1>"
-                "<p>SmartFix-Matrix-ota.bin wurde im GitHub Release nicht gefunden.</p>"
+                "<h1>DIY LED Matrix OTA</h1>"
+                "<p>DIY-LED-Matrix-ota.bin wurde im GitHub Release nicht gefunden.</p>"
                 "<p><a style='color:#38bdf8' href='/#section-ota'>Zurück</a></p>"
                 "</body></html>");
     return;
@@ -1148,7 +1151,7 @@ static void handleGithubOtaStart() {
 
   server.send(200, "text/html",
               "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-              "<h1>SmartFix Matrix OTA</h1>"
+              "<h1>DIY LED Matrix OTA</h1>"
               "<p>GitHub OTA Update startet jetzt.</p>"
               "<p>Bitte Stromversorgung nicht trennen.</p>"
               "</body></html>");
@@ -1162,9 +1165,9 @@ static void handleOtaUploadFinished() {
     lastOtaStatus = "Manuelles OTA fehlgeschlagen.";
     server.send(500, "text/html",
                 "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-                "<h1>SmartFix Matrix OTA</h1>"
+                "<h1>DIY LED Matrix OTA</h1>"
                 "<p>Upload fehlgeschlagen.</p>"
-                "<p>Bitte SmartFix-Matrix-ota.bin verwenden.</p>"
+                "<p>Bitte DIY-LED-Matrix-ota.bin verwenden.</p>"
                 "</body></html>");
     return;
   }
@@ -1172,7 +1175,7 @@ static void handleOtaUploadFinished() {
   lastOtaStatus = "Manuelles OTA OK. Neustart...";
   server.send(200, "text/html",
               "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-              "<h1>SmartFix Matrix OTA</h1>"
+              "<h1>DIY LED Matrix OTA</h1>"
               "<p>Firmware wurde hochgeladen.</p>"
               "<p>Neustart...</p>"
               "</body></html>");
@@ -1217,7 +1220,7 @@ static void handleFactoryReset() {
 
   server.send(200, "text/html",
               "<html><body style='background:#0b0f14;color:white;font-family:Arial;text-align:center;padding-top:40px;'>"
-              "<h1>SmartFix Matrix</h1>"
+              "<h1>DIY LED Matrix</h1>"
               "<p>Einstellungen wurden gel&ouml;scht.</p>"
               "<p>Neustart...</p>"
               "</body></html>");

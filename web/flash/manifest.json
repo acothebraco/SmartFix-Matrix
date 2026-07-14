@@ -1,5 +1,5 @@
 {
-  "name": "SmartFix Matrix",
+  "name": "DIY LED Matrix",
   "version": "__FWVER__",
   "new_install_prompt_erase": true,
   "builds": [
@@ -7,7 +7,7 @@
       "chipFamily": "ESP32-S3",
       "parts": [
         {
-          "path": "SmartFix-Matrix-usb.bin",
+          "path": "DIY-LED-Matrix-usb.bin",
           "offset": 0
         }
       ]

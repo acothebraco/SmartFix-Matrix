@@ -8,8 +8,8 @@ PROJECT_DIR = Path(env.subst("$PROJECT_DIR"))
 BUILD_DIR = Path(env.subst("$BUILD_DIR"))
 
 APP_BIN = BUILD_DIR / "firmware.bin"
-OTA_BIN = BUILD_DIR / "SmartFix-Matrix-ota.bin"
-USB_BIN = BUILD_DIR / "SmartFix-Matrix-usb.bin"
+OTA_BIN = BUILD_DIR / "DIY-LED-Matrix-ota.bin"
+USB_BIN = BUILD_DIR / "DIY-LED-Matrix-usb.bin"
 
 BOOTLOADER_BIN = BUILD_DIR / "bootloader.bin"
 PARTITIONS_BIN = BUILD_DIR / "partitions.bin"
@@ -29,7 +29,7 @@ def find_boot_app0():
 
 
 def after_build(target, source, env):
-    print("\n=== SmartFix Matrix BIN Export ===")
+    print("\n=== DIY LED Matrix BIN Export ===")
 
     if not APP_BIN.exists():
         print(f"ERROR: App firmware not found: {APP_BIN}")

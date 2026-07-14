@@ -1,6 +1,6 @@
-# SmartFix Matrix Web Flasher
+# DIY LED Matrix Web Flasher
 
-This update adds a GitHub Pages based browser flasher for SmartFix Matrix.
+This update adds a GitHub Pages based browser flasher for DIY LED Matrix.
 
 ## Files
 
@@ -12,7 +12,7 @@ web/flash/manifest.json
 
 ## One-time GitHub setup
 
-1. Open the SmartFix-Matrix repository on GitHub.
+1. Open the DIY-LED-Matrix repository on GitHub.
 2. Go to Settings -> Pages.
 3. Set Source to GitHub Actions.
 4. Push this update to main.
@@ -21,7 +21,7 @@ web/flash/manifest.json
 The web flasher will be available at:
 
 ```text
-https://acothebraco.github.io/SmartFix-Matrix/
+https://acothebraco.github.io/DIY-LED-Matrix/
 ```
 
 ## Important
@@ -29,13 +29,13 @@ https://acothebraco.github.io/SmartFix-Matrix/
 The browser flasher uses the full USB binary:
 
 ```text
-SmartFix-Matrix-usb.bin
+DIY-LED-Matrix-usb.bin
 ```
 
 The OTA binary is still used only for OTA updates from the device web interface:
 
 ```text
-SmartFix-Matrix-ota.bin
+DIY-LED-Matrix-ota.bin
 ```
 
 

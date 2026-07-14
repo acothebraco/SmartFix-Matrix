@@ -9,8 +9,8 @@ bool autoModeDemo = true;
 unsigned long lastModeChange = 0;
 const unsigned long modeInterval = 10000;
 
-String scrollText = "ELEKTRONIKSERVICE  -  REPARATUR  -  KONSOLEN  -  SMARTFIX  ";
-String logoText = "SmartFix";
+String scrollText = "DIY LED MATRIX  -  PIXEL ART  -  ESP32  -  HUB75  ";
+String logoText = "DIY LED Matrix";
 
 uint8_t panelCount = MAX_PANEL_COUNT;
 uint8_t matrixBrightness = DEFAULT_BRIGHTNESS;

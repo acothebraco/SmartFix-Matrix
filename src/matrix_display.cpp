@@ -271,8 +271,17 @@ static String utf8PrefixByCodepoints(const String &text, uint8_t maxCodepoints) 
   return output;
 }
 
-static bool logoIsSmartFix() {
-  return logoText.equalsIgnoreCase("SmartFix");
+static bool isDiyLedMatrixBrandText(const String &value) {
+  String normalized = value;
+  normalized.toLowerCase();
+  normalized.replace(" ", "");
+  normalized.replace("-", "");
+  normalized.replace("_", "");
+  return normalized == "diyledmatrix";
+}
+
+static bool logoIsDiyLedMatrix() {
+  return isDiyLedMatrixBrandText(logoText);
 }
 
 static uint8_t clampScale(uint16_t value) {
@@ -396,71 +405,64 @@ static int16_t getLogoBaseY() {
   return logoFontSize >= 2 ? 1 : 3;
 }
 
-// Draw a readable wordmark with the same base font as the scrolling text,
+// Draw a readable DIY LED Matrix wordmark with the same base font as the scrolling text,
 // but with a subtle shadow/highlight so it looks more like a logo and not like
-// plain thin text. This keeps the m readable on 64x32 / 128x32.
+// plain thin text. The words alternate green/blue like the generic brand color mode.
 static void drawBrandWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale, int8_t shimmerIndex = -1) {
-  const String smart = "Smart";
-  const String fix = "Fix";
-  const String full = "SmartFix";
+  const String full = "DIY LED Matrix";
 
-  if (revealChars > full.length()) {
-    revealChars = full.length();
+  uint8_t totalChars = countUtf8Codepoints(full);
+  if (revealChars > totalChars) {
+    revealChars = totalChars;
   }
 
-  uint8_t smartReveal = revealChars;
-  if (smartReveal > smart.length()) smartReveal = smart.length();
+  String visible = utf8PrefixByCodepoints(full, revealChars);
+  int16_t cursorX = x;
+  uint8_t wordIndex = 0;
+  String word = "";
 
-  uint8_t fixReveal = 0;
-  if (revealChars > smart.length()) {
-    fixReveal = revealChars - smart.length();
-    if (fixReveal > fix.length()) fixReveal = fix.length();
+  for (uint16_t i = 0; i <= visible.length(); i++) {
+    char c = (i < visible.length()) ? visible[i] : ' ';
+    bool separator = (c == ' ' || c == '-' || c == '_' || i == visible.length());
+
+    if (!separator) {
+      word += c;
+      continue;
+    }
+
+    if (word.length() > 0) {
+      printText(word, cursorX + 1, y + 1, logoShadowColor(wordIndex, brightnessScale));
+      printText(word, cursorX, y, logoMainColor(wordIndex, brightnessScale));
+      cursorX += getLogoTextWidth(word);
+      wordIndex++;
+      word = "";
+    }
+
+    if (i < visible.length()) {
+      String sep = String(c);
+      printText(sep, cursorX, y, logoMainColor(wordIndex, brightnessScale));
+      cursorX += getLogoTextWidth(sep);
+    }
   }
 
-  String smartVisible = smart.substring(0, smartReveal);
-  String fixVisible = fix.substring(0, fixReveal);
-
-  int16_t smartWidth = getLogoTextWidth(smart);
-  int16_t brandGap = logoFontSize >= 2 ? 3 : 2;
-  int16_t fixX = x + smartWidth + brandGap;
-
-  // Soft logo-like depth. Only dim, so it does not destroy the m.
-  if (smartVisible.length() > 0) {
-    printText(smartVisible, x + 1, y + 1, logoShadowColor(0, brightnessScale));
-  }
-  if (fixVisible.length() > 0) {
-    printText(fixVisible, fixX + 1, y + 1, logoShadowColor(1, brightnessScale));
-  }
-
-  // Main colored letters, exactly the same readable font as the scrolling text.
-  if (smartVisible.length() > 0) {
-    printText(smartVisible, x, y, logoMainColor(0, brightnessScale));
-  }
-  if (fixVisible.length() > 0) {
-    printText(fixVisible, fixX, y, logoMainColor(1, brightnessScale));
-  }
-
-  // Small highlight stripe, inspired by the PNG gloss, but minimal for 64x32 / 128x32.
-  if (revealChars >= full.length() && brightnessScale > 90) {
+  // Small highlight stripe for a subtle logo gloss.
+  if (revealChars >= totalChars && brightnessScale > 90) {
     display->drawPixel(x + logoFontSize + 1, y, logoHighlightColor(0, brightnessScale));
     display->drawPixel(x + logoFontSize + 2, y, logoHighlightColor(0, brightnessScale));
-    display->drawPixel(fixX + logoFontSize, y, logoHighlightColor(1, brightnessScale));
-    display->drawPixel(fixX + logoFontSize + 1, y, logoHighlightColor(1, brightnessScale));
+    display->drawPixel(x + getLogoTextWidth(String("DIY ")) + logoFontSize, y, logoHighlightColor(1, brightnessScale));
+    display->drawPixel(x + getLogoTextWidth(String("DIY LED ")) + logoFontSize, y, logoHighlightColor(2, brightnessScale));
   }
 
   // Shimmer effect: one bright moving character.
-  if (shimmerIndex >= 0 && shimmerIndex < (int)full.length() && revealChars >= full.length()) {
-    if (shimmerIndex < 5) {
-      String c = String(full[shimmerIndex]);
-      printText(c, x + getLogoTextWidth(full.substring(0, shimmerIndex)), y, logoHighlightColor(0, brightnessScale));
-    } else {
-      String c = String(full[shimmerIndex]);
-      printText(c, fixX + getLogoTextWidth(fix.substring(0, shimmerIndex - 5)), y, logoHighlightColor(1, brightnessScale));
+  if (shimmerIndex >= 0 && shimmerIndex < (int)visible.length() && revealChars >= totalChars) {
+    char c = visible[shimmerIndex];
+    if (c != ' ') {
+      printText(String(c), x + getLogoTextWidth(visible.substring(0, shimmerIndex)), y, scaledColor(255, 255, 255, brightnessScale));
     }
   }
 }
 
-void drawSmartFixWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale) {
+void drawDiyLedMatrixWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale) {
   drawBrandWordmark(x, y, revealChars, brightnessScale);
 }
 
@@ -554,7 +556,7 @@ static void drawLogoWaveText(const String &text, int16_t x, int16_t y, bool isBr
       continue;
     }
 
-    uint8_t partIndex = isBrand ? (glyphIndex < 5 ? 0 : 1) : wordIndex;
+    uint8_t partIndex = wordIndex;
     int8_t yOffset = globalBounce;
 
     if (!bounceOnly) {
@@ -566,11 +568,7 @@ static void drawLogoWaveText(const String &text, int16_t x, int16_t y, bool isBr
 
     cursorX += getLogoCharWidth(cp);
 
-    if (isBrand && glyphIndex == 4) {
-      cursorX += (logoFontSize >= 2 ? 3 : 2);
-    }
-
-    if (!isBrand && (cp == '-' || cp == '_')) {
+    if (cp == '-' || cp == '_') {
       wordIndex++;
     }
 
@@ -590,8 +588,8 @@ static void drawLogoGlitchOverlay(const String &text, int16_t x, int16_t y, bool
   uint16_t glitchBlue = scaledColor(50, 150, 255, 120);
 
   if (isBrand) {
-    printText("SmartFix", x + 1, y, glitchRed);
-    printText("SmartFix", x - 1, y + 1, glitchBlue);
+    printText("DIY LED Matrix", x + 1, y, glitchRed);
+    printText("DIY LED Matrix", x - 1, y + 1, glitchBlue);
   } else {
     printText(text, x + 1, y, glitchRed);
     printText(text, x - 1, y + 1, glitchBlue);
@@ -620,16 +618,17 @@ void drawHeader() {
   String text = logoText;
   text.trim();
   if (text.length() == 0) {
-    text = "SmartFix";
+    text = "DIY LED Matrix";
   }
 
-  const bool isBrand = text.equalsIgnoreCase("SmartFix");
-  const uint8_t totalChars = isBrand ? 8 : countUtf8Codepoints(text);
+  const bool isBrand = isDiyLedMatrixBrandText(text);
+  const String brandText = "DIY LED Matrix";
+  const String renderText = isBrand ? brandText : text;
+  const uint8_t totalChars = countUtf8Codepoints(renderText);
 
   uint8_t revealChars = totalChars;
   uint8_t fadeScale = 255;
-  int16_t brandWidth = getLogoTextWidth(String("Smart")) + (logoFontSize >= 2 ? 3 : 2) + getLogoTextWidth(String("Fix"));
-  int16_t logoWidth = isBrand ? brandWidth : getLogoTextWidth(text);
+  int16_t logoWidth = getLogoTextWidth(renderText);
   int16_t baseX = (getMatrixWidth() - logoWidth) / 2;
   int16_t baseY = getLogoBaseY();
   int8_t shimmerIndex = -1;
@@ -682,9 +681,9 @@ void drawHeader() {
   }
 
   if (logoEffectMode == LOGO_EFFECT_WAVE) {
-    drawLogoWaveText(isBrand ? String("SmartFix") : text, baseX, baseY, isBrand, fadeScale, false);
+    drawLogoWaveText(renderText, baseX, baseY, isBrand, fadeScale, false);
   } else if (logoEffectMode == LOGO_EFFECT_BOUNCE) {
-    drawLogoWaveText(isBrand ? String("SmartFix") : text, baseX, baseY, isBrand, fadeScale, true);
+    drawLogoWaveText(renderText, baseX, baseY, isBrand, fadeScale, true);
   } else {
     if (isBrand) {
       drawBrandWordmark(baseX, baseY, revealChars, fadeScale, shimmerIndex);
@@ -696,7 +695,7 @@ void drawHeader() {
   if (logoEffectMode == LOGO_EFFECT_SPARKLE || logoEffectMode == LOGO_EFFECT_PULSE) {
     drawHeaderSparkles(baseX, baseY);
   } else if (logoEffectMode == LOGO_EFFECT_GLITCH) {
-    drawLogoGlitchOverlay(isBrand ? String("SmartFix") : text, baseX, baseY, isBrand);
+    drawLogoGlitchOverlay(renderText, baseX, baseY, isBrand);
   } else if (logoEffectMode == LOGO_EFFECT_SCANLINE) {
     drawLogoScanline(baseX, baseY, logoWidth);
   }

@@ -73,7 +73,7 @@ void loadSettings() {
 
   scrollText = prefs.getString("text", scrollText);
   if (scrollText.length() == 0) {
-    scrollText = "ELEKTRONIKSERVICE  -  REPARATUR  -  KONSOLEN  -  SMARTFIX  ";
+    scrollText = "DIY LED MATRIX  -  PIXEL ART  -  ESP32  -  HUB75  ";
   }
   if (scrollText.length() > MAX_SCROLL_TEXT_LEN) {
     scrollText = scrollText.substring(0, MAX_SCROLL_TEXT_LEN);
@@ -82,7 +82,7 @@ void loadSettings() {
   logoText = prefs.getString("logoText", logoText);
   logoText.trim();
   if (logoText.length() == 0) {
-    logoText = "SmartFix";
+    logoText = "DIY LED Matrix";
   }
   if (logoText.length() > MAX_LOGO_TEXT_LEN) {
     logoText = logoText.substring(0, MAX_LOGO_TEXT_LEN);

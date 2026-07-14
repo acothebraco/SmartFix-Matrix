@@ -30,4 +30,4 @@ void drawMatrixCodepointStyled(uint16_t codepoint, int16_t x, int16_t y, uint16_
 void drawMatrixTextStyled(const String &text, int16_t x, int16_t y, uint16_t color, uint8_t size, uint8_t style);
 
 void drawHeader();
-void drawSmartFixWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale);
+void drawDiyLedMatrixWordmark(int16_t x, int16_t y, uint8_t revealChars, uint8_t brightnessScale);

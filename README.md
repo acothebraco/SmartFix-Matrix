@@ -1,22 +1,22 @@
-# SmartFix Matrix
+# DIY LED Matrix
 
-A modular ESP32-S3 firmware for a SmartFix Elektronikservice LED matrix Screen using a Waveshare ESP32-S3 RGB Matrix board and a 64×32 HUB75 RGB LED panel.
+A modular ESP32-S3 firmware for a DIY LED Matrix screen using a Waveshare ESP32-S3 RGB Matrix board and a 64×32 HUB75 RGB LED panel.
 
-The display shows a custom SmartFix header, scrolling service text, pixel-art effects, random animations, configurable colors, brightness, WiFi settings, and OTA firmware updates from GitHub Releases. A GitHub Pages based web flasher is also included for easy USB installation directly from Chrome or Edge.
+The display shows a custom DIY LED Matrix header, scrolling service text, pixel-art effects, random animations, configurable colors, brightness, WiFi settings, and OTA firmware updates from GitHub Releases. A GitHub Pages based web flasher is also included for easy USB installation directly from Chrome or Edge.
 
 > Project status: active development / maker project.
 
 ---
 
 <p align="center">
-  <img src="assets/smartfix_matrix_readme_preview.gif" alt="SmartFix Matrix Preview" width="900">
+  <img src="assets/diy_led_matrix_readme_preview.gif" alt="DIY LED Matrix Preview" width="900">
 </p>
 
 
 ## About
 
-SmartFix Matrix is a custom LED matrix sign project for **SmartFix Elektronikservice**.  
-It runs on an ESP32-S3 with a HUB75 RGB LED matrix panel and displays a branded SmartFix header, scrolling service messages, pixel-art animations, and configurable visual effects.
+DIY LED Matrix is a custom ESP32-S3 HUB75 LED matrix project.
+It runs on an ESP32-S3 with a HUB75 RGB LED matrix panel and displays a branded DIY LED Matrix header, scrolling service messages, pixel-art animations, and configurable visual effects.
 
 The project is built with **PlatformIO** and the **Arduino framework** and is designed to be easy to maintain and extend.  
 The firmware is split into multiple modules for display handling, animations, settings, WiFi, web configuration, and OTA updates.
@@ -26,7 +26,7 @@ From the web interface, the display text, brightness, animation mode, logo/heade
 
 For first installation or recovery flashing, the project also provides a browser-based USB web flasher powered by ESP Web Tools and GitHub Pages.
 
-The goal of this project is to create a reliable, upgradeable, and visually attractive LED sign for electronics repair services, console repair, refurbished devices, and SmartFix workshop branding.
+The goal of this project is to create a reliable, upgradeable, and visually attractive LED sign for maker projects, pixel art, scrolling messages, effects, and workshop display use.
 
 ---
 
@@ -35,14 +35,14 @@ The goal of this project is to create a reliable, upgradeable, and visually attr
 Add your project photos or GIFs here later, for example:
 
 ```text
-assets/smartfix-matrix-front.jpg
-assets/smartfix-matrix-webui.png
+assets/diy-led-matrix-front.jpg
+assets/diy-led-matrix-webui.png
 ```
 
 Suggested image block:
 
 ```md
-![SmartFix Matrix running on a 64x32 LED panel](assets/smartfix-matrix-front.jpg)
+![DIY LED Matrix running on a 64x32 LED panel](assets/diy-led-matrix-front.jpg)
 ```
 
 ---
@@ -52,7 +52,7 @@ Suggested image block:
 - Modular PlatformIO / Arduino firmware for ESP32-S3
 - HUB75 RGB LED matrix output via ESP32 DMA library
 - 64×32 RGB LED panel support
-- SmartFix header/logo text with green `Smart` and blue `Fix`
+- DIY LED Matrix header/logo text with alternating green/blue word colors
 - Header animation effects:
   - Static
   - Letter-by-letter
@@ -134,7 +134,7 @@ Main responsibilities:
 ```text
 config.h              firmware version, panel size, default values
 app_state.*           global app state and active settings
-matrix_display.*      HUB75 setup, colors, SmartFix header drawing
+matrix_display.*      HUB75 setup, colors, DIY LED Matrix header drawing
 animations.*          scrolling text, logo effects, pixel art, random FX
 web_interface.*       configuration web page and routes
 settings.*            Preferences / NVS load, save, factory reset
@@ -171,12 +171,12 @@ If upload does not start automatically, hold **BOOT**, tap **RESET**, then start
 
 ## Browser web flasher
 
-SmartFix Matrix includes a GitHub Pages based web flasher for easy first-time USB flashing or recovery flashing without installing PlatformIO.
+DIY LED Matrix includes a GitHub Pages based web flasher for easy first-time USB flashing or recovery flashing without installing PlatformIO.
 
 Web flasher page:
 
 
-**https://acothebraco.github.io/SmartFix-Matrix/**
+**https://acothebraco.github.io/DIY-LED-Matrix/**
 ```
 
 Requirements:
@@ -189,10 +189,10 @@ Requirements:
 The web flasher uses the full USB image:
 
 ```text
-SmartFix-Matrix-usb.bin
+DIY-LED-Matrix-usb.bin
 ```
 
-It does **not** use the OTA binary. The OTA binary is only for firmware updates from the SmartFix Matrix web interface.
+It does **not** use the OTA binary. The OTA binary is only for firmware updates from the DIY LED Matrix web interface.
 
 To enable the web flasher on GitHub:
 
@@ -209,15 +209,15 @@ The GitHub Actions workflow builds the firmware and publishes the web flasher au
 The project can generate two different `.bin` files inside the PlatformIO build folder:
 
 ```text
-.pio/build/esp32-s3-rgb-matrix/SmartFix-Matrix-ota.bin
-.pio/build/esp32-s3-rgb-matrix/SmartFix-Matrix-usb.bin
+.pio/build/esp32-s3-rgb-matrix/DIY-LED-Matrix-ota.bin
+.pio/build/esp32-s3-rgb-matrix/DIY-LED-Matrix-usb.bin
 ```
 
 Use them like this:
 
 ```text
-SmartFix-Matrix-ota.bin = app-only firmware for OTA / web update
-SmartFix-Matrix-usb.bin = full flash image for USB / esptool
+DIY-LED-Matrix-ota.bin = app-only firmware for OTA / web update
+DIY-LED-Matrix-usb.bin = full flash image for USB / esptool
 ```
 
 The normal PlatformIO upload command still works:
@@ -229,7 +229,7 @@ pio run -t upload
 For manual full USB flashing with esptool:
 
 ```powershell
-python -m esptool --chip esp32s3 --port COM7 --baud 921600 write_flash 0x0 .pio\build\esp32-s3-rgb-matrix\SmartFix-Matrix-usb.bin
+python -m esptool --chip esp32s3 --port COM7 --baud 921600 write_flash 0x0 .pio\build\esp32-s3-rgb-matrix\DIY-LED-Matrix-usb.bin
 ```
 
 Change `COM7` to your actual ESP32 serial port.
@@ -241,8 +241,8 @@ Change `COM7` to your actual ESP32 serial port.
 On first use, the ESP32 creates a WiFi access point:
 
 ```text
-SSID:     SmartFix-Matrix
-Password: smartfix123
+SSID:     DIY-LED-Matrix
+Password: diyled123
 ```
 
 Connect your phone or computer to this WiFi and open:
@@ -274,19 +274,19 @@ Settings are saved on the ESP32 and restored after reboot.
 OTA updates use the app-only binary:
 
 ```text
-SmartFix-Matrix-ota.bin
+DIY-LED-Matrix-ota.bin
 ```
 
 Recommended GitHub Release asset name:
 
 ```text
-SmartFix-Matrix-ota.bin
+DIY-LED-Matrix-ota.bin
 ```
 
 Example OTA URL:
 
 ```text
-https://github.com/acothebraco/SmartFix-Matrix/releases/latest/download/SmartFix-Matrix-ota.bin
+https://github.com/acothebraco/DIY-LED-Matrix/releases/latest/download/DIY-LED-Matrix-ota.bin
 ```
 
 Important:
@@ -338,17 +338,17 @@ Planned / possible future improvements:
 
 - GitHub Actions release workflow for release assets
 - Automatic upload of OTA and USB binaries to GitHub Releases
-- More SmartFix header fonts
+- More DIY LED Matrix header fonts
 - More pixel-art animations
 - Multi-panel support for 128×32 or 64×64
-- Improved SmartFix shield/wrench pixel logo
+- Improved DIY LED Matrix pixel logo options
 - Night mode / schedule-based brightness
 
 ---
 
 ## Notes
 
-This is a hobby / maker firmware project for the SmartFix Elektronikservice LED sign.
+This is a hobby / maker firmware project for the DIY LED Matrix display.
 
 Do not commit private WiFi passwords, tokens, certificates, or other secrets to the repository.
 

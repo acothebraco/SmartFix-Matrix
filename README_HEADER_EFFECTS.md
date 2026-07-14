@@ -1,4 +1,4 @@
-# SmartFix Matrix - Header Font & Logo Effects Update
+# DIY LED Matrix - Header Font & Logo Effects Update
 
 This update improves only the modular source structure.
 

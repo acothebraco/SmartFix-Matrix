@@ -15,7 +15,7 @@ void setup() {
 
   Serial.println();
   Serial.println("================================");
-  Serial.println("SMARTFIX MATRIX");
+  Serial.println("DIY LED MATRIX");
   Serial.print("Firmware v");
   Serial.println(FIRMWARE_VERSION);
   Serial.println("Modular firmware");
